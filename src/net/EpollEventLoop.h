@@ -4,7 +4,9 @@
 #include <memory>
 #include <thread>
 
+#include "../net/EpollBase.h"
 #include "../net/EpollEvent.h"
+#include "../base/TaskQueue.h"
 
 class EpollEventLoop 
 {
@@ -16,13 +18,17 @@ public:
 
     void stopLoop();
 
-    void updateEvents();
+    // void updateEvents();
+    void updateTaskQueue(TaskQueue<int>& queue);
+    void updateTaskQueue(TaskQueue<IOcallBack&>& queue);
     
 private:
     bool isLooping;
-
-    std::unique_ptr<EpollEvent> poll_;
     std::thread::id threadID;
+
+    std::unique_ptr<EpollEvent> epoll_;
+    std::vector<epoll_event> events;    //存放epoll_wait返回结果
+    std::map<int, MyEvent> eventsMap;   //存放fd和ptr指向结构体的对应关系
 
 };
 

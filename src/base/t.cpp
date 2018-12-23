@@ -3,36 +3,38 @@
 #include <iostream>
 #include <thread>
 #include <vector>
+#include <functional>
 
 
-#include "Message.h"
+// #include "Message.h"
+#include "../base/TaskQueue.h"
 
 using namespace std;
 
-class TT 
+class A 
 {
 public:
-    TT() : a(10) {}
-    ~TT() { cout << "~TT" << endl; }
-    void show() { cout << a << endl; }
-    int a;
-};
-class T 
-{
-public:
-    T(TT* pp) : p(pp) {}
-    ~T() { cout << "~T" << endl; }
+    A() {}
+    void put(int val)
+    {
+        // job->add(val);
+        job.add(val);
+    }
     void show() 
     {
-        p->show();
+        int val;
+        // job->getNextTask(val);
+        job.getNextTask(val);
+        cout << val << endl;
     }
 private:
-    shared_ptr<TT> p;
+    TaskQueue<int> job;
+    // std::unique_ptr<TaskQueue<int> > job;
 };
 
 int main() 
 {
-    TT* a = new TT();
-    T tmp(a);
-    tmp.show();
+    A t;
+    t.put(1024);
+    t.show();
 }

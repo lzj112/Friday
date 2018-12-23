@@ -2,26 +2,34 @@
 #define THREAD_H_
 
 #include <thread>
+#include <vector>
+#include <memory>
 #include <functional>
 
-#include "../net/FileDes.h"
+#include "../base/FileDes.h"
+#include "../base/TaskQueue.h"
+#include "../net/EpollEventLoop.h"
 
 class Thread 
 {
 public:
-    typedef std::function<void(FileDes&)> threadFunc;
+    typedef std::function<void()> threadFunc;
 
-    explicit Thread(FileDes& fd, threadFunc& cb);
+    explicit Thread(FileDes fd);
+    explicit Thread(FileDes fd, threadFunc& cb);
 
-    void Detach() { t.detach(); }
+    void defaultThreadFunc();
+    void Detach() { thread_.detach(); }
     void setID();
     void setThreadFunc(threadFunc& cb) { threadFunc_ = cb; }
+    void updateTaskQueue();
 
 private:
-    
+    std::thread thread_;
     threadFunc threadFunc_;
-
     std::thread::id threadID;
-    std::thread t;
+
+    EpollEventLoop* loop_;
+    std::unique_ptr<TaskQueue<IOcallBack&> > taskQueue;
 };
 #endif

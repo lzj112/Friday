@@ -2,16 +2,18 @@
 #define SERVER_H_
 
 #include <string>
+#include <thread>
 
-#include "../net/AcceptTCP.h"
+#include "../net/SocketTCP.h"
 #include "../base/TaskQueue.h"
+#include "../base/ThreadPool.h"
 #include "../net/InitSockAddr.h"
 #include "../net/EpollEventLoop.h"
 
 class Server 
 {
 public:
-    Server(EpollEvent* baseLoop, 
+    Server(EpollEventLoop* baseLoop, 
            const char* name,
            const char* ip,
            int port);
@@ -19,14 +21,16 @@ public:
 
     void starts();
     void newConnection(int connfd);
+    void updateTask(TaskQueue<int>& queue);
     
 
 private:
-    EpollEvent* loop_;
+    EpollEventLoop* loop_;
     const std::string serName;
-    std::unique_ptr<AcceptTCP> accept_;
-    std::unique_ptr<TaskQueue<int> > newConnFd;
-    InitSockAddr serAddr;
+    SocketTCP serverFd;
+    std::shared_ptr<InitSockAddr> serAddr;
+    std::unique_ptr<ThreadPool> threadPool;
+    TaskQueue<int> newConnFd;
 
 };
 
@@ -35,4 +39,6 @@ private:
 /*
 epolleventloop进行loop新连接用accept接收
 放进newconnfd,副线程拿到添加进自己的epoll事件合集
+
+在副线程中有
 */
