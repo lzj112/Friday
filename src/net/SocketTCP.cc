@@ -58,3 +58,46 @@ void SocketTCP::Accept(std::map<int, InitSockAddr>& newConn)
         }
     }
 }
+
+void SocketTCP::setNoDely() 
+{
+    int flag = 1;
+    int res = setsockopt(socketFd.fd(),
+                         IPPROTO_TCP,
+                         TCP_NODELAY,
+                         &flag,
+                         sizeof(flag));
+    if (res == -1) 
+    {
+        perror("setNoDely failed ");
+    }
+}
+
+void SocketTCP::setReuseAddr() 
+{
+    int flag = 1;
+    int res = setsockopt(socketFd.fd(),
+                         IPPROTO_TCP,
+                         SO_REUSEADDR,
+                         &flag,
+                         sizeof(flag));
+    if (res == -1) 
+    {
+        perror("setReuseAddr falied ");
+    }
+}
+
+void SocketTCP::setKeepLive() 
+{
+    int flag = 1;
+    int res = setsockopt(socketFd.fd(),
+                         IPPROTO_TCP,
+                         SO_KEEPALIVE,
+                         &flag,
+                         sizeof(flag));
+    if (res == -1) 
+    {
+        perror("setKeepLive failed ");
+    }
+}
+

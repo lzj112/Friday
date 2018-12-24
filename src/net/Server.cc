@@ -7,7 +7,9 @@ Server::Server(EpollEventLoop* baseLoop,
                int port)
     : loop_(baseLoop),
       serName(name),
+      serverFd(new SocketTCP()),
       serAddr(new InitSockAddr(ip, port))
 {
-    // serverFd
+    serverFd->setReuseAddr();
+    serverFd->setNonBlocking();
 }

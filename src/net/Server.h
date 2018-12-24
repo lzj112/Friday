@@ -27,7 +27,7 @@ public:
 private:
     EpollEventLoop* loop_;
     const std::string serName;
-    SocketTCP serverFd;
+    std::unique_ptr<SocketTCP> serverFd;
     std::shared_ptr<InitSockAddr> serAddr;
     std::unique_ptr<ThreadPool> threadPool;
     TaskQueue<int> newConnFd;

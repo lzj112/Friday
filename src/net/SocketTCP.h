@@ -9,6 +9,7 @@
 #include <map>
 #include <vector>
 #include <utility>
+#include <linux/tcp.h>
 
 #include "../base/FileDes.h"
 // #include "../net/EpollBase.h"
@@ -27,8 +28,10 @@ public:
     // int Accept(std::vector<int>&);
     void Accept(std::map<int, InitSockAddr>&);
 
+    void setNonBlocking() { socketFd.setNonBlocking(); }
     void setNoDely();
     void setReuseAddr();
+    void setKeepLive();
 
 private:
     FileDes socketFd;
