@@ -33,30 +33,22 @@ int SocketTCP::Listen(int backlog)
     assert(res != -1);
 }
 
-// int SocketTCP::Accept(std::vector<int>& newConn) 
-void SocketTCP::Accept(std::map<int, InitSockAddr>& newConn)
+int SocketTCP::Accept()
 {
-    newConn.clear();
-    int connfd = -1;
+    errno = 0;
     sockaddr_in peerAddr;
+    memset(&peerAddr, 0, sizeof(sockaddr_in));
     socklen_t peerAddrLen = sizeof(peerAddr);
-    while (1) 
-    {
-        memset(&peerAddr, 0, sizeof(sockaddr_in));
 
-        connfd = accept(socketFd.fd(), 
-                        (sockaddr *)&peerAddr, 
-                        &peerAddrLen);
-        if (connfd < 0) 
-        {
-            break;
-        }
-        else 
-        {
-            InitSockAddr tmp(peerAddr);
-            newConn.insert(std::make_pair(connfd, tmp));
-        }
-    }
+    int connfd = -1;
+    connfd = accept(socketFd.fd(), 
+                    (sockaddr *)&peerAddr, 
+                    &peerAddrLen);
+    
+    if (connfd < 0) 
+        return errno;
+    else 
+        return connfd;
 }
 
 void SocketTCP::setNoDely() 

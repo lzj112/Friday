@@ -4,9 +4,8 @@
 
 #include "../net/EpollBase.h"
 
-void EpollBase::add(MyEvent* event, epoll_event* ev) 
+void EpollBase::add(int fd, epoll_event* ev) 
 {
-    int fd = event->fd;
     if (epoll_ctl(epollFd, EPOLL_CTL_ADD, fd, ev) < 0) 
     {
         perror("epoll_ctl_add ");
@@ -14,9 +13,8 @@ void EpollBase::add(MyEvent* event, epoll_event* ev)
     }
 }
 
-void EpollBase::del(MyEvent* event, epoll_event* ev) 
+void EpollBase::del(int fd, epoll_event* ev) 
 {
-    int fd = event->fd;
     if (epoll_ctl(epollFd, EPOLL_CTL_DEL, fd, ev) < 0) 
     {
         perror("epoll_ctl_del ");
@@ -24,9 +22,8 @@ void EpollBase::del(MyEvent* event, epoll_event* ev)
     }
 }
 
-void EpollBase::ctl(MyEvent* event, epoll_event* ev) 
+void EpollBase::ctl(int fd, epoll_event* ev) 
 {
-    int fd = event->fd;
     if (epoll_ctl(epollFd, EPOLL_CTL_MOD, fd, ev) < 0) 
     {
         perror("epoll_ctl_mod ");
@@ -40,9 +37,10 @@ void EpollBase::wait(std::vector<epoll_event>& readyEvents, int timeout)
                                   readyEvents.data(),
                                   static_cast<int> (readyEvents.size()),
                                   timeout);
+    //有就绪事件
     if (eventsNumber > 0) 
     {
-        //有就绪事件
+        //返回的事件数量等于容器容量,扩大容量
         if (eventsNumber == readyEvents.size()) 
         {
             readyEvents.resize(eventsNumber * 2);

@@ -1,4 +1,6 @@
 
+#include <map>
+
 #include "../net/Server.h"
 
 Server::Server(EpollEventLoop* baseLoop,
@@ -9,7 +11,51 @@ Server::Server(EpollEventLoop* baseLoop,
       serName(name),
       serverFd(new SocketTCP()),
       serAddr(new InitSockAddr(ip, port))
+    //   threadPool()
 {
     serverFd->setReuseAddr();
     serverFd->setNonBlocking();
+}   
+
+void Server::starts() 
+{
+    MyEvent listenFd;
+    listenFd.setFd(serverFd->fd());
+    listenFd.setReadCallBack(std::bind(&Server::newConntion, 
+                                       this, 
+                                       std::placeholders::_1));
+    //监听套接字 注册epoll可读事件
+    loop_->regReadable(listenFd);
+
+    //启动线程池,在主线程执行loop()
+}
+
+//防止淤积,循环accept
+int Server::newConntion(int) 
+{
+    std::map<int, InitSockAddr> newConn;
+    int connfd = -1;
+    sockaddr_in peer;
+    socklen_t peerLen = sizeof(sockaddr_in);
+    while (1) 
+    {
+        memset(&peer, 0, peerLen);
+
+        connfd = serverFd->Accept();
+        if (connfd < 0) 
+        {
+            break;
+        }
+        else 
+        {
+            InitSockAddr peerAddr(peer);
+            newConn.insert(std::make_pair(connfd, peerAddr));
+        }
+    }
+
+    for(auto x : newConn) 
+    {   
+        EpollEventLoop* ioLoop = threadPool->getNextLoop();
+        //将新连接fd分配给子线程
+    }
 }

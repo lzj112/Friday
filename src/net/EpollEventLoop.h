@@ -4,6 +4,8 @@
 #include <memory>
 #include <thread>
 
+#include "../base/FileDes.h"
+#include "../net/SocketTCP.h"
 #include "../net/EpollBase.h"
 #include "../net/EpollEvent.h"
 #include "../base/TaskQueue.h"
@@ -18,7 +20,9 @@ public:
 
     void stopLoop();
 
-    // void updateEvents();
+    void regReadable(MyEvent socket);
+    void regWriteable(MyEvent socket);
+   
     void updateTaskQueue(TaskQueue<int>& queue);
     void updateTaskQueue(TaskQueue<IOcallBack&>& queue);
     

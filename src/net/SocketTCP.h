@@ -2,6 +2,7 @@
 #define SOCKETTCP_H_
 
 #include <fcntl.h>
+#include <errno.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -25,8 +26,8 @@ public:
     int fd() { return socketFd.fd(); }
     int Bind(InitSockAddr localAddr);
     int Listen(int backlog = 10);
-    // int Accept(std::vector<int>&);
-    void Accept(std::map<int, InitSockAddr>&);
+    int Accept();
+    void close() { socketFd.Close(); }
 
     void setNonBlocking() { socketFd.setNonBlocking(); }
     void setNoDely();

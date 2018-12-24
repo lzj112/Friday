@@ -4,11 +4,12 @@
 #include <vector>
 
 #include "../base/Thread.h"
+#include "../net/EpollEventLoop.h"
 
 class ThreadPool 
 {
 public:
-
+    EpollEventLoop* getNextLoop();
 private:
     std::vector<Thread> pool_;
 };

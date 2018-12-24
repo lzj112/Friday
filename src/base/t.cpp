@@ -2,39 +2,49 @@
 
 #include <iostream>
 #include <thread>
+#include <map>
 #include <vector>
+#include <utility>
 #include <functional>
-
-
-// #include "Message.h"
-#include "../base/TaskQueue.h"
 
 using namespace std;
 
-class A 
+
+struct t 
 {
-public:
-    A() {}
-    void put(int val)
-    {
-        // job->add(val);
-        job.add(val);
-    }
-    void show() 
-    {
-        int val;
-        // job->getNextTask(val);
-        job.getNextTask(val);
-        cout << val << endl;
-    }
-private:
-    TaskQueue<int> job;
-    // std::unique_ptr<TaskQueue<int> > job;
+    int val;
+    const char* ptr = "123456";
 };
+
+map<int, t> tt;
+t* p;
+
+void b(t tmp) 
+{
+    tt.insert(make_pair(10, tmp));
+    auto it = tt.find(10);
+    p = &(*it).second;
+}
+
+
+void a() 
+{
+    t tmp;
+    tmp.val = 1;
+    p = &tmp;
+    b(tmp);
+}
+
 
 int main() 
 {
-    A t;
-    t.put(1024);
-    t.show();
+    a();
+    cout << p->val << ' ' << p->ptr << endl;
+
+    for (auto& x : tt) 
+    {
+        cout << x.first << endl;
+        cout << x.second.val << endl;
+        cout << x.second.ptr << endl;
+    }
 }
