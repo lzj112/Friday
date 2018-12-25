@@ -13,20 +13,17 @@ typedef std::function<void(int)> closeCallBack; //关闭连接直接执行,不�
 class MyEvent 
 {
 public:
-    MyEvent() : fd_(-1), events_(-1), timerfd_(-1) {}
-    MyEvent(int fd, int events, int event, int timeout) 
+    MyEvent() : fd_(-1), timerfd_(-1) {}
+    MyEvent(int fd, int timeout) 
         : fd_(fd),
-          events_(events),
           timerfd_(timeout)
     {}
     ~MyEvent() {}
     
     void setFd(int fd) { fd_ = fd; }
-    void setEvent(int event) { events_ = event; }
     void setTimer(int timer) { timerfd_ = timer; }
 
     int fd() { return fd_; }
-    int event() { return events_; }
     int timefd() { return timerfd_; }
 
     void setReadCallBack(const IOcallBack& cb) 
@@ -35,16 +32,15 @@ public:
     { writeCallBack_ = cb; }
     void setCloseCallBack(const closeCallBack& cb) 
     { closeCallBack_ = cb; }
-    
-private:
-    int fd_;
-    int events_;
-    int timerfd_;
-    void* ptr;
 
     IOcallBack readCallBack_;
     IOcallBack writeCallBack_;
     closeCallBack closeCallBack_;
+    
+private:
+    int fd_;
+    int timerfd_;
+    void* ptr;
 };
 
 enum EPOLLEVENTS
@@ -56,6 +52,7 @@ enum EPOLLEVENTS
     pollReadAble = EPOLLIN,
     pollWriteAble = EPOLLOUT,
     pollEdgeTrigger = EPOLLET,
+    pollRDHangUp = EPOLLRDHUP,
     pollOneShot = EPOLLONESHOT,
 };
 

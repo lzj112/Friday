@@ -48,7 +48,8 @@ void EpollBase::wait(std::vector<epoll_event>& readyEvents, int timeout)
     }
     else if (eventsNumber == 0)  //超时返回无事件发生
     {
-
+        //log TODO
+        return ;
     }
     else 
     {
@@ -60,7 +61,8 @@ void EpollBase::wait(std::vector<epoll_event>& readyEvents, int timeout)
             errno == EFAULT ||  /*对于events没有写全权限*/
             errno == EINVAL)    /*epfd不是一个epoll文件描述符或maxevnts<=0*/
         {
-            exit(1);    //退出
+            //错误处理 TODO
+            exit(1);    //退出 FIXME
         }
     }
 }

@@ -1,5 +1,6 @@
 
 #include <utility>
+#include <assert.h>
 
 #include "../net/EpollEventLoop.h"
 
@@ -8,12 +9,19 @@ const int EPOLLWAITFOR = 10000;
 
 EpollEventLoop::EpollEventLoop() 
     : isLooping(false),
+      isEnd(false),
       epoll_(new EpollEvent()),
       threadID (std::this_thread::get_id())
 {
 
 }
 
+EpollEventLoop::~EpollEventLoop() 
+{
+    assert(!isEnd);
+
+    //关闭所有fd TODO
+}
 
 void EpollEventLoop::loop() 
 {
@@ -23,8 +31,10 @@ void EpollEventLoop::loop()
         events.clear();
         epoll_->poll(events, EPOLLWAITFOR);
 
-        epoll_->handleEvent();
+        epoll_->handleEvent(events);
     }
+
+    isEnd = true;
 }
 
 void EpollEventLoop::stopLoop() 

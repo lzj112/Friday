@@ -28,6 +28,7 @@ public:
     
 private:
     bool isLooping;
+    bool isEnd;
     std::thread::id threadID;
 
     std::unique_ptr<EpollEvent> epoll_;

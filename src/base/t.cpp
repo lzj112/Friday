@@ -9,42 +9,19 @@
 
 using namespace std;
 
-
-struct t 
+void func(int id) 
 {
-    int val;
-    const char* ptr = "123456";
-};
-
-map<int, t> tt;
-t* p;
-
-void b(t tmp) 
-{
-    tt.insert(make_pair(10, tmp));
-    auto it = tt.find(10);
-    p = &(*it).second;
+    while (1)
+    cout << id << endl;
 }
-
-
-void a() 
-{
-    t tmp;
-    tmp.val = 1;
-    p = &tmp;
-    b(tmp);
-}
-
 
 int main() 
-{
-    a();
-    cout << p->val << ' ' << p->ptr << endl;
+{   
+    thread t1(func, 1);
+    thread t2(func, 2);
+    thread t3(func, 3);
+    thread t4(func, 4);
 
-    for (auto& x : tt) 
-    {
-        cout << x.first << endl;
-        cout << x.second.val << endl;
-        cout << x.second.ptr << endl;
-    }
+    while (1)
+    {}
 }

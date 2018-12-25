@@ -28,6 +28,7 @@ void Server::starts()
     loop_->regReadable(listenFd);
 
     //启动线程池,在主线程执行loop()
+    threadPool->start();
 }
 
 //防止淤积,循环accept

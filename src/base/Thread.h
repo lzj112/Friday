@@ -6,30 +6,39 @@
 #include <memory>
 #include <functional>
 
+#include "../base/Mutex.h"
 #include "../base/FileDes.h"
 #include "../base/TaskQueue.h"
 #include "../net/EpollEventLoop.h"
 
+typedef std::function<void()> threadFunc;
+
 class Thread 
 {
 public:
-    typedef std::function<void()> threadFunc;
 
-    explicit Thread(FileDes fd);
-    explicit Thread(FileDes fd, threadFunc& cb);
+    explicit Thread();
+    ~Thread();
 
     void defaultThreadFunc();
     void Detach() { thread_.detach(); }
+    void Join() { thread_.join(); }
     void setID();
-    void setThreadFunc(threadFunc& cb) { threadFunc_ = cb; }
-    void updateTaskQueue();
+    void setThreadFunc(threadFunc& cb);
+    
+    void startLoop() { loop_->loop(); }
+    EpollEventLoop* getLoop() { return loop_; }
+    // void updateTaskQueue();
 
 private:
     std::thread thread_;
     threadFunc threadFunc_;
     std::thread::id threadID;
+    bool isSetted;
 
     EpollEventLoop* loop_;
-    std::unique_ptr<TaskQueue<IOcallBack&> > taskQueue;
+    std::unique_ptr<Mutex> myMutex;
+    std::vector<epoll_event> readyEvents;
+    // std::unique_ptr<TaskQueue<IOcallBack&> > taskQueue;
 };
 #endif
