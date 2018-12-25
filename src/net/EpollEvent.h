@@ -12,6 +12,7 @@
 #include "../net/EpollBase.h"
 
 
+//分类处理事件
 
 class EpollEvent 
 {

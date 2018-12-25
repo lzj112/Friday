@@ -4,11 +4,14 @@
 #include <memory>
 #include <thread>
 
+#include "../net/MyEvent.h"
 #include "../base/FileDes.h"
 #include "../net/SocketTCP.h"
-#include "../net/EpollBase.h"
 #include "../net/EpollEvent.h"
 #include "../base/TaskQueue.h"
+
+
+//EventLoop 事件循环
 
 class EpollEventLoop 
 {
@@ -19,7 +22,9 @@ public:
     void loop();
 
     void stopLoop();
+    void removeAllEvents();
 
+    void regReadable(int fd);
     void regReadable(MyEvent socket);
     void regWriteable(MyEvent socket);
    

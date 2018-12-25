@@ -19,15 +19,15 @@ Server::Server(EpollEventLoop* baseLoop,
 
 void Server::starts() 
 {
-    MyEvent listenFd;
-    listenFd.setFd(serverFd->fd());
+    MyEvent listenFd(serverFd->fd(), -1);
     listenFd.setReadCallBack(std::bind(&Server::newConntion, 
                                        this, 
                                        std::placeholders::_1));
     //监听套接字 注册epoll可读事件
     loop_->regReadable(listenFd);
 
-    //启动线程池,在主线程执行loop()
+    //启动线程池,执行子线程们的loop
+    //server里的loop在主线程中执行,由用户显示调用
     threadPool->start();
 }
 
@@ -58,5 +58,11 @@ int Server::newConntion(int)
     {   
         EpollEventLoop* ioLoop = threadPool->getNextLoop();
         //将新连接fd分配给子线程
+        ioLoop->regReadable(x.first);
     }
+}
+
+void EpollEventLoop::stopLoop() 
+{
+    
 }

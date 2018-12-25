@@ -1,6 +1,7 @@
 
 #include <assert.h>
 
+#include "../net/MyEvent.h"
 #include "../net/EpollEvent.h"
 
 
@@ -68,13 +69,13 @@ void EpollEvent::handleEvent(std::vector<epoll_event>& events)
             }
             else 
                 //有数据读到读buffer里
-                ev->readCallBack_(ev->fd());
+                ev->goRead(ev->fd());
         }
 
         if (x.events & pollWriteAble) 
         {
             //有数据写到写buffer里
-            ev->writeCallBack_(ev->fd());
+            ev->goWrite(ev->fd());
         }                      
        
 

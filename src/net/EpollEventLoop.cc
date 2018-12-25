@@ -20,7 +20,8 @@ EpollEventLoop::~EpollEventLoop()
 {
     assert(!isEnd);
 
-    //关闭所有fd TODO
+    //关闭所有fd 
+    removeAllEvents();
 }
 
 void EpollEventLoop::loop() 
@@ -39,7 +40,27 @@ void EpollEventLoop::loop()
 
 void EpollEventLoop::stopLoop() 
 {
+    isLooping = false;
+}
 
+void EpollEventLoop::removeAllEvents() 
+{
+    if (isEnd || !isLooping) 
+    {
+        for (auto x : eventsMap) 
+        {
+            epoll_event ev;
+            ev.data.ptr = static_cast<void *> (&x.second);
+            epoll_->delEvents(x.first, &ev);
+            ::close(x.first);
+        }
+    }
+}
+
+void EpollEventLoop::regReadable(int fd) 
+{
+    MyEvent socket(fd, -1);
+    regReadable(socket);
 }
 
 void EpollEventLoop::regReadable(MyEvent socket) 
