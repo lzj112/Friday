@@ -13,7 +13,7 @@ class EpollBase
 {
 public:
     EpollBase() { epollFd = epoll_create(1); }
-    ~EpollBase() { close(epollFd); }
+    virtual ~EpollBase() { close(epollFd); }
     int fd() { return epollFd; }
     void add(int fd, epoll_event* ev);
     void del(int fd, epoll_event* ev);
