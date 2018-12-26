@@ -27,6 +27,7 @@ public:
     int Bind(InitSockAddr localAddr);
     int Listen(int backlog = 10);
     int Accept();
+    int Connect(InitSockAddr peerAddr);
     void close() { socketFd.Close(); }
 
     void setNonBlocking() { socketFd.setNonBlocking(); }

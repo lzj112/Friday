@@ -3,7 +3,7 @@
 
 #include "../net/SocketTCP.h"
 
-SocketTCP::SocketTCP()
+SocketTCP::SocketTCP() 
 {
     socketFd.setFd(creSocketTCP());
     socketFd.setNonBlocking();
@@ -35,11 +35,11 @@ int SocketTCP::Listen(int backlog)
 
 int SocketTCP::Accept()
 {
-    errno = 0;
     sockaddr_in peerAddr;
     memset(&peerAddr, 0, sizeof(sockaddr_in));
     socklen_t peerAddrLen = sizeof(peerAddr);
 
+    errno = 0;
     int connfd = -1;
     connfd = accept(socketFd.fd(), 
                     (sockaddr *)&peerAddr, 
@@ -49,6 +49,24 @@ int SocketTCP::Accept()
         return errno;
     else 
         return connfd;
+}
+
+/*
+ETIMEDOUT 无响应
+ECONNREFUSED 收到RST 硬错误
+EHOSTUNREACH ENETUNRECH 软错误,在某个路由器上不可达
+
+*/
+int SocketTCP::Connect(InitSockAddr peerAddr) 
+{
+    errno = 0;
+    int res = connect(socketFd.fd(), 
+                      peerAddr.sockAddr(),
+                      peerAddr.length());
+    if (res == 0) 
+        return res;
+    else 
+        return errno;
 }
 
 void SocketTCP::setNoDely() 

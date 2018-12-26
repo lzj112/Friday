@@ -13,6 +13,8 @@ Server::Server(EpollEventLoop* baseLoop,
       serAddr(new InitSockAddr(ip, port))
     //   threadPool()
 {
+    serverFd->Bind(*serAddr);
+    serverFd->Listen(5);
     serverFd->setReuseAddr();
     serverFd->setNonBlocking();
 }   
@@ -45,12 +47,27 @@ int Server::newConntion(int)
         connfd = serverFd->Accept();
         if (connfd < 0) 
         {
-            break;
+            switch(connfd)
+            {
+                case (EWOULDBLOCK) :  
+                case (ECONNABORTED) :   
+                case (EPROTO) :
+                case (EINTR) :
+                    break;
+                default:
+                {
+                    //记录入日志
+                    break;
+                }
+            }
         }
         else 
         {
             InitSockAddr peerAddr(peer);
             newConn.insert(std::make_pair(connfd, peerAddr));
+
+            std::cout << "got a new connection fd = " << connfd;
+            peerAddr.print();
         }
     }
 

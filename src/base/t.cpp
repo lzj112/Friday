@@ -17,11 +17,7 @@ void func(int id)
 
 int main() 
 {   
-    thread t1(func, 1);
-    thread t2(func, 2);
-    thread t3(func, 3);
-    thread t4(func, 4);
-
-    while (1)
-    {}
+    const char* p ="12";
+    p = "234";
+    cout << p << endl;
 }

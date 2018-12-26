@@ -34,6 +34,35 @@ public:
         return reinterpret_cast<struct sockaddr*> (&netAdderss);
     }
 
+    void IP(char* ip, int len) 
+    {
+        in_addr in = netAdderss.sin_addr;
+        inet_ntop(AF_INET,
+                  &in,
+                  ip,
+                  len);
+    }
+
+    int PORT() 
+    {
+        return ntohs(netAdderss.sin_port);
+    }
+
+    void print() 
+    {
+        char ip[10];
+        in_addr in = netAdderss.sin_addr;
+        inet_ntop(AF_INET,
+                  &in,
+                  ip,
+                  sizeof(ip));
+        std::cout << " ip = " 
+                  << ip 
+                  << " port = " 
+                  << ntohs(netAdderss.sin_port)
+                  << std::endl;
+    }
+
 private:
     sockaddr_in netAdderss;
     socklen_t addrLength;
