@@ -8,6 +8,7 @@
 #include <sys/socket.h>
 
 #include <map>
+#include <memory>
 #include <vector>
 #include <utility>
 #include <linux/tcp.h>
@@ -23,20 +24,20 @@ public:
     ~SocketTCP();
 
     int creSocketTCP();
-    int fd() { return socketFd.fd(); }
-    int Bind(InitSockAddr localAddr);
-    int Listen(int backlog = 10);
-    int Accept();
-    int Connect(InitSockAddr peerAddr);
-    void close() { socketFd.Close(); }
+    int fd() { return socketFd->fd(); }
+    int bind(InitSockAddr localAddr);
+    int listen(int backlog = 10);
+    int accept();
+    int connect(InitSockAddr peerAddr);
+    void close() { socketFd->close(); }
 
-    void setNonBlocking() { socketFd.setNonBlocking(); }
+    void setNonBlocking() { socketFd->setNonBlocking(); }
     void setNoDely();
     void setReuseAddr();
     void setKeepLive();
 
 private:
-    FileDes socketFd;
+    std::shared_ptr<FileDes> socketFd;
 };
 
 #endif

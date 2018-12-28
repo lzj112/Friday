@@ -9,14 +9,15 @@ class FileDes
 public:
     FileDes() : fileFd(-1), isClose(false) {}
     FileDes(int fd) : fileFd(fd), isClose(false) {}
+    FileDes(const FileDes&) = delete;
+    FileDes& operator=(const FileDes&) = delete;
     ~FileDes() 
     { 
         if (!isClose) 
-        close(fileFd); 
+            ::close(fileFd); 
     }
 
-    void setFd(int fd) { fileFd = fd; isClose = false; }
-    void Close() { isClose = true; close(fileFd); }
+    void close() { isClose = true; ::close(fileFd); }
 
     int fd() { return fileFd; }
 

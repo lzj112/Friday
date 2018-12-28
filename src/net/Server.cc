@@ -13,8 +13,8 @@ Server::Server(EpollEventLoop* baseLoop,
       serAddr(new InitSockAddr(ip, port))
     //   threadPool()
 {
-    serverFd->Bind(*serAddr);
-    serverFd->Listen(5);
+    serverFd->bind(*serAddr);
+    serverFd->listen(5);
     serverFd->setReuseAddr();
     serverFd->setNonBlocking();
 }   
@@ -44,7 +44,7 @@ int Server::newConntion(int)
     {
         memset(&peer, 0, peerLen);
 
-        connfd = serverFd->Accept();
+        connfd = serverFd->accept();
         if (connfd < 0) 
         {
             switch(connfd)

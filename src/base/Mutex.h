@@ -9,8 +9,8 @@ public:
     Mutex() : isLock(false) {}
     ~Mutex();
 
-    Mutex(const Mutex& tmp) = delete;
-    Mutex& operator=(const Mutex& p) = delete;
+    Mutex(const Mutex&) = delete;
+    Mutex& operator=(const Mutex&) = delete;
 
     void locked();
     void free();

@@ -3,10 +3,10 @@
 
 #include "../net/SocketTCP.h"
 
-SocketTCP::SocketTCP() 
+SocketTCP::SocketTCP() : socketFd(new FileDes(creSocketTCP()))
 {
-    socketFd.setFd(creSocketTCP());
-    socketFd.setNonBlocking();
+    // socketFd.setFd(creSocketTCP());
+    socketFd->setNonBlocking();
 }
 
 SocketTCP::~SocketTCP() {}
@@ -19,21 +19,21 @@ int SocketTCP::creSocketTCP()
     return newSocket;
 }
 
-int SocketTCP::Bind(InitSockAddr localAddr) 
+int SocketTCP::bind(InitSockAddr localAddr) 
 {
-    int res = bind(socketFd.fd(),
-                   static_cast<sockaddr *> (localAddr.sockAddr()),
-                   localAddr.length());
+    int res = ::bind(socketFd->fd(),
+                     static_cast<sockaddr *> (localAddr.sockAddr()),
+                     localAddr.length());
     assert(res != -1);
 }
 
-int SocketTCP::Listen(int backlog) 
+int SocketTCP::listen(int backlog) 
 {
-    int res = listen(socketFd.fd(), backlog);
+    int res = ::listen(socketFd->fd(), backlog);
     assert(res != -1);
 }
 
-int SocketTCP::Accept()
+int SocketTCP::accept()
 {
     sockaddr_in peerAddr;
     memset(&peerAddr, 0, sizeof(sockaddr_in));
@@ -41,9 +41,9 @@ int SocketTCP::Accept()
 
     errno = 0;
     int connfd = -1;
-    connfd = accept(socketFd.fd(), 
-                    (sockaddr *)&peerAddr, 
-                    &peerAddrLen);
+    connfd = ::accept(socketFd->fd(), 
+                      (sockaddr *)&peerAddr, 
+                      &peerAddrLen);
     
     if (connfd < 0) 
         return errno;
@@ -57,12 +57,12 @@ ECONNREFUSED 收到RST 硬错误
 EHOSTUNREACH ENETUNRECH 软错误,在某个路由器上不可达
 
 */
-int SocketTCP::Connect(InitSockAddr peerAddr) 
+int SocketTCP::connect(InitSockAddr peerAddr) 
 {
     errno = 0;
-    int res = connect(socketFd.fd(), 
-                      peerAddr.sockAddr(),
-                      peerAddr.length());
+    int res = ::connect(socketFd->fd(), 
+                        peerAddr.sockAddr(),
+                        peerAddr.length());
     if (res == 0) 
         return res;
     else 
@@ -72,7 +72,7 @@ int SocketTCP::Connect(InitSockAddr peerAddr)
 void SocketTCP::setNoDely() 
 {
     int flag = 1;
-    int res = setsockopt(socketFd.fd(),
+    int res = setsockopt(socketFd->fd(),
                          IPPROTO_TCP,
                          TCP_NODELAY,
                          &flag,
@@ -86,7 +86,7 @@ void SocketTCP::setNoDely()
 void SocketTCP::setReuseAddr() 
 {
     int flag = 1;
-    int res = setsockopt(socketFd.fd(),
+    int res = setsockopt(socketFd->fd(),
                          IPPROTO_TCP,
                          SO_REUSEADDR,
                          &flag,
@@ -100,7 +100,7 @@ void SocketTCP::setReuseAddr()
 void SocketTCP::setKeepLive() 
 {
     int flag = 1;
-    int res = setsockopt(socketFd.fd(),
+    int res = setsockopt(socketFd->fd(),
                          IPPROTO_TCP,
                          SO_KEEPALIVE,
                          &flag,

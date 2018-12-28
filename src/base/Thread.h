@@ -18,7 +18,9 @@ class Thread
 public:
 
     explicit Thread();
+    explicit Thread(const Thread&);
     ~Thread();
+    Thread& operator=(const Thread&);
 
     void defaultThreadFunc();
     void Detach() { thread_.detach(); }
