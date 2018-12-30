@@ -57,10 +57,11 @@ void EpollEventLoop::removeAllEvents()
     }
 }
 
-void EpollEventLoop::regReadable(int fd) 
+void EpollEventLoop::delEvent(int fd) 
 {
-    MyEvent socket(fd, -1);
-    regReadable(socket);
+    epoll_event ev;
+    ev.data.fd = fd;
+    epoll_->delEvents(fd, &ev);
 }
 
 void EpollEventLoop::regReadable(MyEvent socket) 

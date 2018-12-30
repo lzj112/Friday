@@ -24,7 +24,7 @@ public:
     void stopLoop();
     void removeAllEvents();
 
-    void regReadable(int fd);
+    void delEvent(int fd);
     void regReadable(MyEvent socket);
     void regWriteable(MyEvent socket);
    

@@ -1,5 +1,7 @@
-#ifndef EPOLLMYEVENT_H_
-#define EPOLLMYEVENT_H_
+#ifndef MYEVENT_H_
+#define MYEVENT_H_
+
+#include <unistd.h>
 
 #include <functional>
 #include <sys/epoll.h>
@@ -44,7 +46,12 @@ public:
 
     int defRead(int);
     int defWrite(int);
-    void defClose(int);
+    void defClose(int) 
+    {
+        //log TODO
+        ::close(fd_);
+        fd_ = -1;
+    }
 
     void goRead(int fd) { readCallBack_(fd); }
     void goWrite(int fd) { writeCallBack_(fd); }

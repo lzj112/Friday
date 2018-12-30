@@ -17,10 +17,10 @@ public:
 
     void connect();
     void connSuccessful();
-    void handleErr(int err);
     void inConnection();
     int isConnOk(int);
     void reConnect();
+    void gotError(int);
 
     void setReadCb(IOcallBack& cb) { readCb = cb; }
     void setWriteCb(IOcallBack& cb) { writeCb = cb; }

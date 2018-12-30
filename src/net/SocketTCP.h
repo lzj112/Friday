@@ -36,9 +36,11 @@ public:
     void setNoDely();
     void setReuseAddr();
     void setKeepLive();
+    int getSocketState();
+    bool isSelfConnection();
 
 private:
-    std::shared_ptr<FileDes> socketFd;
+    FileDes* socketFd;
 };
 
 #endif

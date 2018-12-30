@@ -52,11 +52,62 @@ void Connector::connect()
     }   
 }
 
+//连接立刻成功,返回
+void Connector::connSuccessful() 
+{
+
+}
+
+//正在连接
 void Connector::inConnection() 
 {
     MyEvent ev(cliSock->fd(), -1);
     ev.setWriteCallBack(std::bind(&Connector::isConnOk, 
                                   this,
                                   std::placeholders::_1));
+    ev.setCloseCallBack(std::bind(&Connector::gotError,
+                                  this,
+                                  std::placeholders::_1));
+    //注册可写事件
     loop_->regReadable(ev);
+}
+
+void Connector::gotError(int) 
+{
+    //log TODO
+    int error = cliSock->getSocketState();
+    loop_->delEvent(cliSock->fd());
+    reConnect();
+}
+
+
+// TCP 的同时打开???????????
+int Connector::isConnOk(int) 
+{
+    int error = cliSock->connect(*serAddr);
+    if (error == EISCONN) 
+    {
+        //是自连接
+        if (cliSock->isSelfConnection())
+        {
+            //log TODO
+            reConnect();
+        }
+        else
+        {
+            //log TODO
+            connSuccessful();
+        }
+    }
+    else 
+    {
+        //不是EISCONN就是连接失败
+        reConnect();
+    }
+}
+
+
+void Connector::reConnect() 
+{
+
 }
