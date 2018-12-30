@@ -21,16 +21,16 @@ int SocketTCP::creSocketTCP()
 
 int SocketTCP::bind(InitSockAddr localAddr) 
 {
-    int res = ::bind(socketFd->fd(),
+    int ret = ::bind(socketFd->fd(),
                      static_cast<sockaddr *> (localAddr.sockAddr()),
                      localAddr.length());
-    assert(res != -1);
+    assert(ret != -1);
 }
 
 int SocketTCP::listen(int backlog) 
 {
-    int res = ::listen(socketFd->fd(), backlog);
-    assert(res != -1);
+    int ret = ::listen(socketFd->fd(), backlog);
+    assert(ret != -1);
 }
 
 int SocketTCP::accept()
@@ -51,20 +51,15 @@ int SocketTCP::accept()
         return connfd;
 }
 
-/*
-ETIMEDOUT 无响应
-ECONNREFUSED 收到RST 硬错误
-EHOSTUNREACH ENETUNRECH 软错误,在某个路由器上不可达
 
-*/
 int SocketTCP::connect(InitSockAddr peerAddr) 
 {
     errno = 0;
-    int res = ::connect(socketFd->fd(), 
+    int ret = ::connect(socketFd->fd(), 
                         peerAddr.sockAddr(),
                         peerAddr.length());
-    if (res == 0) 
-        return res;
+    if (ret == 0) 
+        return ret;
     else 
         return errno;
 }
@@ -72,12 +67,12 @@ int SocketTCP::connect(InitSockAddr peerAddr)
 void SocketTCP::setNoDely() 
 {
     int flag = 1;
-    int res = setsockopt(socketFd->fd(),
+    int ret = setsockopt(socketFd->fd(),
                          IPPROTO_TCP,
                          TCP_NODELAY,
                          &flag,
                          sizeof(flag));
-    if (res == -1) 
+    if (ret == -1) 
     {
         perror("setNoDely failed ");
     }
@@ -86,12 +81,12 @@ void SocketTCP::setNoDely()
 void SocketTCP::setReuseAddr() 
 {
     int flag = 1;
-    int res = setsockopt(socketFd->fd(),
+    int ret = setsockopt(socketFd->fd(),
                          IPPROTO_TCP,
                          SO_REUSEADDR,
                          &flag,
                          sizeof(flag));
-    if (res == -1) 
+    if (ret == -1) 
     {
         perror("setReuseAddr falied ");
     }
@@ -100,12 +95,12 @@ void SocketTCP::setReuseAddr()
 void SocketTCP::setKeepLive() 
 {
     int flag = 1;
-    int res = setsockopt(socketFd->fd(),
+    int ret = setsockopt(socketFd->fd(),
                          IPPROTO_TCP,
                          SO_KEEPALIVE,
                          &flag,
                          sizeof(flag));
-    if (res == -1) 
+    if (ret == -1) 
     {
         perror("setKeepLive failed ");
     }

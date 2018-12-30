@@ -17,7 +17,20 @@ public:
             ::close(fileFd); 
     }
 
-    void close() { isClose = true; ::close(fileFd); }
+    void reSet(int fd) 
+    {
+        close();
+        fileFd = fd;
+        isClose = false;
+    }
+    void close()
+    {
+        if (!isClose) 
+        {
+            ::close(fileFd);
+            isClose = true;
+        }
+    }
 
     int fd() { return fileFd; }
 

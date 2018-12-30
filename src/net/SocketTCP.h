@@ -30,6 +30,7 @@ public:
     int accept();
     int connect(InitSockAddr peerAddr);
     void close() { socketFd->close(); }
+    void reSet(int fd) { socketFd->reSet(fd); }
 
     void setNonBlocking() { socketFd->setNonBlocking(); }
     void setNoDely();
