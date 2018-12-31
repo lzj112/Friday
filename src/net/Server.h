@@ -39,10 +39,3 @@ private:
 };
 
 #endif
-
-/*
-epolleventloop进行loop新连接用accept接收
-放进newconnfd,副线程拿到添加进自己的epoll事件合集
-
-在副线程中有
-*/

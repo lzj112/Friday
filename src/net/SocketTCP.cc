@@ -137,5 +137,6 @@ bool SocketTCP::isSelfConnection()
     getsockname(socketFd->fd(),
                 (struct sockaddr *)&local,
                 &len);
-    return peer.sin_port == local.sin_port;
+    return (peer.sin_port == local.sin_port) &&
+        (peer.sin_addr.s_addr == local.sin_addr.s_addr);
 }

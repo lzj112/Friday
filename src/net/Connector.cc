@@ -55,7 +55,10 @@ void Connector::connect()
 //连接立刻成功,返回
 void Connector::connSuccessful() 
 {
-
+    if (connSucced_ != nullptr)
+        connSucced_(cliSock->fd());
+    else
+        loop_->regReadable(cliSock->fd());
 }
 
 //正在连接
@@ -81,7 +84,6 @@ void Connector::gotError(int)
 }
 
 
-// TCP 的同时打开???????????
 int Connector::isConnOk(int) 
 {
     int error = cliSock->connect(*serAddr);
@@ -109,5 +111,8 @@ int Connector::isConnOk(int)
 
 void Connector::reConnect() 
 {
+    cliSock->close();
+    cliSock->reSet(cliSock->creSocketTCP());
 
+    
 }

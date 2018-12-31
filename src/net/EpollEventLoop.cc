@@ -10,7 +10,7 @@ const int EPOLLWAITFOR = 10000;
 EpollEventLoop::EpollEventLoop() 
     : isLooping(false),
       isEnd(false),
-      epoll_(new EpollEvent()),
+      epoll_(new EpollBase()),
       threadID (std::this_thread::get_id())
 {
 
@@ -30,12 +30,53 @@ void EpollEventLoop::loop()
     while (isLooping) 
     {
         events.clear();
-        epoll_->poll(events, EPOLLWAITFOR);
+        epoll_->wait(events, EPOLLWAITFOR);
 
-        epoll_->handleEvent(events);
+        handleEvents();
     }
 
     isEnd = true;
+}
+
+
+void EpollEventLoop::handleEvents() 
+{
+    if (events.size() == 0) 
+    {
+        //log TODO
+        return ;
+    }
+
+    for (auto& x : events) 
+    {
+        MyEvent* ev = static_cast<MyEvent *> (x.data.ptr);
+        
+        if (x.events & (pollHangUp | pollErr)) 
+        {
+            //这两个事件发生,设置可读
+            //交给可读回调,触发其中错误处理
+            //尝试重连?
+            x.events = pollReadAble;
+        }
+
+        if (x.events & pollReadAble)
+        {
+            if (x.events & pollRDHangUp) 
+            {
+                //对端正常关闭,同时触发epollin
+                ::close(ev->fd());
+            }
+            else 
+                //有数据读到读buffer里
+                ev->goRead(ev->fd());
+        }
+
+        if (x.events & pollWriteAble) 
+        {
+            //有数据写到写buffer里
+            ev->goWrite(ev->fd());
+        }                      
+    }
 }
 
 void EpollEventLoop::stopLoop() 
@@ -51,7 +92,7 @@ void EpollEventLoop::removeAllEvents()
         {
             epoll_event ev;
             ev.data.ptr = static_cast<void *> (&x.second);
-            epoll_->delEvents(x.first, &ev);
+            delEvent(x.first);
             ::close(x.first);
         }
     }
@@ -61,7 +102,8 @@ void EpollEventLoop::delEvent(int fd)
 {
     epoll_event ev;
     ev.data.fd = fd;
-    epoll_->delEvents(fd, &ev);
+    epoll_->del(fd, &ev);
+    eventsMap.erase(fd);
 }
 
 void EpollEventLoop::regReadable(MyEvent socket) 
@@ -71,17 +113,19 @@ void EpollEventLoop::regReadable(MyEvent socket)
     eventsMap.insert(std::make_pair(socket.fd(), socket));
   
     auto it = eventsMap.find(socket.fd());
-    ev.data.ptr = &(*it).second;
+    ev.data.ptr = &((*it).second);
 
-    epoll_->updateReadEvents(socket.fd(), ev);  //将监听套接字加入epoll事件合集
+    epoll_->add(socket.fd(), &ev);  //将监听套接字加入epoll事件合集
 }
 
-void EpollEventLoop::updateTaskQueue(TaskQueue<int>& queue) 
+void EpollEventLoop::modifyEvent(MyEvent socket) 
 {
-
-}
-
-void EpollEventLoop::updateTaskQueue(TaskQueue<IOcallBack&>& queue) 
-{
-
+    epoll_event ev = {0, {0}};
+    auto it = eventsMap.find(socket.fd());
+    eventsMap.erase(it);
+    eventsMap.insert(std::make_pair(socket.fd(), socket));
+    
+    auto iter = eventsMap.find(socket.fd());
+    ev.data.ptr = &((*iter).second);
+    epoll_->ctl(socket.fd(), &ev);
 }

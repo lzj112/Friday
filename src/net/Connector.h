@@ -26,6 +26,8 @@ public:
     void setWriteCb(IOcallBack& cb) { writeCb = cb; }
     void setCloseCb(closeCallBack& cb) { closeCb = cb; }
 
+typedef std::function<void(int)> connSucced;
+
 private:
     EpollEventLoop* loop_;
     SocketTCP* cliSock;
@@ -35,7 +37,7 @@ private:
     IOcallBack readCb;
     IOcallBack writeCb;
     closeCallBack closeCb;
-    
+    connSucced connSucced_;
 };
 
 #endif  

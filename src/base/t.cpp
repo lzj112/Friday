@@ -10,3 +10,18 @@
 
 using namespace std;
 
+int a = 1;
+
+int& func() 
+{
+    return a;
+}
+
+int main() 
+{
+    function<void(int)> t;
+    if (t == nullptr) 
+    {
+        cout << "asasas" << endl;
+    } 
+}
