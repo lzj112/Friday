@@ -21,7 +21,7 @@ Server::Server(EpollEventLoop* baseLoop,
 
 void Server::starts() 
 {
-    MyEvent listenFd(serverFd->fd(), -1);
+    MyEvent listenFd(serverFd->fd());
     listenFd.setReadCallBack(std::bind(&Server::newConntion, 
                                        this, 
                                        std::placeholders::_1));

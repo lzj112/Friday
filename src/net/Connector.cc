@@ -64,7 +64,7 @@ void Connector::connSuccessful()
 //正在连接
 void Connector::inConnection() 
 {
-    MyEvent ev(cliSock->fd(), -1);
+    MyEvent ev(cliSock->fd());
     ev.setWriteCallBack(std::bind(&Connector::isConnOk, 
                                   this,
                                   std::placeholders::_1));
@@ -114,5 +114,5 @@ void Connector::reConnect()
     cliSock->close();
     cliSock->reSet(cliSock->creSocketTCP());
 
-    
+
 }

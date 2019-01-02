@@ -28,14 +28,12 @@ class MyEvent
 {
 public:
     MyEvent();
-    MyEvent(int fd, int timeout);
+    MyEvent(int fd);
     ~MyEvent() {}
     
     void setFd(int fd) { fd_ = fd; }
-    void setTimer(int timer) { timerfd_ = timer; }
 
     int fd() { return fd_; }
-    int timefd() { return timerfd_; }
 
     void setReadCallBack(const IOcallBack& cb) 
     { readCallBack_ = cb; }
@@ -59,7 +57,6 @@ public:
     
 private:
     int fd_;
-    int timerfd_;
     void* ptr;
     
     IOcallBack readCallBack_;

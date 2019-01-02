@@ -3,7 +3,6 @@
 
 MyEvent::MyEvent() 
     : fd_(-1), 
-      timerfd_(-1),
       ptr(nullptr),
       readCallBack_(std::bind(&MyEvent::defRead, 
                               this, 
@@ -18,9 +17,8 @@ MyEvent::MyEvent()
 
 }
 
-MyEvent::MyEvent(int fd, int timeout) 
+MyEvent::MyEvent(int fd) 
     : fd_(fd),
-      timerfd_(timeout),
       ptr(nullptr),
       readCallBack_(std::bind(&MyEvent::defRead, 
                               this, 
