@@ -1,3 +1,4 @@
+
 #include <sys/timerfd.h>
 #include <cstring>
 
@@ -12,34 +13,15 @@
 
 using namespace std;
 
-class T 
+class t 
 {
 public:
-    T() 
+    void func() 
     {
-        cout << "here is T()" << endl;
+
     }
-    T(const T&) 
+    void show() const 
     {
-        cout << "here is copy" << endl;
+        func();
     }
-    ~T() 
-    {
-        cout << "here is ~T()" << endl;
-    }
-private:
 };
-
-int main() 
-{
-    map<int, T> tmp;
-
-    tmp.insert(make_pair(1, T()));
-    // tmp.erase(1);
-    tmp.insert(make_pair(2, T()));
-    cout << "``````````````````````" << endl;
-    // tmp.clear();
-    tmp.erase(1);
-    tmp.erase(2);
-    // while (1) {}
-}

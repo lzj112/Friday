@@ -3,33 +3,42 @@
 
 #include <unistd.h>
 #include <assert.h>
-#include <sys/timerfd.h>
 
-#include <iostream>
+#include <functional>
 
-using namespace std;
+#include "../base/UniqueID.h"
 
-enum TIMERTYPE 
-{
-    RELATIVE = CLOCK_REALTIME,  //相对时间
-    ABSOLUTE = CLOCK_MONOTONIC  //绝对时间
-};
+typedef std::function<void(int)> timerCallBack;
 
-//默认是相对时间
+//使用相对时间(epoch时间)
 class Timer 
 {
 public:
-    Timer(int type = RELATIVE);
-    ~Timer() { ::close(timerfd_); }
-    void setUpTimer(int firstTime, int interval);
+    Timer(timerCallBack cb, int firstTime, int interval);
+    ~Timer() {}
+    void tick();
+    void reStart();
+    int expiration() const  { return expire; }
+    bool isReapt() { return isRepeat_; }
     void shutdown();
-    int fd();
+    int setFd(int fd) { mayFd = fd; }
+    int fd() { return mayFd; }
+
+    bool operator<(const Timer& tmp) const
+    {
+        return expire > tmp.expiration();
+    }
 
 private:
+    
+    int mayFd;
+    uint32_t timerID;   //定时器ID 全局唯一
+    int expire;      //到期时间
+    int interval;    //时间间隔
 
-    void startTimer(const itimerspec&);
-    int type_;
-    int timerfd_;   //定时时间  time_t就是long int
+    bool isRepeat_;
+    timerCallBack timeCB;
+
 };
 
 #endif
