@@ -10,18 +10,41 @@
 #include <vector>
 #include <utility>
 #include <functional>
+#include <queue>
 
 using namespace std;
 
-class t 
+class A 
 {
 public:
-    void func() 
+    A(int a, int b) : v1(a), v2(b) { cout << "here A()\n";}
+    A(A&& a) : v1(a.val1()), v2(a.val2()) {}
+    void show() 
     {
-
+        cout << v1 << ' ' << v2 << endl;
     }
-    void show() const 
+    int val1() const { return v1; }
+    int val2() const { return v2; }
+    bool operator<(const A& tmp) const 
     {
-        func();
+        return v1 > tmp.val1();
+    } 
+    A* pointer() 
+    {
+        return this;
     }
+private:
+    int v1, v2;
 };
+
+
+int main() 
+{
+    queue<A> tmp;
+
+    A aa(1, 2);
+    tmp.emplace(move(aa));
+    aa.show();
+    A a = tmp.front();
+    a.show();
+}

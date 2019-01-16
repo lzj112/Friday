@@ -13,13 +13,16 @@ public:
     TimerWheel();
     ~TimerWheel();
 
-    void addTimer(timerCallBack cb, int firstTime, int interval);
+    uint32_t addTimer(int firstTime, int interval, timerCallBack cb);
     void cancelTimer(Timer* timer);
+    void tick();
 
 private:
     void reSet();
+    void defaultTimerCallBack(int);
+    timerCallBack defaultTimerCallBack_;
 
-    static const int N = 60;
+    static const int N = 10;
     static const int SI = 1;
 
     std::vector<std::priority_queue<Timer> > wheel;

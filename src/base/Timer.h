@@ -5,7 +5,7 @@
 #include <assert.h>
 
 #include <functional>
-
+ 
 #include "../base/UniqueID.h"
 
 typedef std::function<void(int)> timerCallBack;
@@ -14,15 +14,17 @@ typedef std::function<void(int)> timerCallBack;
 class Timer 
 {
 public:
-    Timer(timerCallBack cb, int firstTime, int interval);
+    Timer(int firstTime, int interval, timerCallBack cb);
+    Timer(Timer&& )
     ~Timer() {}
     void tick();
     void reStart();
     int expiration() const  { return expire; }
     bool isReapt() { return isRepeat_; }
-    void shutdown();
-    int setFd(int fd) { mayFd = fd; }
-    int fd() { return mayFd; }
+    void shutdown() { expire = -1; interval = 0; }
+    int setFd(int fd) { myFd = fd; }
+    int fd() { return myFd; }
+    uint32_t id() { return timerID; }
 
     bool operator<(const Timer& tmp) const
     {
@@ -31,7 +33,7 @@ public:
 
 private:
     
-    int mayFd;
+    int myFd;
     uint32_t timerID;   //定时器ID 全局唯一
     int expire;      //到期时间
     int interval;    //时间间隔
