@@ -1,9 +1,8 @@
 #ifndef TIMERLWHEEL_H_
 #define TIMERLWHEEL_H_
 
-#include <map> 
+#include <set> 
 #include <vector>
-#include <queue>
 
 #include "Timer.h"
 
@@ -14,7 +13,7 @@ public:
     ~TimerWheel();
 
     uint32_t addTimer(int firstTime, int interval, timerCallBack cb);
-    void cancelTimer(Timer* timer);
+    void cancleTimer(uint32_t timerID);
     void tick();
 
 private:
@@ -25,7 +24,7 @@ private:
     static const int N = 10;
     static const int SI = 1;
 
-    std::vector<std::priority_queue<Timer> > wheel;
+    std::vector<std::set<Timer> > wheel;
     int currentSlot;
 };
 

@@ -3,6 +3,7 @@
 
 #include <unistd.h>
 #include <assert.h>
+#include <sys/timerfd.h>
 
 #include <functional>
  
@@ -15,28 +16,31 @@ class Timer
 {
 public:
     Timer(int firstTime, int interval, timerCallBack cb);
-    Timer(Timer&& )
+    Timer(Timer&& tmp);
     ~Timer() {}
     void tick();
     void reStart();
     int expiration() const  { return expire; }
-    bool isReapt() { return isRepeat_; }
-    void shutdown() { expire = -1; interval = 0; }
+    int interval() const { return interval_; }
+    bool isRepeat() const { return isRepeat_; }
+    void shutdown() { expire = -1; interval_ = 0; }
     int setFd(int fd) { myFd = fd; }
-    int fd() { return myFd; }
-    uint32_t id() { return timerID; }
+    int fd() const { return myFd; }
+    timerCallBack timerFunc() const { return timeCB; }
+    uint32_t id() const { return timerID; }
 
     bool operator<(const Timer& tmp) const
     {
         return expire > tmp.expiration();
     }
+    Timer& operator=(Timer&& tmp) {}
 
 private:
     
     int myFd;
     uint32_t timerID;   //定时器ID 全局唯一
     int expire;      //到期时间
-    int interval;    //时间间隔
+    int interval_;    //时间间隔
 
     bool isRepeat_;
     timerCallBack timeCB;

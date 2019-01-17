@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <utility>
 
 #include "../base/TimerWheel.h"
 
@@ -41,9 +42,12 @@ uint32_t TimerWheel::addTimer(int firstTime,
     return timerID;
 }
 
-void cancleTimer(Timer* timer) 
+void TimerWheel::cancleTimer(uint32_t timerID) 
 {
-
+    for (int i = 0; i < N; i++) 
+    {
+        wheel[i].erase(timerID);
+    }
 }
 
 

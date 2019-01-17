@@ -11,40 +11,52 @@
 #include <utility>
 #include <functional>
 #include <queue>
+#include <utility>
+#include <sys/timerfd.h>
 
 using namespace std;
 
-class A 
+class A
 {
 public:
-    A(int a, int b) : v1(a), v2(b) { cout << "here A()\n";}
-    A(A&& a) : v1(a.val1()), v2(a.val2()) {}
-    void show() 
+    A(int show) : val(show) {}
+    A(const A& t) : val(t.v()) { cout << "here is &" << endl; }
+    A(const A&& t) : val(t.v()) {cout << "here is &&" << endl;}
+
+    void change(int v) { val = v; }
+    void show() const { cout << "here is show"  << val << endl; }
+    int v() const { return val; }
+    bool operator< (const A& tmp) const
     {
-        cout << v1 << ' ' << v2 << endl;
-    }
-    int val1() const { return v1; }
-    int val2() const { return v2; }
-    bool operator<(const A& tmp) const 
-    {
-        return v1 > tmp.val1();
-    } 
-    A* pointer() 
-    {
-        return this;
+        return val < tmp.v();
     }
 private:
-    int v1, v2;
+    int val;
 };
 
 
 int main() 
 {
-    queue<A> tmp;
+    // set<A> t;
+    map<int, A> t;
+    A a(10);
+    A b(1);
+    A c(5);
+    A d(3);
+    t.insert(make_pair(1, move(a)));
+    t.insert(make_pair(3, move(b)));
+    t.insert(make_pair(2, move(c)));
+    t.insert(make_pair(4, move(d)));
 
-    A aa(1, 2);
-    tmp.emplace(move(aa));
-    aa.show();
-    A a = tmp.front();
-    a.show();
+    for (auto x = t.begin(), y = t.end(); x != y; x++) 
+    {
+        x->second.show();
+    }
+
+    t.begin()->second.change(0);
+    for (auto x = t.begin(), y = t.end(); x != y; x++) 
+    {
+        x->second.show();
+    }
+
 }
