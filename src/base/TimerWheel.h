@@ -2,6 +2,7 @@
 #define TIMERLWHEEL_H_
 
 #include <set> 
+#include <map>
 #include <vector>
 
 #include "Timer.h"
@@ -12,19 +13,22 @@ public:
     TimerWheel();
     ~TimerWheel();
 
-    uint32_t addTimer(int firstTime, int interval, timerCallBack cb);
+    int tickTime() const { return SI; }
+    uint32_t addTimer(int firstTime, int interval, timerCallBack cb, int fd);
     void cancleTimer(uint32_t timerID);
     void tick();
 
+    void show();
+
 private:
-    void reSet();
     void defaultTimerCallBack(int);
     timerCallBack defaultTimerCallBack_;
 
     static const int N = 10;
-    static const int SI = 1;
+    static const int SI = 2;
 
     std::vector<std::set<Timer> > wheel;
+    std::map<uint32_t, Timer> location;
     int currentSlot;
 };
 

@@ -1,6 +1,5 @@
 
 #include <sys/timerfd.h>
-#include <cstring>
 
 #include <iostream>
 #include <thread>
@@ -10,53 +9,38 @@
 #include <vector>
 #include <utility>
 #include <functional>
+#include <signal.h>
 #include <queue>
-#include <utility>
-#include <sys/timerfd.h>
+
+#include "../base/TimerWheel.h"
 
 using namespace std;
 
-class A
+TimerWheel wheel;
+int si = wheel.tickTime();
+
+void func(int fd) 
 {
-public:
-    A(int show) : val(show) {}
-    A(const A& t) : val(t.v()) { cout << "here is &" << endl; }
-    A(const A&& t) : val(t.v()) {cout << "here is &&" << endl;}
+    cout << "here is " << fd << endl;
+}
 
-    void change(int v) { val = v; }
-    void show() const { cout << "here is show"  << val << endl; }
-    int v() const { return val; }
-    bool operator< (const A& tmp) const
-    {
-        return val < tmp.v();
-    }
-private:
-    int val;
-};
-
+void handle(int) 
+{
+    wheel.tick();
+    alarm(si);
+}
 
 int main() 
 {
-    // set<A> t;
-    map<int, A> t;
-    A a(10);
-    A b(1);
-    A c(5);
-    A d(3);
-    t.insert(make_pair(1, move(a)));
-    t.insert(make_pair(3, move(b)));
-    t.insert(make_pair(2, move(c)));
-    t.insert(make_pair(4, move(d)));
+    function<void(int)> f = bind(func, placeholders::_1);
+    
+    signal(SIGALRM, handle);
+    alarm(si);
 
-    for (auto x = t.begin(), y = t.end(); x != y; x++) 
-    {
-        x->second.show();
-    }
+    wheel.addTimer(2, 1, f, 8086);
+    wheel.addTimer(1, 0, f, 1006);
+    wheel.addTimer(3, 0, f, 2000);
+    wheel.addTimer(4, 1, f, 9999);
 
-    t.begin()->second.change(0);
-    for (auto x = t.begin(), y = t.end(); x != y; x++) 
-    {
-        x->second.show();
-    }
-
+    while (1) {}
 }

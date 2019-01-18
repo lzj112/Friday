@@ -15,11 +15,10 @@ typedef std::function<void(int)> timerCallBack;
 class Timer 
 {
 public:
-    Timer(int firstTime, int interval, timerCallBack cb);
-    Timer(Timer&& tmp);
+    Timer(int firstTime, int interval, timerCallBack cb, int fd);
+    // Timer(Timer&& tmp);
     ~Timer() {}
-    void tick();
-    void reStart();
+    void tick() const;
     int expiration() const  { return expire; }
     int interval() const { return interval_; }
     bool isRepeat() const { return isRepeat_; }
@@ -31,9 +30,9 @@ public:
 
     bool operator<(const Timer& tmp) const
     {
-        return expire > tmp.expiration();
+        return expire < tmp.expiration();
     }
-    Timer& operator=(Timer&& tmp) {}
+    // Timer& operator=(Timer&& tmp);
 
 private:
     
