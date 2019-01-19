@@ -1,9 +1,11 @@
 
 #include <signal.h>
+#include <errno.h>
 
 #include <utility>
 #include <string>
 #include <iostream>
+#include <exception>
 
 #include "../base/TimerWheel.h"
 
@@ -26,8 +28,9 @@ uint32_t TimerWheel::addTimer(int firstTime,
                               timerCallBack cb = nullptr,
                               int fd = -1) 
 {
-std::cout << "插入前****\n";
-    show();
+
+// std::cout << "插入前****\n";
+//     show();
     
     if (cb == nullptr) 
     {
@@ -46,15 +49,46 @@ std::cout << "插入前****\n";
     uint32_t timerID = timerTmp.id();
     //记录timerid和定时器指针的对应关系
     // location.emplace(std::make_pair(timerID, std::move(timerTmp)));
-    location.emplace(std::make_pair(timerID, timerTmp));
+    // location.emplace(std::make_pair(timerID, timerTmp));
+        auto iter = location.insert(std::make_pair(timerID, timerTmp));
     //插入该槽
     // wheel[ts].emplace(std::move(timerTmp));
-    wheel[ts].emplace(timerTmp);
+    // auto ret = wheel[ts].emplace(timerTmp);
+        auto r = wheel[ts].find(timerTmp);
+        if (r != wheel[ts].end()) 
+        {
+            std::cout << "竟然有 你敢信******************" << std::endl;
+            std::cout << "TimerTmp = " << timerTmp.fd() << ' '
+                      << timerTmp.expiration() << ' '
+                      << timerTmp.interval() << ' '
+                      << timerTmp.id() << ' '
+                      << timerTmp.isRepeat() << std::endl;
+        for (auto it = wheel[ts].begin(), end = wheel[ts].end(); it != end; it++) 
+        {
+            std::cout << "第　" << ts << " 槽 = ";
+            std::cout << it->fd() << ' '
+                      << it->expiration() << ' '
+                      << it->interval() << ' '
+                      << it->id() << ' '
+                      << it->isRepeat() << std::endl;
+        }
+        }
+        auto ret = wheel[ts].insert(timerTmp);
+    if (ret.second == false) 
+    {
+        std::cout << ret.first->fd() << " 没有发生插入!!! " << std::endl;
+        std::cout << timerTmp.fd() << " 没有发生插入!!! " << std::endl;
+    }
 
 std::cout << fd << " 应该插入 " << ts << " 槽" << std::endl;
 
-std::cout << "插入后====\n";
-    show();
+// std::cout << "插入后====\n";
+//     show();
+    // for (auto it = wheel[ts].begin(), end = wheel[ts].end(); it != end; it++) 
+    //     {
+    //         std::cout << "第　" << ts << " 槽\n";
+    //         std::cout << it->expiration() << ' ' << it->fd() << std::endl;
+    //     }
 
     return timerID;
 }
@@ -76,7 +110,6 @@ void TimerWheel::cancleTimer(uint32_t timerID)
 
 void TimerWheel::tick() 
 {
-std::cout << "检查" << std::endl;
     if (!wheel[currentSlot].empty()) 
     {
         auto it = wheel[currentSlot].begin();
@@ -96,11 +129,24 @@ std::cout << "检查" << std::endl;
                 if (it->isRepeat()) 
                 {
             std::cout << "重新添加 " << it->fd() << std::endl;
-                    addTimer(it->interval(),
-                             it->interval(),
-                             it->timerFunc(),
-                             it->fd());
+                    int expire = it->interval();
+                    int interval = it->interval();
+                    int fd = it->fd();
+                    timerCallBack cb = it->timerFunc();
+
+                    // try{
                     it = wheel[currentSlot].erase(it);
+
+                    addTimer(expire,
+                             interval,
+                             cb,
+                             fd);
+                    // } 
+                    // catch(std::exception& e) 
+                    // {
+                    //     std::cout << "异常==" << e.what() << std::endl;
+                    // }
+
                 }
                 else 
                     it = wheel[currentSlot].erase(it);
@@ -123,11 +169,10 @@ void TimerWheel::show()
 {
     for (int i = 0; i < N; i++) 
     {
-        std::cout << "第　" << i << " 槽\n";
         for (auto it = wheel[i].begin(), end = wheel[i].end(); it != end; it++) 
         {
+            std::cout << "第　" << i << " 槽\n";
             std::cout << it->expiration() << ' ' << it->fd() << std::endl;
         }
-        std::cout << std::endl;
     }
 }

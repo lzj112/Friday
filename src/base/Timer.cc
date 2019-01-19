@@ -19,14 +19,25 @@ void Timer::tick() const
     timeCB(myFd); //执行回调函数
 }
 
-Timer::Timer(Timer&& tmp) 
-    : myFd(tmp.fd()),
-      timerID(tmp.id()),
-      expire(tmp.expiration()),
-      interval_(tmp.interval()),
-      isRepeat_(tmp.isRepeat()),
-      timeCB(tmp.timerFunc())
-{}
+Timer& Timer::operator=(const Timer& tmp) 
+{
+    if (this == &tmp) 
+        return *this;
+    myFd = tmp.fd();
+    timerID = tmp.id();
+    expire = tmp.expiration();
+    interval_ = tmp.interval();
+    isRepeat_ = tmp.isRepeat();
+    timeCB = tmp.timerFunc();
+}
+// Timer::Timer(Timer&& tmp) 
+//     : myFd(tmp.fd()),
+//       timerID(tmp.id()),
+//       expire(tmp.expiration()),
+//       interval_(tmp.interval()),
+//       isRepeat_(tmp.isRepeat()),
+//       timeCB(tmp.timerFunc())
+// {}
 
 // Timer& Timer::operator=(Timer&& tmp) 
 // {

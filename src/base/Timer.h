@@ -6,6 +6,7 @@
 #include <sys/timerfd.h>
 
 #include <functional>
+#include <iostream>
  
 #include "../base/UniqueID.h"
 
@@ -32,14 +33,31 @@ public:
     {
         return expire < tmp.expiration();
     }
+    bool operator==(const Timer& tmp) const 
+    {
+        if (myFd == tmp.fd() &&
+            timerID == tmp.id() &&
+            expire == tmp.expiration() && 
+            interval_ == tmp.interval())
+        {
+            std::cout << "they are same" << std::endl;
+            return true;
+        }
+        else 
+        {
+            std::cout << "they are not" << std::endl;
+            return false;
+        }
+    }
+    Timer& operator=(const Timer& tmp);
     // Timer& operator=(Timer&& tmp);
 
 private:
     
     int myFd;
-    uint32_t timerID;   //定时器ID 全局唯一
     int expire;      //到期时间
     int interval_;    //时间间隔
+    uint32_t timerID;   //定时器ID 全局唯一
 
     bool isRepeat_;
     timerCallBack timeCB;
