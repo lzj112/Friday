@@ -31,7 +31,25 @@ public:
 
     bool operator<(const Timer& tmp) const
     {
-        return expire <= tmp.expiration();
+        if (expire < tmp.expiration()) 
+        {
+            return true;
+        }
+        else if (expire > tmp.expiration()) 
+        {
+            return false;
+        }
+        else if (expire == tmp.expiration()) 
+        {
+            if (timerID != tmp.id() || myFd != tmp.fd()) 
+            {
+                return true;
+            }
+            else 
+            {
+                return false;
+            }
+        }
     }
     
     bool operator==(const Timer& tmp) const 
