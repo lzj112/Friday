@@ -69,8 +69,10 @@ int main()
     signal(SIGALRM, handle);
     alarm(si);
 
-    wheel.addTimer(2, 1, f, 8086);
-    wheel.addTimer(4, 1, f, 9999);
+    wheel.addTimer(2, 4, f, 8000);
+    wheel.addTimer(1, 0, f, 1000);
+    wheel.addTimer(3, 0, f, 3000);
+    wheel.addTimer(4, 1, f, 9000);
 
     while (1) {}
 }

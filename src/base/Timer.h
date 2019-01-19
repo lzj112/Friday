@@ -31,8 +31,9 @@ public:
 
     bool operator<(const Timer& tmp) const
     {
-        return expire < tmp.expiration();
+        return expire <= tmp.expiration();
     }
+    
     bool operator==(const Timer& tmp) const 
     {
         if (myFd == tmp.fd() &&
