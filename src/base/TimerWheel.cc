@@ -46,6 +46,7 @@ uint32_t TimerWheel::addTimer(int firstTime,
     int ts = (currentSlot + (timeout % N)) % N;
 
     Timer timerTmp(firstTime, interval, cb, fd);
+    // Timer timerTmp(10, 3, cb, 8);
     uint32_t timerID = timerTmp.id();
     //记录timerid和定时器指针的对应关系
     // location.emplace(std::make_pair(timerID, std::move(timerTmp)));
@@ -124,7 +125,7 @@ void TimerWheel::tick()
             int timeStamp = it->expiration();
 
             if (timeStamp <= timeNow) 
-            {
+            git {
                 it->tick();
                 if (it->isRepeat()) 
                 {
@@ -134,22 +135,27 @@ void TimerWheel::tick()
                     int fd = it->fd();
                     timerCallBack cb = it->timerFunc();
 
-                    // try{
-                    it = wheel[currentSlot].erase(it);
+                    // it = wheel[currentSlot].erase(it);
+                    auto delit = it;
+                    wheel[currentSlot].erase(delit);
+                    it++;
 
                     addTimer(expire,
                              interval,
                              cb,
                              fd);
-                    // } 
-                    // catch(std::exception& e) 
-                    // {
-                    //     std::cout << "异常==" << e.what() << std::endl;
-                    // }
-
                 }
                 else 
-                    it = wheel[currentSlot].erase(it);
+                {
+                    // it = wheel[currentSlot].erase(it);
+                    auto delit = it;
+                    wheel[currentSlot].erase(delit);
+                    it++;
+                }
+            }
+            else 
+            {
+                it++;
             }
         }
     }
