@@ -1,4 +1,3 @@
-
 #include <sys/timerfd.h>
 
 #include <iostream>
@@ -13,12 +12,11 @@
 #include <signal.h>
 #include <queue>
 
-// #include "../net/EpollEventLoop.h"
-#include "../net/Connector.h"
+#include "../net/Server.h"
 
 using namespace std;
 
 int main() 
 {
-    EpollEventLoop* loop = new EpollEventLoop();
+    
 }

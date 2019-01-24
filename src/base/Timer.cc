@@ -16,7 +16,7 @@ Timer::Timer(int firstTime, int interval, timerCallBack cb, int fd = -1)
 
 void Timer::tick() const
 {
-    timeCB(myFd); //执行回调函数
+    timeCB(); //执行回调函数
 }
 
 Timer& Timer::operator=(const Timer& tmp) 

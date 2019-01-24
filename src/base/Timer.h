@@ -10,7 +10,7 @@
  
 #include "../base/UniqueID.h"
 
-typedef std::function<void(int)> timerCallBack;
+typedef std::function<void(void)> timerCallBack;
 
 //使用相对时间(epoch时间)
 class Timer 

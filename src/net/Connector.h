@@ -5,6 +5,7 @@
 
 #include "../base/FileDes.h"
 #include "../net/SocketTCP.h"
+#include "../base/TimerWheel.h"
 #include "../net/EpollEventLoop.h"
 
 class Connector 
@@ -32,6 +33,7 @@ private:
     EpollEventLoop* loop_;
     SocketTCP* cliSock;
     InitSockAddr* serAddr;
+    std::unique_ptr<TimerWheel> timerContainer;
     int reTryDelay;
 
     IOcallBack readCb;

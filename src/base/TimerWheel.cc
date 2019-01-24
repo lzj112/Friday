@@ -12,8 +12,7 @@
 TimerWheel::TimerWheel() 
     : currentSlot(0),
       defaultTimerCallBack_(std::bind(&TimerWheel::defaultTimerCallBack, 
-                                      this,
-                                      std::placeholders::_1))
+                                      this))
 {
     wheel.resize(N);
 }
@@ -112,10 +111,7 @@ void TimerWheel::tick()
     currentSlot = ++currentSlot % N;    
 }
 
-void TimerWheel::defaultTimerCallBack(int fd = -1) 
+void TimerWheel::defaultTimerCallBack() 
 {
-    std::cout << "performing defaultTimerCallBack "
-              << " and Timer`s fd = "
-              << fd 
-              << std::endl;
+    std::cout << "performing defaultTimerCallBack " << std::endl;
 }

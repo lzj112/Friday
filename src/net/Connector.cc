@@ -6,7 +6,8 @@ Connector::Connector(EpollEventLoop* baseLoop,
                      InitSockAddr* addr)
     : loop_(baseLoop),
       cliSock(p),
-      serAddr(addr)
+      serAddr(addr),
+      timerContainer(new TimerWheel())
 {
 
 }
@@ -113,6 +114,11 @@ void Connector::reConnect()
 {
     cliSock->close();
     cliSock->reSet(cliSock->creSocketTCP());
-
-
+    timerContainer->addTimer(reTryDelay,
+                             0,
+                             std::bind(&Connector::connect,
+                                       this),
+                             1);
+    reTryDelay = 2 * reTryDelay;
+                             
 }

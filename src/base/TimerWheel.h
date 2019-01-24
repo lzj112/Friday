@@ -17,9 +17,9 @@ public:
     uint32_t addTimer(int firstTime, int interval, timerCallBack cb, int fd);
     void cancleTimer(uint32_t timerID);
     void tick();
-    
+
 private:
-    void defaultTimerCallBack(int);
+    void defaultTimerCallBack();
     timerCallBack defaultTimerCallBack_;
 
     static const int N = 10;
