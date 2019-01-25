@@ -12,16 +12,16 @@ class Connector
 {
 public:
     Connector(EpollEventLoop* baseLoop, 
-              SocketTCP* p,
+              SocketTCP* sock,
               InitSockAddr* addr);
     ~Connector();
 
     void connect();
     void connSuccessful();
     void inConnection();
-    int isConnOk(int);
+    int isConnOk();
     void reConnect();
-    void gotError(int);
+    void gotError();
 
     void setReadCb(IOcallBack& cb) { readCb = cb; }
     void setWriteCb(IOcallBack& cb) { writeCb = cb; }

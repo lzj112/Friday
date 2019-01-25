@@ -1,25 +1,54 @@
 
-#include <signal.h>
 #include <errno.h>
 
-#include <utility>
 #include <string>
+#include <utility>
 #include <iostream>
 #include <exception>
 
 #include "../base/TimerWheel.h"
 
-TimerWheel::TimerWheel() 
-    : currentSlot(0),
+TimerWheel::TimerWheel(EpollEventLoop* loop) 
+    : loop_(loop),
+      currentSlot(0),
+      timerfd_(timerfd_create(CLOCK_REALTIME, TFD_NONBLOCK)),
       defaultTimerCallBack_(std::bind(&TimerWheel::defaultTimerCallBack, 
                                       this))
 {
     wheel.resize(N);
+    start();
 }
 
 TimerWheel::~TimerWheel() 
 {
     
+}
+
+void TimerWheel::start() 
+{
+    MyEvent timeTmp(timerfd_.fd());
+    timeTmp.setReadCallBack(std::bind(&TimerWheel::readTimerfd, this));
+
+    loop_->regReadable(timeTmp);
+
+    itimerspec new_value;
+    new_value.it_value.tv_sec = SI; //设置第一次到期时间
+    new_value.it_value.tv_nsec = 0;
+    new_value.it_interval.tv_sec = SI;  //设置tick时间
+    new_value.it_interval.tv_nsec = 0;
+    //启动timerfd定时器
+    int ret = timerfd_settime(timerfd_.fd(), 0, &new_value, nullptr);
+    assert(ret != -1);
+}
+
+int TimerWheel::readTimerfd() 
+{
+    ssize_t s;
+    uint64_t exp;
+    s = ::read(timerfd_.fd(), &exp, sizeof(uint64_t));
+    assert(s == sizeof(uint64_t));
+
+    tick();
 }
 
 uint32_t TimerWheel::addTimer(int firstTime, 

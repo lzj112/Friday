@@ -1,13 +1,17 @@
 
+#include <signal.h>
+
+#include <functional>
+
 #include "../net/Connector.h"
 
 Connector::Connector(EpollEventLoop* baseLoop,
-                     SocketTCP* p,
+                     SocketTCP* sock,
                      InitSockAddr* addr)
     : loop_(baseLoop),
-      cliSock(p),
+      cliSock(sock),
       serAddr(addr),
-      timerContainer(new TimerWheel())
+      timerContainer(new TimerWheel(baseLoop))
 {
 
 }
@@ -66,17 +70,13 @@ void Connector::connSuccessful()
 void Connector::inConnection() 
 {
     MyEvent ev(cliSock->fd());
-    ev.setWriteCallBack(std::bind(&Connector::isConnOk, 
-                                  this,
-                                  std::placeholders::_1));
-    ev.setCloseCallBack(std::bind(&Connector::gotError,
-                                  this,
-                                  std::placeholders::_1));
+    ev.setWriteCallBack(std::bind(&Connector::isConnOk, this));
+    ev.setCloseCallBack(std::bind(&Connector::gotError, this));
     //注册可写事件
     loop_->regReadable(ev);
 }
 
-void Connector::gotError(int) 
+void Connector::gotError() 
 {
     //log TODO
     int error = cliSock->getSocketState();
@@ -85,7 +85,7 @@ void Connector::gotError(int)
 }
 
 
-int Connector::isConnOk(int) 
+int Connector::isConnOk() 
 {
     int error = cliSock->connect(*serAddr);
     if (error == EISCONN) 

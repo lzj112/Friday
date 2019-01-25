@@ -20,5 +20,9 @@ using namespace std;
 
 int main() 
 {
-    EpollEventLoop* loop = new EpollEventLoop();
+    EpollEventLoop loop;
+    SocketTCP sock;
+    InitSockAddr addr("127.0.0.1", 6000);
+    Connector conn(&loop, &sock, &addr);
+    conn.connect();
 }

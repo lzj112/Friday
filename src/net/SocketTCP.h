@@ -14,7 +14,6 @@
 #include <linux/tcp.h>
 
 #include "../base/FileDes.h"
-// #include "../net/EpollBase.h"
 #include "../net/InitSockAddr.h"
 
 class SocketTCP 

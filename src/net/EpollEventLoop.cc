@@ -68,13 +68,13 @@ void EpollEventLoop::handleEvents()
             }
             else 
                 //有数据读到读buffer里
-                ev->goRead(ev->fd());
+                ev->goRead();
         }
 
         if (x.events & pollWriteAble) 
         {
             //有数据写到写buffer里
-            ev->goWrite(ev->fd());
+            ev->goWrite();
         }                      
     }
 }

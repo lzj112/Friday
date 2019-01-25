@@ -6,8 +6,8 @@
 #include <functional>
 #include <sys/epoll.h>
 
-typedef std::function<int(int)> IOcallBack;
-typedef std::function<void(int)> closeCallBack; //关闭连接直接执行,不放进任务队列
+typedef std::function<int(void)> IOcallBack;
+typedef std::function<void(void)> closeCallBack; //关闭连接直接执行,不放进任务队列
 
 enum EPOLLEVENTS
 {
@@ -42,18 +42,18 @@ public:
     void setCloseCallBack(const closeCallBack& cb) 
     { closeCallBack_ = cb; }
 
-    int defRead(int);
-    int defWrite(int);
-    void defClose(int) 
+    int defRead();
+    int defWrite();
+    void defClose() 
     {
         //log TODO
         ::close(fd_);
         fd_ = -1;
     }
 
-    void goRead(int fd) { readCallBack_(fd); }
-    void goWrite(int fd) { writeCallBack_(fd); }
-    void goClose(int fd) { closeCallBack(fd); }
+    void goRead() { readCallBack_(); }
+    void goWrite() { writeCallBack_(); }
+    void goClose() { closeCallBack_(); }
     
 private:
     int fd_;

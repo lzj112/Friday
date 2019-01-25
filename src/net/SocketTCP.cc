@@ -6,8 +6,8 @@
 
 SocketTCP::SocketTCP() : socketFd(new FileDes(creSocketTCP()))
 {
-    // socketFd.setFd(creSocketTCP());
-    socketFd->setNonBlocking();
+    //为了测试先注释掉
+    // socketFd->setNonBlocking(); 
 }
 
 SocketTCP::~SocketTCP()
@@ -17,7 +17,7 @@ int SocketTCP::creSocketTCP()
 {
     int newSocket = ::socket(AF_INET, SOCK_STREAM, 0);
     assert(newSocket != -1);
-
+std::cout << "==== " << newSocket <<std::endl;
     return newSocket;
 }
 
@@ -29,6 +29,7 @@ int SocketTCP::bind(InitSockAddr localAddr)
     assert(ret != -1);
 }
 
+
 int SocketTCP::listen(int backlog) 
 {
     int ret = ::listen(socketFd->fd(), backlog);
@@ -37,6 +38,8 @@ int SocketTCP::listen(int backlog)
 
 int SocketTCP::accept()
 {
+std::cout << "here is accept from " << socketFd->fd() << std::endl;
+
     sockaddr_in peerAddr;
     memset(&peerAddr, 0, sizeof(sockaddr_in));
     socklen_t peerAddrLen = sizeof(peerAddr);
@@ -47,6 +50,8 @@ int SocketTCP::accept()
                       (sockaddr *)&peerAddr, 
                       &peerAddrLen);
     
+std::cout << "got new conn = " << connfd  << " errno = " << errno << std::endl;
+
     if (connfd < 0) 
         return errno;
     else 

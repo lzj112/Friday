@@ -22,9 +22,11 @@ Server::Server(EpollEventLoop* baseLoop,
 void Server::starts() 
 {
     MyEvent listenFd(serverFd->fd());
-    listenFd.setReadCallBack(std::bind(&Server::newConntion, 
-                                       this, 
-                                       std::placeholders::_1));
+    listenFd.setReadCallBack(std::bind(&Server::newConntion, this));
+
+    serverFd->bind(*serAddr);
+    serverFd->listen();
+
     //监听套接字 注册epoll可读事件
     loop_->regReadable(listenFd);
 
@@ -34,7 +36,7 @@ void Server::starts()
 }
 
 //防止淤积,循环accept
-int Server::newConntion(int) 
+int Server::newConntion() 
 {
     std::map<int, InitSockAddr> newConn;
     int connfd = -1;
