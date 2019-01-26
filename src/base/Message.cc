@@ -15,6 +15,11 @@ Message::Message(std::string& str) : lengthNow(0)
     copy(ctr, ctrLength);
 }
 
+Message::Message(Message&& mess) noexcept
+{
+
+}
+
 void Message::copy(const char* ctr, int length) 
 {
     //有太多闲置空间

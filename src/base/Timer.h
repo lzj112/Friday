@@ -17,7 +17,7 @@ class Timer
 {
 public:
     Timer(int firstTime, int interval, timerCallBack cb, int fd);
-    // Timer(Timer&& tmp);
+    // Timer(Timer&& tmp) noexcept;
     ~Timer() {}
     void tick() const;
     int expiration() const  { return expire; }
@@ -29,45 +29,9 @@ public:
     timerCallBack timerFunc() const { return timeCB; }
     uint32_t id() const { return timerID; }
 
-    bool operator<(const Timer& tmp) const
-    {
-        if (expire < tmp.expiration()) 
-        {
-            return true;
-        }
-        else if (expire > tmp.expiration()) 
-        {
-            return false;
-        }
-        else if (expire == tmp.expiration()) 
-        {
-            if (timerID != tmp.id() || myFd != tmp.fd()) 
-            {
-                return true;
-            }
-            else 
-            {
-                return false;
-            }
-        }
-    }
+    bool operator<(const Timer& tmp) const;
     
-    bool operator==(const Timer& tmp) const 
-    {
-        if (myFd == tmp.fd() &&
-            timerID == tmp.id() &&
-            expire == tmp.expiration() && 
-            interval_ == tmp.interval())
-        {
-            std::cout << "they are same" << std::endl;
-            return true;
-        }
-        else 
-        {
-            std::cout << "they are not" << std::endl;
-            return false;
-        }
-    }
+    bool operator==(const Timer& tmp) const;
     Timer& operator=(const Timer& tmp);
     // Timer& operator=(Timer&& tmp);
 

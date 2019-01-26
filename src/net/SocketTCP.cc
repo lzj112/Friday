@@ -5,10 +5,7 @@
 #include "../net/SocketTCP.h"
 
 SocketTCP::SocketTCP() : socketFd(new FileDes(creSocketTCP()))
-{
-    //为了测试先注释掉
-    // socketFd->setNonBlocking(); 
-}
+{}
 
 SocketTCP::~SocketTCP()
 { delete socketFd; }

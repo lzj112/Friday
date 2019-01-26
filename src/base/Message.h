@@ -12,6 +12,10 @@ class Message
 public:
     Message(const char* str);
     Message(std::string& str);
+    Message(Message&& mess) noexcept;
+    Message& operator=(const Message& t); //use copy
+    Message& operator=(const Message&& t) noexcept; //use swap
+    ~Message() {}
 
     void resize(int length) { message.resize(length); lengthNow = message.size(); }
     void reserve(int length) { message.reserve(length); }
