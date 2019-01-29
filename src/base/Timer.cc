@@ -29,6 +29,12 @@ Timer& Timer::operator=(const Timer& tmp)
     interval_ = tmp.interval();
     isRepeat_ = tmp.isRepeat();
     timeCB = tmp.timerFunc();
+    // myFd = tmp.myFd;
+    // timerID = tmp.timerID;
+    // expire = tmp.expire;
+    // interval_ = tmp.interval_;
+    // isRepeat_ = tmp.isRepeat_;
+    // timeCB = tmp.timeCB;
 }
 
 // Timer::Timer(Timer&& tmp) noexcept

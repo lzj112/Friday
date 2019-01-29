@@ -12,30 +12,36 @@ class Message
 public:
     Message(const char* str);
     Message(std::string& str);
+    Message(const Message& t);
     Message(Message&& mess) noexcept;
     Message& operator=(const Message& t); //use copy
-    Message& operator=(const Message&& t) noexcept; //use swap
+    Message& operator=(Message&& t) noexcept; //use swap
     ~Message() {}
 
-    void resize(int length) { message.resize(length); lengthNow = message.size(); }
-    void reserve(int length) { message.reserve(length); }
-    void copy(const char* str, int length);
-    int length() { return message.size(); }
-    void clear() { message.clear(); }
+    void resize(int length) 
+    { message_.resize(length); lengthNow = message_.size(); }
+    void reserve(int length) { message_.reserve(length); }
+    void copyMessage(const char* str, int length);
+    int length() { return message_.size(); }
+    void clear() { message_.clear(); }
+    void releaseMessage() 
+    { std::vector<char>().swap(message_); }
+    std::vector<char>& message() { return message_; }
+    uint32_t type() const { return type_;}
 
     //测试所用
     void show() 
     {
-        for (auto x : message) 
+        for (auto x : message_) 
         {
             std::cout << x << std::endl;
         }
     }
 
 private:
-    std::vector<char> message;
+    std::vector<char> message_;
     int lengthNow;
-    uint32_t type;      //服务类型 TODO
+    uint32_t type_;      //服务类型 TODO
 };
 
 #endif

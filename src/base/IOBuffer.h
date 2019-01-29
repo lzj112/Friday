@@ -3,6 +3,7 @@
 #define IOBUFFER_H_
 
 
+#include <array>
 #include <vector>
 
 #include "../base/Message.h"
@@ -13,12 +14,15 @@ public:
     IOBuffer();
     ~IOBuffer();
 
-    void append(Message&& a);
+    void append(Message&& tmp);
+    void swap(IOBuffer& tmp);
+    // size_t 
 private:
-    
+    static const int MAXBUFFER = 1024;
     int readIndex;
     int writeIndex;
-    std::vector<Message> ioBuffer;
+    // std::vector<Message> ioBuffer;
+    std::array<Message, MAXBUFFER> ioBuffer;    //循环队列
 };
 
 
