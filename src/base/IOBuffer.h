@@ -16,7 +16,8 @@ public:
 
     void append(Message&& tmp);
     void swap(IOBuffer& tmp);
-    // size_t 
+    int readableBytes();
+    int writableBytes();
 private:
     static const int MAXBUFFER = 1024;
     int readIndex;
