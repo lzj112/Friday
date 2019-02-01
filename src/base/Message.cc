@@ -2,6 +2,11 @@
 
 #include "../base/Message.h"
 
+Message::Message() 
+    : lengthNow(0),
+      type_(-1)
+{}
+
 Message::Message(const char* str) : lengthNow(0)
 {  
     int ctrLength = strlen(str) + 1;

@@ -82,8 +82,4 @@ private:
 
 int main() 
 {
-	Test v1(99);
-
-	Test v2(v1);
-	v1.show(v2);
 }

@@ -6,10 +6,11 @@
 #include <vector>
 #include <string>
 #include <iostream>
-
+ 
 class Message 
 {
-public:
+public: 
+    Message();
     Message(const char* str);
     Message(std::string& str);
     Message(const Message& t);
