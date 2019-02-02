@@ -82,4 +82,13 @@ private:
 
 int main() 
 {
+	vector<char> t;
+	const char* ctr = "123";
+	for (int i = 0; i < 4; i++) 
+	{
+		t.push_back(*(ctr + i));
+	}
+
+	cout << t.size() << endl;
+	cout << t[3] << endl;
 }

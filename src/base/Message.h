@@ -15,7 +15,7 @@ public:
     Message(std::string& str);
     Message(const Message& t);
     Message(Message&& mess) noexcept;
-    Message& operator=(const Message& t); //use copy
+    Message& operator=(const Message& t);
     Message& operator=(Message&& t) noexcept; //use swap
     ~Message() {}
 
