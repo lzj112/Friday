@@ -6,8 +6,13 @@
 #include <functional>
 #include <sys/epoll.h>
 
+#include "../base/IOBuffer.h"
+#include "../base/TimerWheel.h"
+
+//IOCallBack是接收完数据的逻辑处理(也是由用户指定的)
+//接收数据和发送数据都是一样的
 typedef std::function<int(void)> IOcallBack;
-typedef std::function<void(void)> closeCallBack; //关闭连接直接执行,不放进任务队列
+typedef std::function<void(void)> errorCallBack; //关闭连接直接执行,不放进任务队列
 
 enum EPOLLEVENTS
 {
@@ -39,8 +44,8 @@ public:
     { readCallBack_ = cb; }
     void setWriteCallBack(const IOcallBack& cb) 
     { writeCallBack_ = cb; }
-    void setCloseCallBack(const closeCallBack& cb) 
-    { closeCallBack_ = cb; }
+    void setCloseCallBack(const errorCallBack& cb) 
+    { errorCallBack_ = cb; }
 
     int defRead();
     int defWrite();
@@ -51,17 +56,22 @@ public:
         fd_ = -1;
     }
 
-    void goRead() { readCallBack_(); }
-    void goWrite() { writeCallBack_(); }
-    void goClose() { closeCallBack_(); }
+    void goRead();
+    void goWrite();
+    void goClose();
+    // void goRead() { readCallBack_(); }
+    // void goWrite() { writeCallBack_(); }
+    // void goClose() { errorCallBack_(); }
     
 private:
     int fd_;
     void* ptr;
     
+    IOBuffer socketBuffer;
+
     IOcallBack readCallBack_;
     IOcallBack writeCallBack_;
-    closeCallBack closeCallBack_;
+    errorCallBack errorCallBack_;
 };
 
 #endif

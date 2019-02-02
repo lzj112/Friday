@@ -4,31 +4,20 @@
 MyEvent::MyEvent() 
     : fd_(-1), 
       ptr(nullptr),
-      readCallBack_(std::bind(&MyEvent::defRead, 
-                              this, 
-                              std::placeholders::_1)),
-      writeCallBack_(std::bind(&MyEvent::defWrite, 
-                               this,
-                               std::placeholders::_1)),
-      closeCallBack_(std::bind(&MyEvent::defClose, 
-                               this,
-                               std::placeholders::_1))
-{
-
-}
+      readCallBack_(std::bind(&MyEvent::defRead, this)),
+      writeCallBack_(std::bind(&MyEvent::defWrite, this)),
+      errorCallBack_(std::bind(&MyEvent::defClose, this))
+{}
 
 MyEvent::MyEvent(int fd) 
     : fd_(fd),
       ptr(nullptr),
-      readCallBack_(std::bind(&MyEvent::defRead, 
-                              this, 
-                              std::placeholders::_1)),
-      writeCallBack_(std::bind(&MyEvent::defWrite, 
-                               this,
-                               std::placeholders::_1)),
-      closeCallBack_(std::bind(&MyEvent::defClose, 
-                               this,
-                               std::placeholders::_1))
+      readCallBack_(std::bind(&MyEvent::defRead, this)),
+      writeCallBack_(std::bind(&MyEvent::defWrite, this)),
+      errorCallBack_(std::bind(&MyEvent::defClose, this))
+{}
+
+void MyEvent::goRead() 
 {
-    
+
 }

@@ -25,7 +25,7 @@ public:
 
     void setReadCb(IOcallBack& cb) { readCb = cb; }
     void setWriteCb(IOcallBack& cb) { writeCb = cb; }
-    void setCloseCb(closeCallBack& cb) { closeCb = cb; }
+    void setCloseCb(errorCallBack& cb) { closeCb = cb; }
 
 typedef std::function<void(int)> connSucced;
 
@@ -38,7 +38,7 @@ private:
 
     IOcallBack readCb;
     IOcallBack writeCb;
-    closeCallBack closeCb;
+    errorCallBack closeCb;
     connSucced connSucced_;
 };
 
