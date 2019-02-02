@@ -19,5 +19,11 @@ MyEvent::MyEvent(int fd)
 
 void MyEvent::goRead() 
 {
+	PackageTCP tmpPackage;
+	do 
+	{
+		bzero(&tmpPackage, sizeof(PackageTCP));
 
+		
+	}
 }

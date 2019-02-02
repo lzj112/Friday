@@ -40,9 +40,9 @@ public:
     }
 
 private:
-    std::vector<char> message_;
     int lengthNow;
-    uint32_t type_;      //服务类型 TODO
+    uint32_t type_;      //服务类型
+    std::vector<char> message_;
 };
 
 #endif

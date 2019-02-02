@@ -7,6 +7,7 @@
 #include <sys/epoll.h>
 
 #include "../base/IOBuffer.h"
+#include "../base/PackageTCP.h"
 #include "../base/TimerWheel.h"
 
 //IOCallBack是接收完数据的逻辑处理(也是由用户指定的)
@@ -57,6 +58,7 @@ public:
     }
 
     void goRead();
+    void readBody(int len);
     void goWrite();
     void goClose();
     // void goRead() { readCallBack_(); }
