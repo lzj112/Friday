@@ -30,6 +30,7 @@ struct PackageTCP
             head.length = 256;
         }
     }
+    
     PackHead head;
     char body[MAXBODY];   
 };

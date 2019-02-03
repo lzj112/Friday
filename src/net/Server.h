@@ -9,7 +9,9 @@
 #include "../base/ThreadPool.h"
 #include "../net/InitSockAddr.h"
 #include "../net/EpollEventLoop.h"
-
+/*
+新连接connfd要设置为非阻塞
+*/
 class Server 
 {
 public:

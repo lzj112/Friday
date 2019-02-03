@@ -20,7 +20,21 @@
 
 using namespace std;
 
+struct Head 
+{
+	int type;
+	int length;
+};
+struct Pack 
+{
+	Head head;
+	int value;
+};
 
+void func(Pack* tmp) 
+{
+	cout << *tmp << endl;
+}
 int main() 
 {
 	PackageTCP t;

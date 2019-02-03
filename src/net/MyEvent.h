@@ -57,15 +57,18 @@ public:
         fd_ = -1;
     }
 
+    
+private:
     void goRead();
-    void readBody(int len);
+    void readPackBody(PackageTCP& tmp, int len);
+    void appendPack(PackageTCP& tmp);
     void goWrite();
     void goClose();
+    
     // void goRead() { readCallBack_(); }
     // void goWrite() { writeCallBack_(); }
     // void goClose() { errorCallBack_(); }
     
-private:
     int fd_;
     void* ptr;
     
