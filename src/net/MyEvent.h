@@ -9,6 +9,7 @@
 #include "../base/IOBuffer.h"
 #include "../base/PackageTCP.h"
 #include "../base/TimerWheel.h"
+#include "../net/EpollEventLoop.h"
 
 //IOCallBack是接收完数据的逻辑处理(也是由用户指定的)
 //接收数据和发送数据都是一样的
@@ -33,8 +34,8 @@ enum EPOLLEVENTS
 class MyEvent 
 {
 public:
-    MyEvent();
-    MyEvent(int fd);
+    MyEvent(EpollEventLoop* loop);
+    MyEvent(EpollEventLoop* loop, int fd);
     ~MyEvent() {}
     
     void setFd(int fd) { fd_ = fd; }
@@ -48,6 +49,11 @@ public:
     void setCloseCallBack(const errorCallBack& cb) 
     { errorCallBack_ = cb; }
 
+
+    int sendMess(PackageTCP& tmpPack);
+    void goRead();
+    void goWrite();
+    void goClose();
     //默认处理
     int defRead();      
     int defWrite();
@@ -60,19 +66,18 @@ public:
 
     
 private:
-    void goRead();
-    void goWrite();
-    void goClose();
     bool readPackHead(PackageTCP& tmpPackage);
     bool readPackBody(PackageTCP& tmpPackage, int len);
     void appendSendBuffer(PackageTCP& tmp);
     void appendRecvBuffer(PackageTCP& tmp);
+    void sendMess(Message tmpMess);
     
     // void goRead() { readCallBack_(); }
     // void goWrite() { writeCallBack_(); }
     // void goClose() { errorCallBack_(); }
     
     int fd_;
+    EpollEventLoop* loop_;
     void* ptr;
     
     IOBuffer sendBuffer;

@@ -20,23 +20,20 @@
 
 using namespace std;
 
-struct Head 
+class test 
 {
-	int type;
-	int length;
-};
-struct Pack 
-{
-	Head head;
-	int value;
+public:
+	test(int v) : val(v) {}
+	test* getThis() { return this; }
+	void show() 
+	{cout << val << endl; }
+private:
+	int val;
 };
 
-void func(Pack* tmp) 
-{
-	cout << *tmp << endl;
-}
 int main() 
 {
-	PackageTCP t;
-	cout << sizeof(t) << endl;
+	test t(109);
+	test* ptr = t.getThis();
+	ptr->show();
 }

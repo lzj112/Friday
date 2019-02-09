@@ -1,16 +1,18 @@
 
 #include "../net/MyEvent.h"
 
-MyEvent::MyEvent() 
+MyEvent::MyEvent(EpollEventLoop* loop) 
     : fd_(-1), 
+	  loop_(loop),
       ptr(nullptr),
       readCallBack_(std::bind(&MyEvent::defRead, this)),
       writeCallBack_(std::bind(&MyEvent::defWrite, this)),
       errorCallBack_(std::bind(&MyEvent::defClose, this))
 {}
 
-MyEvent::MyEvent(int fd) 
+MyEvent::MyEvent(EpollEventLoop* loop, int fd) 
     : fd_(fd),
+	  loop_(loop),
       ptr(nullptr),
       readCallBack_(std::bind(&MyEvent::defRead, this)),
       writeCallBack_(std::bind(&MyEvent::defWrite, this)),
@@ -118,7 +120,29 @@ int MyEvent::defRead()
 	}
 }
 
-void MyEvent::goWrite() 
+int MyEvent::sendMess(PackageTCP& tmpPack) 
+{
+	Message tmpMess(tmpPack.body);
+	tmpMess.setType(tmpPack.head.type);
+	sendBuffer.appendMess(tmpMess);	//加入写buffer
+	loop_->regWriteable(*this);	//注册写事件
+}
+
+void MyEvent::sendMess(Message tmpMess) 
 {
 	
+}
+
+void MyEvent::goWrite() 
+{
+	if (!sendBuffer.isEmpty()) 
+	{
+		Message tmpMess;
+		do 
+		{
+			memset(&tmpMess, 0, sizeof(Message));
+			sendBuffer.readMess(tmpMess);
+			sendMess(tmpMess);
+		}	while (!sendBuffer.isEmpty());
+	}
 }
