@@ -60,11 +60,14 @@ public:
     
 private:
     void goRead();
-    void readPackBody(PackageTCP& tmp, int len);
-    void appendPack(PackageTCP& tmp);
     void goWrite();
     void goClose();
+    bool readPackHead(PackageTCP& tmpPackage);
+    bool readPackBody(PackageTCP& tmpPackage, int len);
+    void appendSendBuffer(PackageTCP& tmp);
+    void appendRecvBuffer(PackageTCP& tmp);
     
+    void handleRecvBufMess();
     // void goRead() { readCallBack_(); }
     // void goWrite() { writeCallBack_(); }
     // void goClose() { errorCallBack_(); }
@@ -72,7 +75,8 @@ private:
     int fd_;
     void* ptr;
     
-    IOBuffer socketBuffer;
+    IOBuffer sendBuffer;
+    IOBuffer recvBuffer;
 
     IOcallBack readCallBack_;
     IOcallBack writeCallBack_;

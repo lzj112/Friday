@@ -10,6 +10,7 @@ struct PackHead
 };
 
 static const int MAXBODY = 256;
+static const int PACKHEADSIZE = sizeof(PackHead);
 
 struct PackageTCP 
 {

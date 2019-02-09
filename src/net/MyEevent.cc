@@ -17,32 +17,54 @@ MyEvent::MyEvent(int fd)
       errorCallBack_(std::bind(&MyEvent::defClose, this))
 {}
 
-void MyEvent::goRead() 
+void MyEvent::goRead() //每次读取套接字上的数据时尽可能多的读取
 {
-	PackageTCP tmpPackage;
+	PackageTCP tmpBuffer;
+	bool isEndRead = true;
+	do 
+	{
+		bzero(&tmpBuffer, sizeof(PackageTCP));
+		isEndRead = readPackHead(tmpBuffer);
+		if (isEndRead) 
+		{
+			appendRecvBuffer(tmpBuffer);
+		}
+	}	while (isEndRead == true);
+	handleRecvBufMess();
+}
+
+bool MyEvent::readPackHead(PackageTCP& tmpPackage) 
+{
 	bzero(&tmpPackage, sizeof(PackageTCP));
-	int ret = 0;
-	int sum = 0;
-	while (sum < sizeof(PackHead)) 
+	int ret = 0, sum = 0;
+	bool isRecvHeadOK = true;
+	while (sum < sizeof(PackHead)) //读取数据头
 	{
 		ret = ::recv(fd_, 
 					 (&tmpPackage + sum), 
-					 sizeof(PackHead), 
+					 PACKHEADSIZE, 
 					 0);
 		if (ret <= 0) 
-			break;
+		{ isRecvHeadOK = false; break; }
 		else 
 			sum += ret;
 	}
 
-	readPackBody(tmpPackage, tmpPackage.head.length);	
+	bool isRecvBodyOK = true;
+	if (isRecvHeadOK)
+		isRecvBodyOK = readPackBody(tmpPackage, tmpPackage.head.length);	
+	else 
+		return false;
+	if (isRecvBodyOK)
+		return true;
+	else 
+		return false;
 }
 
-void MyEvent::readPackBody(PackageTCP& tmp, int len) 
+bool MyEvent::readPackBody(PackageTCP& tmp, int len) 
 {
-	int count = len;
-	int ret = 0;
-	int sum = 0;
+	int count = len, ret = 0, sum = 0;
+	bool isRecvBodyOK = true;
 	while (count > 0) 
 	{
 		ret = ::recv(fd_, (tmp.body + sum), len, 0);
@@ -58,8 +80,8 @@ void MyEvent::readPackBody(PackageTCP& tmp, int len)
 			{
 				//断开连接
 				//关闭 fd 删除 event
+				isRecvBodyOK = false;
 				break;
-
 			}
 		}
 		else
@@ -68,15 +90,20 @@ void MyEvent::readPackBody(PackageTCP& tmp, int len)
 			sum += ret;
 		}
 	}
+	if (isRecvBodyOK)	//需要同时验证count<=0么?
+		return true;
+	else 
+		return false;
+}
 
-	if (count <= 0) 
-	{
-		/*
-		在这个函数里添加完处理?
-		感觉不是很合理,那不和一次读取一个处理一个一样
-		是每次尽量多读取PackageTCP然后存入iobuffer?
-		还是处理不在添加完就进行?
-		*/
-		appendPack();
-	}
+void MyEvent::appendRecvBuffer(PackageTCP& tmp)
+{
+	Message tmpMess(tmp.body);
+	tmpMess.setType(tmp.head.type);
+	recvBuffer.appendMess(std::move(tmpMess));
+}
+
+void MyEvent::handleRecvBufMess() 
+{
+	
 }

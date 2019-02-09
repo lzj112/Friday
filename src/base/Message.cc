@@ -7,13 +7,13 @@ Message::Message()
       type_(-1)
 {}
 
-Message::Message(const char* str) : lengthNow(0)
+Message::Message(const char* str) : lengthNow(0), type_(-1)
 {  
     int ctrLength = strlen(str) + 1;
     copyMessage(str, ctrLength);
 }
 
-Message::Message(std::string& str) : lengthNow(0) 
+Message::Message(std::string& str) : lengthNow(0), type_(-1)
 {
     const char* ctr = str.c_str();
     int ctrLength = strlen(ctr) + 1;
