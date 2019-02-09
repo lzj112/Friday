@@ -48,7 +48,8 @@ public:
     void setCloseCallBack(const errorCallBack& cb) 
     { errorCallBack_ = cb; }
 
-    int defRead();
+    //默认处理
+    int defRead();      
     int defWrite();
     void defClose() 
     {
@@ -67,7 +68,6 @@ private:
     void appendSendBuffer(PackageTCP& tmp);
     void appendRecvBuffer(PackageTCP& tmp);
     
-    void handleRecvBufMess();
     // void goRead() { readCallBack_(); }
     // void goWrite() { writeCallBack_(); }
     // void goClose() { errorCallBack_(); }

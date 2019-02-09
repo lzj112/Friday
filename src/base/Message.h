@@ -31,13 +31,10 @@ public:
     void setType(uint32_t t) { type_ = t; }
     uint32_t type() const { return type_;}
 
-    //测试所用
     void show() 
     {
         for (auto x : message_) 
-        {
             std::cout << x << std::endl;
-        }
     }
 
 private:

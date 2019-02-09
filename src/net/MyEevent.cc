@@ -30,7 +30,7 @@ void MyEvent::goRead() //每次读取套接字上的数据时尽可能多的读�
 			appendRecvBuffer(tmpBuffer);
 		}
 	}	while (isEndRead == true);
-	handleRecvBufMess();
+	readCallBack_();
 }
 
 bool MyEvent::readPackHead(PackageTCP& tmpPackage) 
@@ -103,7 +103,22 @@ void MyEvent::appendRecvBuffer(PackageTCP& tmp)
 	recvBuffer.appendMess(std::move(tmpMess));
 }
 
-void MyEvent::handleRecvBufMess() 
+int MyEvent::defRead() 
+{
+	if (!recvBuffer.isEmpty()) 
+	{
+		Message tmpMess;
+		do 
+		{
+			memset(&tmpMess, 0, sizeof(Message));
+			recvBuffer.readMess(tmpMess);
+			std::cout << "取出数据:" << std::endl;
+			tmpMess.show();
+		}	while (!recvBuffer.isEmpty());
+	}
+}
+
+void MyEvent::goWrite() 
 {
 	
 }
