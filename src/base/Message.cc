@@ -66,6 +66,11 @@ Message& Message::operator=(Message&& t) noexcept
     return *this;
 }
 
+int Message::length() 
+{
+    return (lengthNow == message_.size()) ? lengthNow : message_.size(); 
+}
+
 void Message::copyMessage(const char* ctr, int length) 
 {
     //有太多闲置空间

@@ -6,7 +6,7 @@ MyEvent::MyEvent(EpollEventLoop* loop)
 	  loop_(loop),
       ptr(nullptr),
       readCallBack_(std::bind(&MyEvent::defRead, this)),
-      writeCallBack_(std::bind(&MyEvent::defWrite, this)),
+    //   writeCallBack_(std::bind(&MyEvent::defWrite, this)),
       errorCallBack_(std::bind(&MyEvent::defClose, this))
 {}
 
@@ -15,7 +15,7 @@ MyEvent::MyEvent(EpollEventLoop* loop, int fd)
 	  loop_(loop),
       ptr(nullptr),
       readCallBack_(std::bind(&MyEvent::defRead, this)),
-      writeCallBack_(std::bind(&MyEvent::defWrite, this)),
+    //   writeCallBack_(std::bind(&MyEvent::defWrite, this)),
       errorCallBack_(std::bind(&MyEvent::defClose, this))
 {}
 
@@ -128,9 +128,37 @@ int MyEvent::sendMess(PackageTCP& tmpPack)
 	loop_->regWriteable(*this);	//注册写事件
 }
 
+//如果这次没发完?
+//重新添加 注册可写
 void MyEvent::sendMess(Message tmpMess) 
 {
-	
+	int count = tmpMess.length(), ret = 0, sum = 0;
+	while (count > 0) 
+	{
+		ret = send(fd_,
+				   (tmpMess.message().data() + sum),
+				   count,
+				   0);
+		if (ret <= 0) 
+		{
+			if (errno == EAGAIN || 
+				errno == EWOULDBLOCK || 
+				errno == EINTR)
+				continue;
+			else 
+			{
+				//断开连接
+				break;
+			}
+		}
+		else 
+		{
+			count += ret;
+			sum += ret;
+		}
+	}
+	//注销监听可写
+	//here
 }
 
 void MyEvent::goWrite() 

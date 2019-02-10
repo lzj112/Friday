@@ -44,8 +44,8 @@ public:
 
     void setReadCallBack(const IOcallBack& cb) 
     { readCallBack_ = cb; }
-    void setWriteCallBack(const IOcallBack& cb) 
-    { writeCallBack_ = cb; }
+    // void setWriteCallBack(const IOcallBack& cb) 
+    // { writeCallBack_ = cb; }
     void setCloseCallBack(const errorCallBack& cb) 
     { errorCallBack_ = cb; }
 
@@ -56,7 +56,7 @@ public:
     void goClose();
     //默认处理
     int defRead();      
-    int defWrite();
+    // int defWrite();
     void defClose() 
     {
         //log TODO
@@ -84,7 +84,7 @@ private:
     IOBuffer recvBuffer;
 
     IOcallBack readCallBack_;
-    IOcallBack writeCallBack_;
+    // IOcallBack writeCallBack_;
     errorCallBack errorCallBack_;
 };
 

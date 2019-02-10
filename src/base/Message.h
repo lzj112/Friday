@@ -22,8 +22,7 @@ public:
     void resize(int length) 
     { message_.resize(length); lengthNow = message_.size(); }
     void reserve(int length) { message_.reserve(length); }
-    void copyMessage(const char* str, int length);
-    int length() { return message_.size(); }
+    int length();
     void clear() { message_.clear(); }
     void releaseMessage() 
     { std::vector<char>().swap(message_); }
@@ -38,6 +37,8 @@ public:
     }
 
 private:
+    void copyMessage(const char* str, int length);
+
     int lengthNow;
     uint32_t type_;      //服务类型
     std::vector<char> message_;
