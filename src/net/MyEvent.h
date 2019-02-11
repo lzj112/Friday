@@ -71,6 +71,9 @@ private:
     void appendSendBuffer(PackageTCP& tmp);
     void appendRecvBuffer(PackageTCP& tmp);
     void sendMess(Message tmpMess);
+
+    void changeToIN();
+    void changeToOUT();
     
     // void goRead() { readCallBack_(); }
     // void goWrite() { writeCallBack_(); }

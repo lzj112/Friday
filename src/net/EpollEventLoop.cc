@@ -113,19 +113,40 @@ void EpollEventLoop::regReadable(MyEvent socket)
     eventsMap.insert(std::make_pair(socket.fd(), socket));
   
     auto it = eventsMap.find(socket.fd());
-    ev.data.ptr = &((*it).second);
-
-    epoll_->add(socket.fd(), &ev);  //将监听套接字加入epoll事件合集
+    if (it != eventsMap.end()) 
+    {
+        ev.data.ptr = &((*it).second);
+        epoll_->add(socket.fd(), &ev);  //将监听套接字加入epoll事件合集
+    }
 }
 
-void EpollEventLoop::modifyEvent(MyEvent socket) 
+void EpollEventLoop::regWriteable(MyEvent socket) 
 {
     epoll_event ev = {0, {0}};
-    auto it = eventsMap.find(socket.fd());
-    eventsMap.erase(it);
+    ev.events = pollWriteAble | pollEdgeTrigger;
     eventsMap.insert(std::make_pair(socket.fd(), socket));
+  
+    auto it = eventsMap.find(socket.fd());
+    if (it != eventsMap.end()) 
+    {
+        ev.data.ptr = &((*it).second);
+        epoll_->add(socket.fd(), &ev);  //将监听套接字加入epoll事件合集
+    }
+}
+
+void EpollEventLoop::modifyEvent(epoll_event ev) 
+{
+    MyEvent* tmp = static_cast<MyEvent *> (ev.data.ptr);
+    int sockfd = tmp->fd();
+    auto it = eventsMap.find(sockfd);
+    if (it != eventsMap.end())
+        eventsMap.erase(it);
+    eventsMap.insert(std::make_pair(sockfd, *tmp));
     
-    auto iter = eventsMap.find(socket.fd());
-    ev.data.ptr = &((*iter).second);
-    epoll_->ctl(socket.fd(), &ev);
+    auto iter = eventsMap.find(sockfd);
+    if (iter != eventsMap.end()) 
+    {
+        ev.data.ptr = &((*iter).second);
+        epoll_->ctl(sockfd, &ev);
+    }
 }

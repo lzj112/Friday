@@ -31,7 +31,7 @@ public:
     void regReadable(MyEvent socket);
     // void regWriteable(int fd);
     void regWriteable(MyEvent socket);
-    void modifyEvent(MyEvent socket);
+    void modifyEvent(epoll_event ev);
    
     
 private:

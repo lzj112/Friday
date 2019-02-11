@@ -125,7 +125,8 @@ int MyEvent::sendMess(PackageTCP& tmpPack)
 	Message tmpMess(tmpPack.body);
 	tmpMess.setType(tmpPack.head.type);
 	sendBuffer.appendMess(tmpMess);	//加入写buffer
-	loop_->regWriteable(*this);	//注册写事件
+
+	changeToOUT();
 }
 
 //如果这次没发完?
@@ -157,8 +158,6 @@ void MyEvent::sendMess(Message tmpMess)
 			sum += ret;
 		}
 	}
-	//注销监听可写
-	//here
 }
 
 void MyEvent::goWrite() 
@@ -173,4 +172,22 @@ void MyEvent::goWrite()
 			sendMess(tmpMess);
 		}	while (!sendBuffer.isEmpty());
 	}
+	//改为可读事件
+	changeToIN();
+}
+
+void MyEvent::changeToIN() 
+{
+	epoll_event ev;
+	ev.events = pollEdgeTrigger | pollReadAble;
+	ev.data.ptr = this;	//这样写对么???
+	loop_->modifyEvent(ev);
+}
+
+void MyEvent::changeToOUT() 
+{
+	epoll_event ev;
+	ev.events = pollEdgeTrigger | pollWriteAble;
+	ev.data.ptr = this;	//这样写对么???
+	loop_->modifyEvent(ev);
 }
