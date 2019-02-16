@@ -1,3 +1,0 @@
-/home/lzj/Friday/Examples/Echo/build/CMakeFiles/rebuild_cache.dir
-/home/lzj/Friday/Examples/Echo/build/CMakeFiles/echoServer.dir
-/home/lzj/Friday/Examples/Echo/build/CMakeFiles/edit_cache.dir
