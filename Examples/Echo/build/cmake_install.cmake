@@ -39,7 +39,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/lzj/Friday/Examples/Echo/build/friday/cmake_install.cmake")
+  include("/home/lzj/Friday/Examples/Echo/build/src/cmake_install.cmake")
 
 endif()
 

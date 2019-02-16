@@ -1,4 +1,4 @@
-# Install script for directory: /home/lzj/Friday/Examples/Echo/friday
+# Install script for directory: /home/lzj/Friday/Examples/Echo/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

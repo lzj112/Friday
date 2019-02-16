@@ -80,14 +80,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/lzj/Friday/Examples/Echo/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/lzj/Friday/Examples/Echo/build/CMakeFiles /home/lzj/Friday/Examples/Echo/build/friday/CMakeFiles/progress.marks
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f CMakeFiles/Makefile2 friday/all
+	cd /home/lzj/Friday/Examples/Echo/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/lzj/Friday/Examples/Echo/build/CMakeFiles /home/lzj/Friday/Examples/Echo/build/src/CMakeFiles/progress.marks
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f CMakeFiles/Makefile2 src/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/lzj/Friday/Examples/Echo/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f CMakeFiles/Makefile2 friday/clean
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f CMakeFiles/Makefile2 src/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,12 +97,12 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f CMakeFiles/Makefile2 friday/preinstall
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f CMakeFiles/Makefile2 src/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f CMakeFiles/Makefile2 friday/preinstall
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f CMakeFiles/Makefile2 src/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
@@ -111,18 +111,18 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-friday/CMakeFiles/FridayNET.dir/rule:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f CMakeFiles/Makefile2 friday/CMakeFiles/FridayNET.dir/rule
-.PHONY : friday/CMakeFiles/FridayNET.dir/rule
+src/CMakeFiles/FridayNET.dir/rule:
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/FridayNET.dir/rule
+.PHONY : src/CMakeFiles/FridayNET.dir/rule
 
 # Convenience name for target.
-FridayNET: friday/CMakeFiles/FridayNET.dir/rule
+FridayNET: src/CMakeFiles/FridayNET.dir/rule
 
 .PHONY : FridayNET
 
 # fast build rule for target.
 FridayNET/fast:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/build
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/build
 .PHONY : FridayNET/fast
 
 Connector.o: Connector.cc.o
@@ -131,7 +131,7 @@ Connector.o: Connector.cc.o
 
 # target to build an object file
 Connector.cc.o:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/Connector.cc.o
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/Connector.cc.o
 .PHONY : Connector.cc.o
 
 Connector.i: Connector.cc.i
@@ -140,7 +140,7 @@ Connector.i: Connector.cc.i
 
 # target to preprocess a source file
 Connector.cc.i:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/Connector.cc.i
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/Connector.cc.i
 .PHONY : Connector.cc.i
 
 Connector.s: Connector.cc.s
@@ -149,7 +149,7 @@ Connector.s: Connector.cc.s
 
 # target to generate assembly for a file
 Connector.cc.s:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/Connector.cc.s
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/Connector.cc.s
 .PHONY : Connector.cc.s
 
 EpollBase.o: EpollBase.cc.o
@@ -158,7 +158,7 @@ EpollBase.o: EpollBase.cc.o
 
 # target to build an object file
 EpollBase.cc.o:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/EpollBase.cc.o
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/EpollBase.cc.o
 .PHONY : EpollBase.cc.o
 
 EpollBase.i: EpollBase.cc.i
@@ -167,7 +167,7 @@ EpollBase.i: EpollBase.cc.i
 
 # target to preprocess a source file
 EpollBase.cc.i:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/EpollBase.cc.i
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/EpollBase.cc.i
 .PHONY : EpollBase.cc.i
 
 EpollBase.s: EpollBase.cc.s
@@ -176,7 +176,7 @@ EpollBase.s: EpollBase.cc.s
 
 # target to generate assembly for a file
 EpollBase.cc.s:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/EpollBase.cc.s
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/EpollBase.cc.s
 .PHONY : EpollBase.cc.s
 
 EpollEventLoop.o: EpollEventLoop.cc.o
@@ -185,7 +185,7 @@ EpollEventLoop.o: EpollEventLoop.cc.o
 
 # target to build an object file
 EpollEventLoop.cc.o:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.o
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.o
 .PHONY : EpollEventLoop.cc.o
 
 EpollEventLoop.i: EpollEventLoop.cc.i
@@ -194,7 +194,7 @@ EpollEventLoop.i: EpollEventLoop.cc.i
 
 # target to preprocess a source file
 EpollEventLoop.cc.i:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.i
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.i
 .PHONY : EpollEventLoop.cc.i
 
 EpollEventLoop.s: EpollEventLoop.cc.s
@@ -203,7 +203,7 @@ EpollEventLoop.s: EpollEventLoop.cc.s
 
 # target to generate assembly for a file
 EpollEventLoop.cc.s:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.s
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.s
 .PHONY : EpollEventLoop.cc.s
 
 FServer.o: FServer.cc.o
@@ -212,7 +212,7 @@ FServer.o: FServer.cc.o
 
 # target to build an object file
 FServer.cc.o:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/FServer.cc.o
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/FServer.cc.o
 .PHONY : FServer.cc.o
 
 FServer.i: FServer.cc.i
@@ -221,7 +221,7 @@ FServer.i: FServer.cc.i
 
 # target to preprocess a source file
 FServer.cc.i:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/FServer.cc.i
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/FServer.cc.i
 .PHONY : FServer.cc.i
 
 FServer.s: FServer.cc.s
@@ -230,7 +230,7 @@ FServer.s: FServer.cc.s
 
 # target to generate assembly for a file
 FServer.cc.s:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/FServer.cc.s
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/FServer.cc.s
 .PHONY : FServer.cc.s
 
 HeartBeat.o: HeartBeat.cc.o
@@ -239,7 +239,7 @@ HeartBeat.o: HeartBeat.cc.o
 
 # target to build an object file
 HeartBeat.cc.o:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/HeartBeat.cc.o
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/HeartBeat.cc.o
 .PHONY : HeartBeat.cc.o
 
 HeartBeat.i: HeartBeat.cc.i
@@ -248,7 +248,7 @@ HeartBeat.i: HeartBeat.cc.i
 
 # target to preprocess a source file
 HeartBeat.cc.i:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/HeartBeat.cc.i
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/HeartBeat.cc.i
 .PHONY : HeartBeat.cc.i
 
 HeartBeat.s: HeartBeat.cc.s
@@ -257,7 +257,7 @@ HeartBeat.s: HeartBeat.cc.s
 
 # target to generate assembly for a file
 HeartBeat.cc.s:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/HeartBeat.cc.s
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/HeartBeat.cc.s
 .PHONY : HeartBeat.cc.s
 
 IOBuffer.o: IOBuffer.cc.o
@@ -266,7 +266,7 @@ IOBuffer.o: IOBuffer.cc.o
 
 # target to build an object file
 IOBuffer.cc.o:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/IOBuffer.cc.o
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/IOBuffer.cc.o
 .PHONY : IOBuffer.cc.o
 
 IOBuffer.i: IOBuffer.cc.i
@@ -275,7 +275,7 @@ IOBuffer.i: IOBuffer.cc.i
 
 # target to preprocess a source file
 IOBuffer.cc.i:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/IOBuffer.cc.i
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/IOBuffer.cc.i
 .PHONY : IOBuffer.cc.i
 
 IOBuffer.s: IOBuffer.cc.s
@@ -284,7 +284,7 @@ IOBuffer.s: IOBuffer.cc.s
 
 # target to generate assembly for a file
 IOBuffer.cc.s:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/IOBuffer.cc.s
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/IOBuffer.cc.s
 .PHONY : IOBuffer.cc.s
 
 Message.o: Message.cc.o
@@ -293,7 +293,7 @@ Message.o: Message.cc.o
 
 # target to build an object file
 Message.cc.o:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/Message.cc.o
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/Message.cc.o
 .PHONY : Message.cc.o
 
 Message.i: Message.cc.i
@@ -302,7 +302,7 @@ Message.i: Message.cc.i
 
 # target to preprocess a source file
 Message.cc.i:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/Message.cc.i
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/Message.cc.i
 .PHONY : Message.cc.i
 
 Message.s: Message.cc.s
@@ -311,7 +311,7 @@ Message.s: Message.cc.s
 
 # target to generate assembly for a file
 Message.cc.s:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/Message.cc.s
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/Message.cc.s
 .PHONY : Message.cc.s
 
 Mutex.o: Mutex.cc.o
@@ -320,7 +320,7 @@ Mutex.o: Mutex.cc.o
 
 # target to build an object file
 Mutex.cc.o:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/Mutex.cc.o
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/Mutex.cc.o
 .PHONY : Mutex.cc.o
 
 Mutex.i: Mutex.cc.i
@@ -329,7 +329,7 @@ Mutex.i: Mutex.cc.i
 
 # target to preprocess a source file
 Mutex.cc.i:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/Mutex.cc.i
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/Mutex.cc.i
 .PHONY : Mutex.cc.i
 
 Mutex.s: Mutex.cc.s
@@ -338,7 +338,7 @@ Mutex.s: Mutex.cc.s
 
 # target to generate assembly for a file
 Mutex.cc.s:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/Mutex.cc.s
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/Mutex.cc.s
 .PHONY : Mutex.cc.s
 
 MyEevent.o: MyEevent.cc.o
@@ -347,7 +347,7 @@ MyEevent.o: MyEevent.cc.o
 
 # target to build an object file
 MyEevent.cc.o:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/MyEevent.cc.o
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/MyEevent.cc.o
 .PHONY : MyEevent.cc.o
 
 MyEevent.i: MyEevent.cc.i
@@ -356,7 +356,7 @@ MyEevent.i: MyEevent.cc.i
 
 # target to preprocess a source file
 MyEevent.cc.i:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/MyEevent.cc.i
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/MyEevent.cc.i
 .PHONY : MyEevent.cc.i
 
 MyEevent.s: MyEevent.cc.s
@@ -365,7 +365,7 @@ MyEevent.s: MyEevent.cc.s
 
 # target to generate assembly for a file
 MyEevent.cc.s:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/MyEevent.cc.s
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/MyEevent.cc.s
 .PHONY : MyEevent.cc.s
 
 SocketTCP.o: SocketTCP.cc.o
@@ -374,7 +374,7 @@ SocketTCP.o: SocketTCP.cc.o
 
 # target to build an object file
 SocketTCP.cc.o:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/SocketTCP.cc.o
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/SocketTCP.cc.o
 .PHONY : SocketTCP.cc.o
 
 SocketTCP.i: SocketTCP.cc.i
@@ -383,7 +383,7 @@ SocketTCP.i: SocketTCP.cc.i
 
 # target to preprocess a source file
 SocketTCP.cc.i:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/SocketTCP.cc.i
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/SocketTCP.cc.i
 .PHONY : SocketTCP.cc.i
 
 SocketTCP.s: SocketTCP.cc.s
@@ -392,7 +392,7 @@ SocketTCP.s: SocketTCP.cc.s
 
 # target to generate assembly for a file
 SocketTCP.cc.s:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/SocketTCP.cc.s
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/SocketTCP.cc.s
 .PHONY : SocketTCP.cc.s
 
 Thread.o: Thread.cc.o
@@ -401,7 +401,7 @@ Thread.o: Thread.cc.o
 
 # target to build an object file
 Thread.cc.o:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/Thread.cc.o
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/Thread.cc.o
 .PHONY : Thread.cc.o
 
 Thread.i: Thread.cc.i
@@ -410,7 +410,7 @@ Thread.i: Thread.cc.i
 
 # target to preprocess a source file
 Thread.cc.i:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/Thread.cc.i
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/Thread.cc.i
 .PHONY : Thread.cc.i
 
 Thread.s: Thread.cc.s
@@ -419,7 +419,7 @@ Thread.s: Thread.cc.s
 
 # target to generate assembly for a file
 Thread.cc.s:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/Thread.cc.s
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/Thread.cc.s
 .PHONY : Thread.cc.s
 
 ThreadPool.o: ThreadPool.cc.o
@@ -428,7 +428,7 @@ ThreadPool.o: ThreadPool.cc.o
 
 # target to build an object file
 ThreadPool.cc.o:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/ThreadPool.cc.o
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/ThreadPool.cc.o
 .PHONY : ThreadPool.cc.o
 
 ThreadPool.i: ThreadPool.cc.i
@@ -437,7 +437,7 @@ ThreadPool.i: ThreadPool.cc.i
 
 # target to preprocess a source file
 ThreadPool.cc.i:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/ThreadPool.cc.i
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/ThreadPool.cc.i
 .PHONY : ThreadPool.cc.i
 
 ThreadPool.s: ThreadPool.cc.s
@@ -446,7 +446,7 @@ ThreadPool.s: ThreadPool.cc.s
 
 # target to generate assembly for a file
 ThreadPool.cc.s:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/ThreadPool.cc.s
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/ThreadPool.cc.s
 .PHONY : ThreadPool.cc.s
 
 Timer.o: Timer.cc.o
@@ -455,7 +455,7 @@ Timer.o: Timer.cc.o
 
 # target to build an object file
 Timer.cc.o:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/Timer.cc.o
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/Timer.cc.o
 .PHONY : Timer.cc.o
 
 Timer.i: Timer.cc.i
@@ -464,7 +464,7 @@ Timer.i: Timer.cc.i
 
 # target to preprocess a source file
 Timer.cc.i:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/Timer.cc.i
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/Timer.cc.i
 .PHONY : Timer.cc.i
 
 Timer.s: Timer.cc.s
@@ -473,7 +473,7 @@ Timer.s: Timer.cc.s
 
 # target to generate assembly for a file
 Timer.cc.s:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/Timer.cc.s
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/Timer.cc.s
 .PHONY : Timer.cc.s
 
 TimerWheel.o: TimerWheel.cc.o
@@ -482,7 +482,7 @@ TimerWheel.o: TimerWheel.cc.o
 
 # target to build an object file
 TimerWheel.cc.o:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/TimerWheel.cc.o
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/TimerWheel.cc.o
 .PHONY : TimerWheel.cc.o
 
 TimerWheel.i: TimerWheel.cc.i
@@ -491,7 +491,7 @@ TimerWheel.i: TimerWheel.cc.i
 
 # target to preprocess a source file
 TimerWheel.cc.i:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/TimerWheel.cc.i
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/TimerWheel.cc.i
 .PHONY : TimerWheel.cc.i
 
 TimerWheel.s: TimerWheel.cc.s
@@ -500,7 +500,7 @@ TimerWheel.s: TimerWheel.cc.s
 
 # target to generate assembly for a file
 TimerWheel.cc.s:
-	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/TimerWheel.cc.s
+	cd /home/lzj/Friday/Examples/Echo/build && $(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/TimerWheel.cc.s
 .PHONY : TimerWheel.cc.s
 
 # Help Target

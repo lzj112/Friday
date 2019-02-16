@@ -2,7 +2,7 @@
 测试接受连接
 */
 
-#include "friday/FServer.h"
+#include "src/FServer.h"
 
 int main() 
 {

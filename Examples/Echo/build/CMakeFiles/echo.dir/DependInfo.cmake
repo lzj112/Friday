@@ -14,7 +14,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/home/lzj/Friday/Examples/Echo/build/friday/CMakeFiles/FridayNET.dir/DependInfo.cmake"
+  "/home/lzj/Friday/Examples/Echo/build/src/CMakeFiles/FridayNET.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

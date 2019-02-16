@@ -63,7 +63,7 @@ CMAKE_BINARY_DIR = /home/lzj/Friday/Examples/Echo/build
 # Target rules for target CMakeFiles/echo.dir
 
 # All Build rule for target.
-CMakeFiles/echo.dir/all: friday/CMakeFiles/FridayNET.dir/all
+CMakeFiles/echo.dir/all: src/CMakeFiles/FridayNET.dir/all
 	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/depend
 	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/lzj/Friday/Examples/Echo/build/CMakeFiles --progress-num=16,17 "Built target echo"
@@ -97,57 +97,57 @@ clean: CMakeFiles/echo.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Directory level rules for directory friday
+# Directory level rules for directory src
 
 # Convenience name for "all" pass in the directory.
-friday/all: friday/CMakeFiles/FridayNET.dir/all
+src/all: src/CMakeFiles/FridayNET.dir/all
 
-.PHONY : friday/all
+.PHONY : src/all
 
 # Convenience name for "clean" pass in the directory.
-friday/clean: friday/CMakeFiles/FridayNET.dir/clean
+src/clean: src/CMakeFiles/FridayNET.dir/clean
 
-.PHONY : friday/clean
+.PHONY : src/clean
 
 # Convenience name for "preinstall" pass in the directory.
-friday/preinstall:
+src/preinstall:
 
-.PHONY : friday/preinstall
+.PHONY : src/preinstall
 
 #=============================================================================
-# Target rules for target friday/CMakeFiles/FridayNET.dir
+# Target rules for target src/CMakeFiles/FridayNET.dir
 
 # All Build rule for target.
-friday/CMakeFiles/FridayNET.dir/all:
-	$(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/depend
-	$(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/build
+src/CMakeFiles/FridayNET.dir/all:
+	$(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/depend
+	$(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/lzj/Friday/Examples/Echo/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15 "Built target FridayNET"
-.PHONY : friday/CMakeFiles/FridayNET.dir/all
+.PHONY : src/CMakeFiles/FridayNET.dir/all
 
 # Include target in all.
-all: friday/CMakeFiles/FridayNET.dir/all
+all: src/CMakeFiles/FridayNET.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-friday/CMakeFiles/FridayNET.dir/rule: cmake_check_build_system
+src/CMakeFiles/FridayNET.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/lzj/Friday/Examples/Echo/build/CMakeFiles 15
-	$(MAKE) -f CMakeFiles/Makefile2 friday/CMakeFiles/FridayNET.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/FridayNET.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/lzj/Friday/Examples/Echo/build/CMakeFiles 0
-.PHONY : friday/CMakeFiles/FridayNET.dir/rule
+.PHONY : src/CMakeFiles/FridayNET.dir/rule
 
 # Convenience name for target.
-FridayNET: friday/CMakeFiles/FridayNET.dir/rule
+FridayNET: src/CMakeFiles/FridayNET.dir/rule
 
 .PHONY : FridayNET
 
 # clean rule for target.
-friday/CMakeFiles/FridayNET.dir/clean:
-	$(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/clean
-.PHONY : friday/CMakeFiles/FridayNET.dir/clean
+src/CMakeFiles/FridayNET.dir/clean:
+	$(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/clean
+.PHONY : src/CMakeFiles/FridayNET.dir/clean
 
 # clean rule for target.
-clean: friday/CMakeFiles/FridayNET.dir/clean
+clean: src/CMakeFiles/FridayNET.dir/clean
 
 .PHONY : clean
 

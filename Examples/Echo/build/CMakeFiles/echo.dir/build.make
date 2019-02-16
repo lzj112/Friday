@@ -90,7 +90,7 @@ echo_EXTERNAL_OBJECTS =
 
 echo: CMakeFiles/echo.dir/EchoServer.cpp.o
 echo: CMakeFiles/echo.dir/build.make
-echo: friday/libFridayNET.a
+echo: src/libFridayNET.a
 echo: CMakeFiles/echo.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/lzj/Friday/Examples/Echo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable echo"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/echo.dir/link.txt --verbose=$(VERBOSE)

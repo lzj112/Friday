@@ -133,7 +133,7 @@ FridayNET: cmake_check_build_system
 
 # fast build rule for target.
 FridayNET/fast:
-	$(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/build
+	$(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/build
 .PHONY : FridayNET/fast
 
 EchoServer.o: EchoServer.cpp.o
