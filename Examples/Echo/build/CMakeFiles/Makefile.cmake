@@ -117,5 +117,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/echo.dir/DependInfo.cmake"
-  "friday/CMakeFiles/friday.dir/DependInfo.cmake"
+  "friday/CMakeFiles/FridayNET.dir/DependInfo.cmake"
   )

@@ -124,17 +124,17 @@ echo/fast:
 .PHONY : echo/fast
 
 #=============================================================================
-# Target rules for targets named friday
+# Target rules for targets named FridayNET
 
 # Build rule for target.
-friday: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 friday
-.PHONY : friday
+FridayNET: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 FridayNET
+.PHONY : FridayNET
 
 # fast build rule for target.
-friday/fast:
-	$(MAKE) -f friday/CMakeFiles/friday.dir/build.make friday/CMakeFiles/friday.dir/build
-.PHONY : friday/fast
+FridayNET/fast:
+	$(MAKE) -f friday/CMakeFiles/FridayNET.dir/build.make friday/CMakeFiles/FridayNET.dir/build
+.PHONY : FridayNET/fast
 
 EchoServer.o: EchoServer.cpp.o
 
@@ -172,7 +172,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... echo"
 	@echo "... edit_cache"
-	@echo "... friday"
+	@echo "... FridayNET"
 	@echo "... EchoServer.o"
 	@echo "... EchoServer.i"
 	@echo "... EchoServer.s"

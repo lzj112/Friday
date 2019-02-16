@@ -1,1 +1,1 @@
-/usr/bin/c++    -rdynamic CMakeFiles/echo.dir/EchoServer.cpp.o  -o echo friday/libfriday.a -lpthread 
+/usr/bin/c++    -rdynamic CMakeFiles/echo.dir/EchoServer.cpp.o  -o echo friday/libFridayNET.a -lpthread 
