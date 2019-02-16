@@ -1,5 +1,4 @@
 
-cmake_minimum_required(VERSION 3.0)
+add_executable(echoServer EchoServer.cpp)
 
-project(Friday)
-
+target_link_libraries(echoServer FNET FBASE)

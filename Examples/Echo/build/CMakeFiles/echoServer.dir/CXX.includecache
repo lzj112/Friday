@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/lzj/Friday/Examples/Echo/EchoServer.cpp
+/home/lzj/Friday/friday/net/test.h
+-
+
+/home/lzj/Friday/friday/net/test.h
+
