@@ -1,1 +1,0 @@
-/usr/bin/c++    -rdynamic CMakeFiles/echoServer.dir/EchoServer.cpp.o  -o echoServer -lFNET -lFBASE 
