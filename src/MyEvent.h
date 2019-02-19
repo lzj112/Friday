@@ -32,7 +32,7 @@ class EpollEventLoop;
 
 typedef std::function<int(void)> IOcallBack;
 typedef std::function<void(void)> errorCallBack; //关闭连接直接执行,不放进任务队列
-typedef std::function<void(const MyEvent*, const Message&)> messManage;
+typedef std::function<void(const MyEvent*, Message&)> messManage;
 
 class MyEvent 
 {
@@ -56,7 +56,7 @@ public:
     void goWrite();
     void goClose();
 
-    int sendMess(PackageTCP& tmpPack);
+    int sendMess(Message mess);
 
     
 private:
@@ -64,7 +64,9 @@ private:
     bool readPackBody(PackageTCP& tmpPackage, int len);
     void appendSendBuffer(PackageTCP& tmp);
     void appendRecvBuffer(PackageTCP& tmp);
-    void sendMess(Message tmpMess);
+    void sendMessTo(Message tmpMess);
+    bool sendMessHead(PackageTCP* pac);
+    bool sendMessBody(PackageTCP* pac, int length);
 
     void changeToIN();
     void changeToOUT();

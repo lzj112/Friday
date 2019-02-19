@@ -20,6 +20,8 @@ public:
            int port);
     ~FServer();
 
+    void setMesMang(const messManage& cb) 
+    { messManage_ = cb; }
     void starts();
     int defaultConnIOCB();
     void defaultConnErrCB(); 
@@ -38,6 +40,7 @@ private:
 
     IOcallBack connIOCallBack;
     errorCallBack connErrCallBack;
+    messManage messManage_;
 };
 
 #endif

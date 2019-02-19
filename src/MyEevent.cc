@@ -122,22 +122,22 @@ void MyEvent::performMessManaCB()
 }
 
 
-int MyEvent::sendMess(PackageTCP& tmpPack) 
+int MyEvent::sendMess(Message mess) 
 {
-	Message tmpMess(tmpPack.body);
-	tmpMess.setType(tmpPack.head.type);
-	sendBuffer.appendMess(tmpMess);	//加入写buffer
+	// Message tmpMess(tmpPack.body);
+	// tmpMess.setType(tmpPack.head.type);
+	sendBuffer.appendMess(mess);	//加入写buffer
 
 	changeToOUT();
 }
 
-//如果这次没发完?
 //重新添加 注册可写
-void MyEvent::sendMess(Message tmpMess) 
+void MyEvent::sendMessTo(Message tmpMess) 
 {
 	int count = tmpMess.length(), ret = 0, sum = 0;
 	while (count > 0) 
 	{
+		//不对,发送packageTCP,先发包头,再发包体
 		ret = send(fd_,
 				   (tmpMess.message().data() + sum),
 				   count,
@@ -173,7 +173,7 @@ void MyEvent::goWrite()
 		{
 			memset(&tmpMess, 0, sizeof(Message));
 			sendBuffer.readMess(tmpMess);
-			sendMess(tmpMess);
+			sendMessTo(tmpMess);
 		}	while (!sendBuffer.isEmpty());
 	}
 	//改为监听可读事件

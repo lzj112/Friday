@@ -18,6 +18,7 @@ Connector::Connector(EpollEventLoop* baseLoop,
 void Connector::connect() 
 {
     int ret = cliSock->connect(*serAddr);
+    printf("connect return ret == %d\n", ret);
     switch (ret) 
     {
         case 0:             //连接成功
@@ -64,6 +65,7 @@ void Connector::connSuccessful()
 //正在连接
 void Connector::inConnection() 
 {
+    printf("here is isConnection\n");
     MyEvent ev(loop_, cliSock->fd());
     ev.setWriteCallBack(std::bind(&Connector::isConnOk, this));
     ev.setCloseCallBack(std::bind(&Connector::gotError, this));
@@ -107,6 +109,7 @@ int Connector::isConnOk()
 
 void Connector::reConnect() 
 {
+    printf("here is reConnect\n");
     cliSock->close();
     cliSock->reSet(cliSock->creSocketTCP());
     timerContainer->addTimer(reTryDelay,

@@ -8,7 +8,7 @@ struct PackHead
     int type;
     int length;
 };
-
+ 
 static const int MAXBODY = 256;
 static const int PACKHEADSIZE = sizeof(PackHead);
 

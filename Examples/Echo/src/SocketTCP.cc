@@ -11,7 +11,7 @@ SocketTCP::SocketTCP() : socketFd(new FileDes(creSocketTCP()))
 }
 
 SocketTCP::~SocketTCP()
-{ delete socketFd; }
+{}
 
 int SocketTCP::creSocketTCP() 
 {

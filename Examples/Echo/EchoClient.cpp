@@ -17,5 +17,6 @@ int main()
                          "127.0.0.1",
                          4000);
     connector_.setconnSucc(newConn);
+    connector_.connect();
     while (1) {}
 }

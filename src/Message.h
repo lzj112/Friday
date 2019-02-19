@@ -27,8 +27,9 @@ public:
     void releaseMessage() 
     { std::vector<char>().swap(message_); }
     std::vector<char>& message() { return message_; }
-    void setType(uint32_t t) { type_ = t; }
-    uint32_t type() const { return type_;}
+    void setType(int t) { type_ = t; }
+    int type() const { return type_;}
+    char* mess() { return message_.data(); } 
 
     void show() 
     {
@@ -40,8 +41,8 @@ private:
     void copyMessage(const char* str, int length);
 
     int lengthNow;
-    uint32_t type_;      //服务类型
+    int type_;      //服务类型
     std::vector<char> message_;
 };
 
-#endif
+#endif 

@@ -41,6 +41,7 @@ void FServer::starts()
 //防止淤积,循环accept
 void FServer::newConntion(const MyEvent*, const Message&) 
 {
+    printf("有新的连接等待accept\n");
     std::map<int, InitSockAddr> newConn;
     int connfd = -1;
     sockaddr_in peer;
@@ -80,8 +81,12 @@ void FServer::newConntion(const MyEvent*, const Message&)
     for(auto x : newConn) 
     {   
         EpollEventLoop* ioLoop = threadPool->getNextLoop();
-        //将新连接fd分配给子线程
-        ioLoop->regReadable(x.first);
+        {
+            MyEvent tmpEvent(ioLoop, x.first);
+            tmpEvent.setMessMana(messManage_);
+            //将新连接fd分配给子线程
+            ioLoop->regReadable(tmpEvent);
+        }
     }
 }
 

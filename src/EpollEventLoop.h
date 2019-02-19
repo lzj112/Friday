@@ -25,7 +25,7 @@ public:
     void removeAllEvents();
 
     void delEvent(int fd);
-    void regReadable(int fd);
+    // void regReadable(int fd);
     void regReadable(MyEvent socket);
     // void regWriteable(int fd);
     void regWriteable(MyEvent socket);

@@ -100,11 +100,11 @@ void EpollEventLoop::delEvent(int fd)
 }
 
 
-void EpollEventLoop::regReadable(int fd) 
-{
-    MyEvent tmp(this, fd); 
-    regReadable(tmp);
-}
+// void EpollEventLoop::regReadable(int fd) 
+// {
+//     MyEvent tmp(this, fd); 
+//     regReadable(tmp);
+// }
 
 void EpollEventLoop::regReadable(MyEvent socket) 
 {

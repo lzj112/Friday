@@ -39,7 +39,7 @@ public:
     bool isSelfConnection();
 
 private:
-    FileDes* socketFd;
+    std::shared_ptr<FileDes> socketFd;
 };
 
 #endif
