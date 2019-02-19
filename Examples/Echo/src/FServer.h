@@ -34,6 +34,8 @@ private:
     std::shared_ptr<InitSockAddr> serAddr;
     std::unique_ptr<ThreadPool> threadPool;
 
+    static const int workThreadNums = 4;
+
     IOcallBack connIOCallBack;
     errorCallBack connErrCallBack;
 };

@@ -10,12 +10,13 @@ FServer::FServer(EpollEventLoop* baseLoop,
     : loop_(baseLoop),
       serName(name),
       serverFd(new SocketTCP()),
-      serAddr(new InitSockAddr(ip, port))
-    //   threadPool()
+      serAddr(new InitSockAddr(ip, port)),
+      threadPool( new ThreadPool(workThreadNums))
 {
     serverFd->bind(*serAddr);
     serverFd->listen(5);
     serverFd->setReuseAddr();
+    serverFd->setNoDely();
     serverFd->setNonBlocking();
 }   
 
@@ -24,21 +25,17 @@ FServer::~FServer()
 
 void FServer::starts() 
 {
-    MyEvent listenFd(loop_, serverFd->fd());
-    listenFd.setMessMana(std::bind(&FServer::newConntion, 
+    MyEvent listenEvent(loop_, serverFd->fd());
+    listenEvent.setMessMana(std::bind(&FServer::newConntion, 
                                        this,
                                        std::placeholders::_1,
                                        std::placeholders::_2));
-
-    serverFd->bind(*serAddr);
-    serverFd->listen();
-
-    //监听套接字 注册epoll可读事件
-    loop_->regReadable(listenFd);
-
     //启动线程池,执行子线程们的loop
     //server里的loop在主线程中执行,由用户显示调用
     threadPool->start();
+    
+    //监听套接字 注册epoll可读事件
+    loop_->regReadable(listenEvent);
 }
 
 //防止淤积,循环accept
@@ -48,6 +45,7 @@ void FServer::newConntion(const MyEvent*, const Message&)
     int connfd = -1;
     sockaddr_in peer;
     socklen_t peerLen = sizeof(sockaddr_in);
+    //循环接收防止accept队列淤积
     while (1) 
     {
         memset(&peer, 0, peerLen);

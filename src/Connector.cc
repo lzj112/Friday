@@ -5,14 +5,6 @@
 
 #include "Connector.h"
 
-// Connector::Connector(EpollEventLoop* baseLoop,
-//                      SocketTCP* sock,
-//                      InitSockAddr* addr)
-//     : loop_(baseLoop),
-//       cliSock(sock),
-//       serAddr(addr),
-//       timerContainer(new TimerWheel(baseLoop))
-// {}
 Connector::Connector(EpollEventLoop* baseLoop,
                      SocketTCP* sock,
                      const char* ip,

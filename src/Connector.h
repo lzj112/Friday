@@ -8,19 +8,18 @@
 #include "TimerWheel.h"
 #include "EpollEventLoop.h"
 
+
 class Connector 
 {
 public:
 typedef std::function<void(int)> connSucced;
 
-    // Connector(EpollEventLoop* baseLoop, 
-    //           SocketTCP* sock,
-    //           InitSockAddr* addr);
     Connector(EpollEventLoop* loop,
               SocketTCP* sock,
               const char* ip,
               int port);
-    ~Connector();
+    ~Connector()
+    {}
 
     void connect();
     void connSuccessful();

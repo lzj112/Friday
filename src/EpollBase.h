@@ -27,5 +27,4 @@ private:
     int epollFd;
 };
 
-
 #endif

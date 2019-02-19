@@ -1,6 +1,9 @@
 #include <cstdio>
 #include <errno.h>
 #include <cstdlib>
+#include <stdio.h>
+
+#include <iostream>
 
 #include "EpollBase.h"
 
@@ -62,6 +65,7 @@ void EpollBase::wait(std::vector<epoll_event>& readyEvents, int timeout)
             errno == EINVAL)    /*epfd不是一个epoll文件描述符或maxevnts<=0*/
         {
             //错误处理 TODO
+            perror("被信号中断:");
             exit(1);    //退出 FIXME
         }
     }

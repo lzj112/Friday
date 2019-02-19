@@ -31,6 +31,10 @@ errno.h
 -
 cstdlib
 -
+stdio.h
+-
+iostream
+-
 EpollBase.h
 /home/lzj/Friday/Examples/Echo/src/EpollBase.h
 

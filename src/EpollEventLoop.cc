@@ -11,9 +11,9 @@ EpollEventLoop::EpollEventLoop()
     : isLooping(false),
       isEnd(false),
       epoll_(new EpollBase()),
+      events(initEventSize),
       threadID (std::this_thread::get_id())
 {
-
 }
 
 EpollEventLoop::~EpollEventLoop() 
@@ -29,10 +29,12 @@ void EpollEventLoop::loop()
     isLooping = true;
     while (isLooping) 
     {
-        events.clear();
         epoll_->wait(events, EPOLLWAITFOR);
-
         handleEvents();
+        {
+            std::vector<epoll_event> evs(events.size());
+            std::swap(events, evs);
+        }
     }
 
     isEnd = true;

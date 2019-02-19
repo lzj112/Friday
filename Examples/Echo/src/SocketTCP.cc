@@ -5,7 +5,10 @@
 #include "SocketTCP.h"
 
 SocketTCP::SocketTCP() : socketFd(new FileDes(creSocketTCP()))
-{}
+{
+    //设置非阻塞
+    socketFd->setNonBlocking();
+}
 
 SocketTCP::~SocketTCP()
 { delete socketFd; }
@@ -14,9 +17,10 @@ int SocketTCP::creSocketTCP()
 {
     int newSocket = ::socket(AF_INET, SOCK_STREAM, 0);
     assert(newSocket != -1);
-    std::cout << "==== " << newSocket <<std::endl;
+    std::cout << "created a new socket = " << newSocket <<std::endl;
     return newSocket;
 }
+
 
 int SocketTCP::bind(InitSockAddr localAddr) 
 {
@@ -72,7 +76,7 @@ void SocketTCP::setNoDely()
 {
     int optval = 1;
     int ret = ::setsockopt(socketFd->fd(),
-                           SOL_SOCKET,
+                           IPPROTO_TCP,
                            TCP_NODELAY,
                            &optval,
                            static_cast<socklen_t> (sizeof(int)));

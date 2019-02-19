@@ -41,6 +41,7 @@ private:
     std::vector<epoll_event> events;    //存放epoll_wait返回结果
     std::map<int, MyEvent> eventsMap;   //存放fd和ptr指向结构体的对应关系
 
+    static const int initEventSize = 16;
 };
 
 #endif

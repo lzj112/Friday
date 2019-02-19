@@ -9,13 +9,14 @@
 class ThreadPool 
 {
 public:
-    ThreadPool();
+    ThreadPool(int threadnum);
     ~ThreadPool();
 
     void start();
 
     void setThreadNums(int nums) { threadNums = nums; }
     EpollEventLoop* getNextLoop();
+    
 private:
     std::vector<std::unique_ptr<Thread> > pool_;
     std::vector<EpollEventLoop *> loops_;

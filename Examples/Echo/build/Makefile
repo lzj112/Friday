@@ -124,6 +124,19 @@ echo/fast:
 .PHONY : echo/fast
 
 #=============================================================================
+# Target rules for targets named client
+
+# Build rule for target.
+client: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 client
+.PHONY : client
+
+# fast build rule for target.
+client/fast:
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/build
+.PHONY : client/fast
+
+#=============================================================================
 # Target rules for targets named FridayNET
 
 # Build rule for target.
@@ -135,6 +148,33 @@ FridayNET: cmake_check_build_system
 FridayNET/fast:
 	$(MAKE) -f src/CMakeFiles/FridayNET.dir/build.make src/CMakeFiles/FridayNET.dir/build
 .PHONY : FridayNET/fast
+
+EchoClient.o: EchoClient.cpp.o
+
+.PHONY : EchoClient.o
+
+# target to build an object file
+EchoClient.cpp.o:
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/EchoClient.cpp.o
+.PHONY : EchoClient.cpp.o
+
+EchoClient.i: EchoClient.cpp.i
+
+.PHONY : EchoClient.i
+
+# target to preprocess a source file
+EchoClient.cpp.i:
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/EchoClient.cpp.i
+.PHONY : EchoClient.cpp.i
+
+EchoClient.s: EchoClient.cpp.s
+
+.PHONY : EchoClient.s
+
+# target to generate assembly for a file
+EchoClient.cpp.s:
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/EchoClient.cpp.s
+.PHONY : EchoClient.cpp.s
 
 EchoServer.o: EchoServer.cpp.o
 
@@ -170,9 +210,13 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
-	@echo "... echo"
 	@echo "... edit_cache"
+	@echo "... echo"
+	@echo "... client"
 	@echo "... FridayNET"
+	@echo "... EchoClient.o"
+	@echo "... EchoClient.i"
+	@echo "... EchoClient.s"
 	@echo "... EchoServer.o"
 	@echo "... EchoServer.i"
 	@echo "... EchoServer.s"
