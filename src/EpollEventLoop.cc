@@ -45,7 +45,6 @@ void EpollEventLoop::handleEvents()
 {
     if (events.size() == 0) 
     {
-        //log TODO
         return ;
     }
 
@@ -54,21 +53,33 @@ void EpollEventLoop::handleEvents()
         MyEvent* ev = static_cast<MyEvent *> (x.data.ptr);
         
         if (x.events & (pollHangUp | pollErr)) 
-            //这两个事件发生,设置可读
+        {
+             //这两个事件发生,设置可读
             //交给可读回调,触发其中错误处理
+            printf("pollHangUp || pollErr\n");
             x.events = pollReadAble;
-
-        if (x.events & pollReadAble)
+        }
+        else if (x.events & pollReadAble)
+        {
             if (x.events & pollRDHangUp) 
+            {
+                printf("pollRDHangUp\n");
                 //对端正常关闭,同时触发epollin
                 ::close(ev->fd());
+            }
             else 
+            {
+                printf("pollread\n");
                 //有数据读到读buffer里
                 ev->goRead();
-
-        if (x.events & pollWriteAble) 
+            }
+        }
+        else if (x.events & pollWriteAble) 
+        {
+            printf("pollwrite\n");
             //有数据写到写buffer里
             ev->goWrite();
+        }
     }
 }
 

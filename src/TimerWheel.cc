@@ -47,6 +47,7 @@ void TimerWheel::start()
 
 void TimerWheel::readTimerfd(const MyEvent*, const Message&) 
 {
+    printf("定时器 timerfd 到期\n");
     ssize_t s;
     uint64_t exp;
     s = ::read(timerfd_.fd(), &exp, sizeof(uint64_t));

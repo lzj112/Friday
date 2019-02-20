@@ -35,6 +35,8 @@ stdio.h
 -
 iostream
 -
+MyEvent.h
+/home/lzj/Friday/Examples/Echo/src/MyEvent.h
 EpollBase.h
 /home/lzj/Friday/Examples/Echo/src/EpollBase.h
 
@@ -72,6 +74,8 @@ EpollBase.h
 
 /home/lzj/Friday/Examples/Echo/src/FServer.cc
 map
+-
+stdio.h
 -
 FServer.h
 /home/lzj/Friday/Examples/Echo/src/FServer.h

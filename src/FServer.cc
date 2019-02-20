@@ -1,5 +1,6 @@
 
 #include <map>
+#include <stdio.h>
 
 #include "FServer.h"
 
@@ -26,10 +27,7 @@ FServer::~FServer()
 void FServer::starts() 
 {
     MyEvent listenEvent(loop_, serverFd->fd());
-    listenEvent.setMessMana(std::bind(&FServer::newConntion, 
-                                       this,
-                                       std::placeholders::_1,
-                                       std::placeholders::_2));
+    listenEvent.setReadCallBack(std::bind(&FServer::newConntion, this));
     //启动线程池,执行子线程们的loop
     //server里的loop在主线程中执行,由用户显示调用
     threadPool->start();
@@ -39,9 +37,8 @@ void FServer::starts()
 }
 
 //防止淤积,循环accept
-void FServer::newConntion(const MyEvent*, const Message&) 
+void FServer::newConntion() 
 {
-    printf("有新的连接等待accept\n");
     std::map<int, InitSockAddr> newConn;
     int connfd = -1;
     sockaddr_in peer;
@@ -51,30 +48,15 @@ void FServer::newConntion(const MyEvent*, const Message&)
     {
         memset(&peer, 0, peerLen);
 
-        connfd = serverFd->accept();
+        connfd = serverFd->accept(&peer);
         if (connfd < 0) 
-        {
-            switch(connfd)
-            {
-                case (EWOULDBLOCK) :  
-                case (ECONNABORTED) :   
-                case (EPROTO) :
-                case (EINTR) :
-                    break;
-                default:
-                {
-                    //记录入日志
-                    break;
-                }
-            }
-        }
+            break;
         else 
         {
             InitSockAddr peerAddr(peer);
             newConn.insert(std::make_pair(connfd, peerAddr));
 
-            std::cout << "got a new connection fd = " << connfd;
-            peerAddr.print();
+            printf("got a new connection fd = %d\n", connfd);
         }
     }
 

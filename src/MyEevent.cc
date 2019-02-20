@@ -13,20 +13,26 @@ MyEvent::MyEvent(EpollEventLoop* loop, int fd)
 
 void MyEvent::goRead() //每次读取套接字上的数据时尽可能多的读取
 {
-	PackageTCP tmpBuffer;
-	bool isEndRead = true;
-	do 
+	printf("here is myevent::goread\n");
+	if (readCallBack_ == nullptr)
 	{
-		bzero(&tmpBuffer, sizeof(PackageTCP));
-		isEndRead = readPackHead(tmpBuffer);
-		if (isEndRead) 
+		PackageTCP tmpBuffer;
+		bool isEndRead = true;
+		do 
 		{
-			appendRecvBuffer(tmpBuffer);
-		}
-	}	while (isEndRead == true);
-	
-	//处理拿到的数据
-	performMessManaCB();
+			bzero(&tmpBuffer, sizeof(PackageTCP));
+			isEndRead = readPackHead(tmpBuffer);
+			if (isEndRead) 
+			{
+				appendRecvBuffer(tmpBuffer);
+			}
+		}	while (isEndRead == true);
+
+		//处理拿到的数据
+		performMessManaCB();
+	}
+	else 
+		readCallBack_();
 }
 
 bool MyEvent::readPackHead(PackageTCP& tmpPackage) 
@@ -74,8 +80,7 @@ bool MyEvent::readPackBody(PackageTCP& tmp, int len)
 			}
 			else 
 			{
-				//断开连接
-				//关闭 fd 删除 event
+				::close(fd_);
 				isRecvBodyOK = false;
 				break;
 			}
@@ -121,47 +126,6 @@ void MyEvent::performMessManaCB()
 	}
 }
 
-
-int MyEvent::sendMess(Message mess) 
-{
-	// Message tmpMess(tmpPack.body);
-	// tmpMess.setType(tmpPack.head.type);
-	sendBuffer.appendMess(mess);	//加入写buffer
-
-	changeToOUT();
-}
-
-//重新添加 注册可写
-void MyEvent::sendMessTo(Message tmpMess) 
-{
-	int count = tmpMess.length(), ret = 0, sum = 0;
-	while (count > 0) 
-	{
-		//不对,发送packageTCP,先发包头,再发包体
-		ret = send(fd_,
-				   (tmpMess.message().data() + sum),
-				   count,
-				   0);
-		if (ret <= 0) 
-		{
-			if (errno == EAGAIN || 
-				errno == EWOULDBLOCK || 
-				errno == EINTR)
-				continue;
-			else 
-			{
-				//断开连接
-				break;
-			}
-		}
-		else 
-		{
-			count += ret;
-			sum += ret;
-		}
-	}
-}
-
 void MyEvent::goWrite() 
 {
 	if (writeCallBack_ != nullptr) 
@@ -178,6 +142,94 @@ void MyEvent::goWrite()
 	}
 	//改为监听可读事件
 	changeToIN();
+}
+
+
+int MyEvent::sendMess(Message mess)
+{
+	// Message tmpMess(tmpPack.body);
+	// tmpMess.setType(tmpPack.head.type);
+	sendBuffer.appendMess(mess);	//加入写buffer
+
+	changeToOUT();
+}
+
+//重新添加 注册可写
+void MyEvent::sendMessTo(Message tmpMess) 
+{
+	PackageTCP package;
+    strcpy(package.body, tmpMess.mess());
+    package.head.type = tmpMess.type();
+    package.head.length = sizeof(package.body);
+	
+	bool isSucSend = sendMessHead(&package);
+	if (isSucSend == true)
+		isSucSend = sendMessBody(&package + PACKHEADSIZE, package.head.length);
+	if (isSucSend == false) 
+	{
+		// sendMess(tmpMess);
+		std::cout << "发送一条消息失败" << std::endl;
+	}
+}
+
+bool MyEvent::sendMessHead(PackageTCP* pac) 
+{
+	int count = PACKHEADSIZE, ret = 0, sum = 0;
+	while (count > 0) 
+	{
+		//不对,发送packageTCP,先发包头,再发包体
+		ret = send(fd_,
+				   (pac + sum),
+				   count,
+				   0);
+		if (ret <= 0) 
+		{
+			if (errno == EAGAIN || 
+				errno == EWOULDBLOCK || 
+				errno == EINTR)
+				continue;
+			else 
+			{
+				return false;
+			}
+		}
+		else 
+		{
+			count -= ret;
+			sum += ret;
+		}
+	}
+	return true;
+}
+
+bool MyEvent::sendMessBody(PackageTCP* pac, int length) 
+{
+	int count = length, ret = 0, sum = 0;
+	while (count > 0) 
+	{
+		//不对,发送packageTCP,先发包头,再发包体
+		ret = send(fd_,
+				   (pac + sum),
+				   count,
+				   0);
+		if (ret <= 0) 
+		{
+			if (errno == EAGAIN || 
+				errno == EWOULDBLOCK || 
+				errno == EINTR)
+				continue;
+			else 
+			{
+				return false;
+			}
+		}
+		else 
+		{
+			count -= ret;
+			sum += ret;
+		}
+	}
+	return true;
 }
 
 void MyEvent::changeToIN() 

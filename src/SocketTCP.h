@@ -26,7 +26,7 @@ public:
     int fd() { return socketFd->fd(); }
     int bind(InitSockAddr localAddr);
     int listen(int backlog = 10);
-    int accept();
+    int accept(sockaddr_in* peer);
     int connect(InitSockAddr peerAddr);
     void close() { socketFd->close(); }
     void reSet(int fd) { socketFd->reSet(fd); }

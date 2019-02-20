@@ -11,6 +11,7 @@ Connector::Connector(EpollEventLoop* baseLoop,
                      int port)
     : loop_(baseLoop),
       cliSock(sock),
+      reTryDelay(initReTryDelay),
       serAddr(new InitSockAddr(ip, port)),
       timerContainer(new TimerWheel(baseLoop))
 {}
@@ -19,7 +20,8 @@ void Connector::connect()
 {
     int ret = cliSock->connect(*serAddr);
     printf("connect return ret == %d\n", ret);
-    switch (ret) 
+    int saveErrno = (ret == 0) ? ret : errno;
+    switch (saveErrno) 
     {
         case 0:             //连接成功
             connSuccessful();
@@ -65,7 +67,7 @@ void Connector::connSuccessful()
 //正在连接
 void Connector::inConnection() 
 {
-    printf("here is isConnection\n");
+    printf("here is isConnection--------\n");
     MyEvent ev(loop_, cliSock->fd());
     ev.setWriteCallBack(std::bind(&Connector::isConnOk, this));
     ev.setCloseCallBack(std::bind(&Connector::gotError, this));
@@ -82,41 +84,50 @@ void Connector::gotError()
 }
 
 
-int Connector::isConnOk() 
+void Connector::isConnOk() 
 {
-    int error = cliSock->connect(*serAddr);
-    if (error == EISCONN) 
+    printf("here is isConnOK\n");
+    int ret = cliSock->connect(*serAddr);
+    int error = (ret == 0) ? ret : errno;
+    printf("EISCONN = %d errno = %d\n", EISCONN, errno);
+    if (error == 0)
+    {
+        connSuccessful();
+    }
+    else if (error == EISCONN) 
     {
         //是自连接
         if (cliSock->isSelfConnection())
         {
-            //log TODO
+            printf("是自连接\n");
             reConnect();
         }
         else
         {
-            //log TODO
+            printf("成功连接\n");
             connSuccessful();
         }
     }
     else 
     {
+        printf("连接失败,重连\n");
         //不是EISCONN就是连接失败
         reConnect();
     }
 }
 
-
 void Connector::reConnect() 
 {
     printf("here is reConnect\n");
     cliSock->close();
+    printf("re---1\n");
     cliSock->reSet(cliSock->creSocketTCP());
+    printf("re---2\n");
     timerContainer->addTimer(reTryDelay,
                              0,
                              std::bind(&Connector::connect,
                                        this),
                              1);
     reTryDelay = 2 * reTryDelay;
-                             
+    printf("re---3\n");            
 }

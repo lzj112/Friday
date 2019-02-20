@@ -37,39 +37,23 @@ int SocketTCP::listen(int backlog)
     assert(ret != -1);
 }
 
-int SocketTCP::accept()
+int SocketTCP::accept(sockaddr_in* peer)
 {
-std::cout << "here is accept from " << socketFd->fd() << std::endl;
-
-    sockaddr_in peerAddr;
-    memset(&peerAddr, 0, sizeof(sockaddr_in));
-    socklen_t peerAddrLen = sizeof(peerAddr);
+    socklen_t peerAddrLen = sizeof(sockaddr_in);
 
     errno = 0;
-    int connfd = -1;
-    connfd = ::accept(socketFd->fd(), 
-                      (sockaddr *)&peerAddr, 
+    return ::accept(socketFd->fd(), 
+                      (sockaddr *)peer, 
                       &peerAddrLen);
-    
-std::cout << "got new conn = " << connfd  << " errno = " << errno << std::endl;
-
-    if (connfd < 0) 
-        return errno;
-    else 
-        return connfd;
 }
 
 
 int SocketTCP::connect(InitSockAddr peerAddr) 
 {
     errno = 0;
-    int ret = ::connect(socketFd->fd(), 
-                        peerAddr.sockAddr(),
-                        peerAddr.length());
-    if (ret == 0) 
-        return ret;
-    else 
-        return errno;
+    return ::connect(socketFd->fd(), 
+                     peerAddr.sockAddr(),
+                     peerAddr.length());
 }
 
 void SocketTCP::setNoDely() 

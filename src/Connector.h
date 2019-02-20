@@ -24,7 +24,7 @@ typedef std::function<void(int)> connSucced;
     void connect();
     void connSuccessful();
     void inConnection();
-    int isConnOk();
+    void isConnOk();
     void reConnect();
     void gotError();
 
@@ -42,9 +42,12 @@ private:
     EpollEventLoop* loop_;
     SocketTCP* cliSock;
     std::unique_ptr<InitSockAddr> serAddr;
-    // InitSockAddr* serAddr;
     std::unique_ptr<TimerWheel> timerContainer;
+
     int reTryDelay;
+    
+    static const int maxCEILING = 30000;
+    static const int initReTryDelay = 500;
 
     IOcallBack readCb;
     IOcallBack writeCb;

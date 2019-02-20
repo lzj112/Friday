@@ -5,14 +5,14 @@
 
 using namespace std;
 
-void echoFunc(const MyEvent* ev, Message& m) 
+void echoFunc(MyEvent* ev, Message& m) 
 {
-    PackageTCP package;
-    strcpy(package.body, m.mess());
-    package.head.type = m.type();
-    package.head.length = sizeof(package.body);
+    // PackageTCP package;
+    // strcpy(package.body, m.mess());
+    // package.head.type = m.type();
+    // package.head.length = sizeof(package.body);
 
-    ev->sendMess(package);
+    ev->sendMess(m);
 }
 
 int main() 

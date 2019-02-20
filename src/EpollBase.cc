@@ -5,10 +5,13 @@
 
 #include <iostream>
 
+#include "MyEvent.h"
 #include "EpollBase.h"
 
 void EpollBase::add(int fd, epoll_event* ev) 
 {
+    MyEvent* ptr = static_cast<MyEvent *> (ev->data.ptr);
+    printf("here is epoll_add, epollfd=%d,fd=%d,inPtrfd=%d\n", epollFd, fd, ptr->fd());
     if (epoll_ctl(epollFd, EPOLL_CTL_ADD, fd, ev) < 0) 
     {
         perror("epoll_ctl_add ");

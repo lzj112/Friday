@@ -27,7 +27,7 @@ public:
     void defaultConnErrCB(); 
     
 private:
-    void newConntion(const MyEvent*, const Message&);
+    void newConntion();
 
     EpollEventLoop* loop_;
     const std::string serName;
