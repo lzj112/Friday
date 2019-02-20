@@ -9,6 +9,8 @@
 /home/lzj/Friday/Examples/Echo/EchoClient.cpp
 stdio.h
 -
+iostream
+-
 src/Connector.h
 /home/lzj/Friday/Examples/Echo/src/Connector.h
 src/EpollEventLoop.h

@@ -7,18 +7,19 @@ using namespace std;
 
 void echoFunc(MyEvent* ev, Message& m) 
 {
-    // PackageTCP package;
-    // strcpy(package.body, m.mess());
-    // package.head.type = m.type();
-    // package.head.length = sizeof(package.body);
-
-    ev->sendMess(m);
+    const int length = m.length();
+    char ctr[length + 10];
+    strcpy(ctr, "ECHO : ");
+    strcat(ctr, m.mess());
+    Message tmp(ctr);
+    ev->sendMess(tmp);
 }
 
 int main() 
 {
     EpollEventLoop loop;
     FServer ser(&loop, "test", "127.0.0.1", 4000);
+    ser.setMesMang(echoFunc);
     ser.starts();
     loop.loop();
 

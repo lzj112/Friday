@@ -50,6 +50,12 @@ int main(int argc, char* argv[])
     else 
         printf("%d %d\n", EISCONN, errno);
 
+    ret = connect(sockfd, (struct sockaddr*)&address, sizeof(address));
+    if (ret == 0)
+        printf("连接成功2222\n");
+    else 
+        printf("%d %d\n", EISCONN, errno);
+
 
     return 0;
 }
