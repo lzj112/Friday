@@ -24,8 +24,11 @@ void MyEvent::goRead() //每次读取套接字上的数据时尽可能多的读�
 		{
 			bzero(&tmpBuffer, sizeof(PackageTCP));
 			isEndRead = readPackHead(&tmpBuffer);
+			if (isEndRead)
+				isEndRead = readPackBody(tmpBuffer, tmpBuffer.head.length);
 			if (isEndRead) 
 			{
+				printf("将[%s]添加到recvbuffer\n", tmpBuffer.body);
 				appendRecvBuffer(tmpBuffer);
 			}
 		}	while (isEndRead == true);
@@ -53,28 +56,20 @@ bool MyEvent::readPackHead(PackageTCP* pack)
 			sum += ret;
 	}
 
-	bool isRecvBodyOK = true;
 	if (isRecvHeadOK)
-	{
-		isRecvBodyOK = readPackBody(pack + PACKHEADSIZE, 
-									pack->head.length);	
-		if (isRecvBodyOK)
-			return true;
-		else 
-			return false;
-	}
+		return true;
 	else 
 		return false;
 }
 
-bool MyEvent::readPackBody(PackageTCP* tmp, int len) 
+bool MyEvent::readPackBody(PackageTCP& tmp, int len) 
 {
 	int count = len, ret = 0, sum = 0;
 	bool isRecvBodyOK = true;
 	while (count > 0) 
 	{
 		ret = ::recv(fd_, 
-					 (tmp + sum), 
+					 (tmp.body + sum), 
 					 MAXBODY,
 					 0);
 		if (ret < 0) 
@@ -99,6 +94,7 @@ bool MyEvent::readPackBody(PackageTCP* tmp, int len)
 			sum += ret;
 		}
 	}
+	printf("读取到数据||%s||\n", tmp.body);
 	if (isRecvBodyOK)	//需要同时验证count<=0么?
 		return true;
 	else 
@@ -137,15 +133,18 @@ void MyEvent::performMessManaCB()
 
 void MyEvent::goWrite() 
 {
+	printf("here is goWrite\n");
 	if (writeCallBack_ != nullptr) 
 		writeCallBack_();
-	if (!sendBuffer.isEmpty()) 
+	else if (!sendBuffer.isEmpty()) 
 	{
+		printf("-------------\n");
 		Message tmpMess;
 		do 
 		{
 			memset(&tmpMess, 0, sizeof(Message));
 			sendBuffer.readMess(tmpMess);
+			printf("mess=%s\n", tmpMess.mess());
 			sendMessTo(tmpMess);
 		}	while (!sendBuffer.isEmpty());
 	}

@@ -50,7 +50,7 @@ public:
     
 private:
     bool readPackHead(PackageTCP* tmpPackage);
-    bool readPackBody(PackageTCP* tmpPackage, int len);
+    bool readPackBody(PackageTCP& tmpPackage, int len);
     void appendSendBuffer(PackageTCP& tmp);
     void appendRecvBuffer(PackageTCP& tmp);
     void sendMessTo(Message tmpMess);
