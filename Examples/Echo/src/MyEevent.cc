@@ -94,7 +94,6 @@ bool MyEvent::readPackBody(PackageTCP& tmp, int len)
 			sum += ret;
 		}
 	}
-	printf("读取到数据||%s||\n", tmp.body);
 	if (isRecvBodyOK)	//需要同时验证count<=0么?
 		return true;
 	else 
@@ -105,6 +104,7 @@ void MyEvent::appendRecvBuffer(PackageTCP& tmp)
 {
 	Message tmpMess(tmp.body);
 	tmpMess.setType(tmp.head.type);
+	printf("存入读buffer前=%s\n", tmpMess.mess());
 	recvBuffer.appendMess(std::move(tmpMess));
 }
 
@@ -120,13 +120,15 @@ void MyEvent::performMessManaCB()
 			memset(&tmpMess, 0, sizeof(Message));
 			recvBuffer.readMess(tmpMess);
 			if (messManage_ != nullptr)
+			{
 				messManage_(this, tmpMess);
+				printf("--->%s\n", tmpMess.mess());
+			}
 			else 
 			{
 				std::cout << "take the message:" << std::endl;
 				tmpMess.show();
 			}
-			std::cout << "执行了performMessManaCB一次\n";
 		}	while (!recvBuffer.isEmpty());
 	}
 }
@@ -138,7 +140,6 @@ void MyEvent::goWrite()
 		writeCallBack_();
 	else if (!sendBuffer.isEmpty()) 
 	{
-		printf("-------------\n");
 		Message tmpMess;
 		do 
 		{
@@ -155,7 +156,7 @@ void MyEvent::goWrite()
 
 int MyEvent::sendMess(Message mess)
 {
-	printf("here is sendMess\n");
+	printf("here is sendMess=%s\n", mess.mess());
 	sendBuffer.appendMess(mess);	//加入写buffer
 
 	changeToOUT();

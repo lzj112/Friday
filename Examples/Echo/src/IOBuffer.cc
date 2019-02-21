@@ -35,7 +35,9 @@ void IOBuffer::appendMess(Message& tmp)
 {
     if (!isFull()) 
     {
+        printf("iobuffer中存入数据前tmp.mess=%s\n", tmp.mess());
         ioBuffer[writeIndex] = tmp;
+        printf("iobuffer中存入数据=%s\n", ioBuffer[writeIndex]);
         writeIndex = ++writeIndex % MAXBUFFER;
     }
 }
@@ -54,6 +56,7 @@ void IOBuffer::readMess(Message& buffer)
     if (!isEmpty()) 
     {
         buffer = ioBuffer[readIndex];
+        printf("iobuffer中读取到数据%s\n", buffer.mess());
         readIndex = ++readIndex % MAXBUFFER;
     }
 }

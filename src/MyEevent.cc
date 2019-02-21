@@ -24,8 +24,11 @@ void MyEvent::goRead() //每次读取套接字上的数据时尽可能多的读�
 		{
 			bzero(&tmpBuffer, sizeof(PackageTCP));
 			isEndRead = readPackHead(&tmpBuffer);
+			if (isEndRead)
+				isEndRead = readPackBody(tmpBuffer, tmpBuffer.head.length);
 			if (isEndRead) 
 			{
+				printf("将[%s]添加到recvbuffer\n", tmpBuffer.body);
 				appendRecvBuffer(tmpBuffer);
 			}
 		}	while (isEndRead == true);
@@ -53,28 +56,20 @@ bool MyEvent::readPackHead(PackageTCP* pack)
 			sum += ret;
 	}
 
-	bool isRecvBodyOK = true;
 	if (isRecvHeadOK)
-	{
-		isRecvBodyOK = readPackBody(pack + PACKHEADSIZE, 
-									pack->head.length);	
-		if (isRecvBodyOK)
-			return true;
-		else 
-			return false;
-	}
+		return true;
 	else 
 		return false;
 }
 
-bool MyEvent::readPackBody(PackageTCP* tmp, int len) 
+bool MyEvent::readPackBody(PackageTCP& tmp, int len) 
 {
 	int count = len, ret = 0, sum = 0;
 	bool isRecvBodyOK = true;
 	while (count > 0) 
 	{
 		ret = ::recv(fd_, 
-					 (tmp + sum), 
+					 (tmp.body + sum), 
 					 MAXBODY,
 					 0);
 		if (ret < 0) 
@@ -109,6 +104,7 @@ void MyEvent::appendRecvBuffer(PackageTCP& tmp)
 {
 	Message tmpMess(tmp.body);
 	tmpMess.setType(tmp.head.type);
+	printf("存入读buffer前=%s\n", tmpMess.mess());
 	recvBuffer.appendMess(std::move(tmpMess));
 }
 
@@ -124,28 +120,32 @@ void MyEvent::performMessManaCB()
 			memset(&tmpMess, 0, sizeof(Message));
 			recvBuffer.readMess(tmpMess);
 			if (messManage_ != nullptr)
+			{
 				messManage_(this, tmpMess);
+				printf("--->%s\n", tmpMess.mess());
+			}
 			else 
 			{
 				std::cout << "take the message:" << std::endl;
 				tmpMess.show();
 			}
-			std::cout << "执行了performMessManaCB一次\n";
 		}	while (!recvBuffer.isEmpty());
 	}
 }
 
 void MyEvent::goWrite() 
 {
+	printf("here is goWrite\n");
 	if (writeCallBack_ != nullptr) 
 		writeCallBack_();
-	if (!sendBuffer.isEmpty()) 
+	else if (!sendBuffer.isEmpty()) 
 	{
 		Message tmpMess;
 		do 
 		{
 			memset(&tmpMess, 0, sizeof(Message));
 			sendBuffer.readMess(tmpMess);
+			printf("mess=%s\n", tmpMess.mess());
 			sendMessTo(tmpMess);
 		}	while (!sendBuffer.isEmpty());
 	}
@@ -156,7 +156,7 @@ void MyEvent::goWrite()
 
 int MyEvent::sendMess(Message mess)
 {
-	printf("here is sendMess\n");
+	printf("here is sendMess=%s\n", mess.mess());
 	sendBuffer.appendMess(mess);	//加入写buffer
 
 	changeToOUT();
