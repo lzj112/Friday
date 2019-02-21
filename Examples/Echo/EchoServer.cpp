@@ -12,7 +12,6 @@ void echoFunc(MyEvent* ev, Message& m)
     strcpy(ctr, "ECHO : ");
     strcat(ctr, m.mess());
     Message tmp(ctr);
-    printf("在echoServer中数据=%s\n", ctr);
     ev->sendMess(tmp);
 }
 

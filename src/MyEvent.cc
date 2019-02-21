@@ -13,9 +13,22 @@ MyEvent::MyEvent(EpollEventLoop* loop, int fd)
 	  errorCallBack_(nullptr)
 {}
 
+
+MyEvent::MyEvent(const MyEvent& t) 
+	: fd_(t.fd_),
+	  loop_(t.loop_),
+	  ptr(t.ptr),
+	  readCallBack_(t.readCallBack_),
+	  writeCallBack_(t.writeCallBack_),
+	  messManage_(t.messManage_),
+	  errorCallBack_(t.errorCallBack_)
+{
+	sendBuffer = t.sendBuffer;
+	recvBuffer = t.recvBuffer;
+}
+
 void MyEvent::goRead() //每次读取套接字上的数据时尽可能多的读取
 {
-	printf("here is myevent::goread\n");
 	if (readCallBack_ == nullptr)
 	{
 		PackageTCP tmpBuffer;
@@ -104,7 +117,6 @@ void MyEvent::appendRecvBuffer(PackageTCP& tmp)
 {
 	Message tmpMess(tmp.body);
 	tmpMess.setType(tmp.head.type);
-	printf("存入读buffer前=%s\n", tmpMess.mess());
 	recvBuffer.appendMess(std::move(tmpMess));
 }
 
@@ -122,7 +134,6 @@ void MyEvent::performMessManaCB()
 			if (messManage_ != nullptr)
 			{
 				messManage_(this, tmpMess);
-				printf("--->%s\n", tmpMess.mess());
 			}
 			else 
 			{
@@ -135,7 +146,6 @@ void MyEvent::performMessManaCB()
 
 void MyEvent::goWrite() 
 {
-	printf("here is goWrite\n");
 	if (writeCallBack_ != nullptr) 
 		writeCallBack_();
 	else if (!sendBuffer.isEmpty()) 
@@ -145,7 +155,7 @@ void MyEvent::goWrite()
 		{
 			memset(&tmpMess, 0, sizeof(Message));
 			sendBuffer.readMess(tmpMess);
-			printf("mess=%s\n", tmpMess.mess());
+			printf("从sendbuffer中拿到%s\n", tmpMess.mess());
 			sendMessTo(tmpMess);
 		}	while (!sendBuffer.isEmpty());
 	}
@@ -156,8 +166,7 @@ void MyEvent::goWrite()
 
 int MyEvent::sendMess(Message mess)
 {
-	printf("here is sendMess=%s\n", mess.mess());
-	sendBuffer.appendMess(mess);	//加入写buffer
+	sendBuffer.appendMess(std::move(mess));	//加入写buffer
 
 	changeToOUT();
 }
@@ -185,7 +194,6 @@ bool MyEvent::sendMessHead(PackageTCP* pac)
 	int count = PACKHEADSIZE, ret = 0, sum = 0;
 	while (count > 0) 
 	{
-		//不对,发送packageTCP,先发包头,再发包体
 		ret = send(fd_,
 				   (pac + sum),
 				   count,
@@ -215,7 +223,6 @@ bool MyEvent::sendMessBody(PackageTCP* pac, int length)
 	int count = length, ret = 0, sum = 0;
 	while (count > 0) 
 	{
-		//不对,发送packageTCP,先发包头,再发包体
 		ret = send(fd_,
 				   (pac + sum),
 				   count,
@@ -242,16 +249,11 @@ bool MyEvent::sendMessBody(PackageTCP* pac, int length)
 
 void MyEvent::changeToIN() 
 {
-	epoll_event ev;
-	ev.events = pollEdgeTrigger | pollReadAble;
-	ev.data.ptr = this;	//这样写对么???
-	loop_->modifyEvent(ev);
+	loop_->modifyEvent(pollEdgeTrigger | pollReadAble, *this);
 }
 
 void MyEvent::changeToOUT() 
 {
-	epoll_event ev;
-	ev.events = pollEdgeTrigger | pollWriteAble;
-	ev.data.ptr = this;	//这样写对么???
-	loop_->modifyEvent(ev);
+
+	loop_->modifyEvent(pollEdgeTrigger | pollWriteAble, *this);
 }

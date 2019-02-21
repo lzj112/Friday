@@ -137,14 +137,18 @@ void EpollEventLoop::regWriteable(MyEvent socket)
     }
 }
 
-void EpollEventLoop::modifyEvent(epoll_event ev) 
+void EpollEventLoop::modifyEvent(int type, MyEvent evT) 
 {
-    MyEvent* tmp = static_cast<MyEvent *> (ev.data.ptr);
-    int sockfd = tmp->fd();
+    int sockfd = evT.fd();
+    epoll_event ev;
+    ev.events = type;
     auto it = eventsMap.find(sockfd);
     if (it != eventsMap.end())
+    {
         eventsMap.erase(it);
-    eventsMap.insert(std::make_pair(sockfd, *tmp));
+    }
+
+    eventsMap.insert(std::make_pair(sockfd, evT));
     
     auto iter = eventsMap.find(sockfd);
     if (iter != eventsMap.end()) 
@@ -152,4 +156,6 @@ void EpollEventLoop::modifyEvent(epoll_event ev)
         ev.data.ptr = &((*iter).second);
         epoll_->ctl(sockfd, &ev);
     }
+    else 
+        printf("更改epoll注册事件失败\n");
 }

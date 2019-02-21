@@ -26,6 +26,7 @@ class MyEvent
 public:
     MyEvent(EpollEventLoop* loop, int fd);
     ~MyEvent() {}
+    MyEvent(const MyEvent& t);
     
 
     int fd() { return fd_; }
@@ -46,7 +47,6 @@ public:
     void goClose();
 
     int sendMess(Message mess);
-
     
 private:
     bool readPackHead(PackageTCP* tmpPackage);

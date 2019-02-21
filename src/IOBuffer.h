@@ -13,6 +13,8 @@ class IOBuffer
 public:
     IOBuffer();
     ~IOBuffer();
+    IOBuffer(const IOBuffer& t);
+    IOBuffer& operator=(const IOBuffer& t);
 
     void appendMess(const char* buffer);
     void appendMess(Message& tmp);
@@ -29,7 +31,8 @@ public:
 
 
 private:
-    static const int MAXBUFFER = 1024;
+    // static const int MAXBUFFER = 1024;
+    static const int MAXBUFFER = 3;
     int readIndex;
     int writeIndex;
     int messCount;

@@ -18,6 +18,37 @@ IOBuffer::~IOBuffer()
     }
 }
 
+IOBuffer::IOBuffer(const IOBuffer& t)
+    : readIndex(t.readIndex),
+      writeIndex(t.writeIndex),
+      messCount(t.messCount)
+{
+    for (int i = readIndex, j = writeIndex; 
+         i != ((j + 1) % MAXBUFFER); 
+         (++i % MAXBUFFER))
+    {
+        ioBuffer[i] = t.ioBuffer[i];
+    }
+}
+
+IOBuffer& IOBuffer::operator=(const IOBuffer& t) 
+{
+    if (this != &t) 
+    {
+        readIndex = t.readIndex;
+        writeIndex = t.writeIndex;
+        messCount = t.messCount;
+        for (int i = readIndex, j = writeIndex; 
+             i != ((j + 1) % MAXBUFFER); 
+             (++i % MAXBUFFER))
+        {
+            ioBuffer[i] = t.ioBuffer[i];
+        }
+    }
+}
+
+
+
 void IOBuffer::appendMess(const char* buffer) 
 {
     if (buffer != nullptr) 
@@ -35,9 +66,7 @@ void IOBuffer::appendMess(Message& tmp)
 {
     if (!isFull()) 
     {
-        printf("iobuffer中存入数据前tmp.mess=%s\n", tmp.mess());
         ioBuffer[writeIndex] = tmp;
-        printf("iobuffer中存入数据=%s\n", ioBuffer[writeIndex]);
         writeIndex = ++writeIndex % MAXBUFFER;
     }
 }
@@ -56,7 +85,6 @@ void IOBuffer::readMess(Message& buffer)
     if (!isEmpty()) 
     {
         buffer = ioBuffer[readIndex];
-        printf("iobuffer中读取到数据%s\n", buffer.mess());
         readIndex = ++readIndex % MAXBUFFER;
     }
 }

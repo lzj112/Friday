@@ -22,11 +22,13 @@ Message::Message(std::string& str) : lengthNow(0), type_(-1)
 
 Message::Message(const Message& t) 
 {
-    int len = t.message_.size();
-    for (int i = 0; i < len; i++)
-        message_.push_back(*(t.message_.data() + i));
-    lengthNow = message_.size();
+    // int len = t.message_.size();
     type_ = t.type_;
+    // for (int i = 0; i < len; i++)
+    //     message_.push_back(*(t.message_.data() + i));
+    std::vector<char> tmp(t.message_);
+    std::swap(message_, tmp);
+    lengthNow = message_.size();
 }
 
 Message::Message(Message&& mess) noexcept
@@ -44,9 +46,11 @@ Message& Message::operator=(const Message& t)
         {
             std::vector<char> ().swap(message_);
         }
-        int len = t.message_.size();
-        for (int i = 0; i < len; i++)
-            message_.push_back(*(t.message_.data() + i));
+        // int len = t.message_.size();
+        // for (int i = 0; i < len; i++)
+        //     message_.push_back(*(t.message_.data() + i));
+        std::vector<char> tmp(t.message_);
+        std::swap(message_, tmp);
         lengthNow = message_.size();
     }
     return *this;
@@ -58,9 +62,11 @@ Message& Message::operator=(Message&& t) noexcept
     {
         std::vector<char> ().swap(message_);
     }
-    int len = t.message_.size();
-    for (int i = 0; i < len; i++)
-        message_.push_back(*(t.message_.data() + i));
+    // int len = t.message_.size();
+    // for (int i = 0; i < len; i++)
+    //     message_.push_back(*(t.message_.data() + i));
+    std::vector<char> tmp(t.message_);
+    std::swap(message_, tmp);
     lengthNow = message_.size();
 
     return *this;
