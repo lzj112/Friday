@@ -23,12 +23,8 @@ void Connector::connect()
     switch (saveErrno) 
     {
         case 0:             //连接成功
-            // printf("a\n");
-            // connSuccessful();
-            // break;
         case EINTR:         //被信号中止
         case EINPROGRESS:   //正在尝试连接
-        printf("b\n");
             inConnection();
             break;
         
@@ -37,7 +33,6 @@ void Connector::connect()
         case ENETUNREACH:   //网络不可达
         case ECONNREFUSED:  //拒绝连接
         case EADDRNOTAVAIL: //地址分配错误
-        printf("c\n");
             reConnect();
             break;
 
@@ -64,6 +59,7 @@ void Connector::connect()
 void Connector::connSuccessful() 
 {
     connSucced_(cliSock->fd());
+    loop_->stopLoop();
 }
 
 //正在连接
@@ -71,7 +67,7 @@ void Connector::inConnection()
 {
     MyEvent ev(loop_, cliSock->fd());
     ev.setWriteCallBack(std::bind(&Connector::isConnOk, this));
-    ev.setCloseCallBack(std::bind(&Connector::gotError, this));
+    // ev.setCloseCallBack(std::bind(&Connector::gotError, this));
     //注册可写事件
     loop_->regWriteable(ev);
 }
@@ -80,7 +76,7 @@ void Connector::gotError()
 {
     //log TODO
     int error = cliSock->getSocketState();
-    loop_->delEvent(cliSock->fd());
+
     reConnect();
 }
 

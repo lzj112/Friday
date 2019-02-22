@@ -17,7 +17,7 @@ EpollEventLoop::EpollEventLoop()
 
 EpollEventLoop::~EpollEventLoop() 
 {
-    assert(!isEnd);
+    assert(isEnd);
 
     //关闭所有fd 
     removeAllEvents();
@@ -94,19 +94,11 @@ void EpollEventLoop::removeAllEvents()
         {
             epoll_event ev;
             ev.data.ptr = static_cast<void *> (&x.second);
-            delEvent(x.first);
             ::close(x.first);
         }
     }
 }
 
-void EpollEventLoop::delEvent(int fd) 
-{
-    epoll_event ev;
-    ev.data.fd = fd;
-    epoll_.del(fd, &ev);
-    eventsMap.erase(fd);
-}
 
 void EpollEventLoop::regReadable(MyEvent socket) 
 {
@@ -138,7 +130,6 @@ void EpollEventLoop::regWriteable(MyEvent socket)
 
 void EpollEventLoop::modifyEvent(int type, MyEvent evT) 
 {
-    printf("不错, 我被调用了\n");;
     int sockfd = evT.fd();
     epoll_event ev;
     ev.events = type;
@@ -152,7 +143,6 @@ void EpollEventLoop::modifyEvent(int type, MyEvent evT)
     if (iter != eventsMap.end()) 
     {
         ev.data.ptr = &((*iter).second);
-        printf("我被调用了\n");
         epoll_.ctl(sockfd, &ev);
     }
     else 

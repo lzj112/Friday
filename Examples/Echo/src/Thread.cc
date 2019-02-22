@@ -34,10 +34,5 @@ Thread::~Thread()
 void Thread::defaultThreadFunc() 
 {
     loop_->loop();
-    // startLoop();
 }
 
-// void Thread::startLoop() 
-// {
-//     loop_->loop();
-// }

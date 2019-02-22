@@ -65,8 +65,7 @@ uint32_t TimerWheel::addTimer(int firstTime,
     
     //多少次SI后被触发
     int timeout = (firstTime < SI) ? 1 : (firstTime / SI);
-    // //转动多少圈后被触发
-    // int rotation = timeout / N;
+
     //应该插入哪个槽
     int ts = (currentSlot + (timeout % N)) % N;
 

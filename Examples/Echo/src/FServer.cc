@@ -1,6 +1,7 @@
+#include <stdio.h>
+#include <signal.h>
 
 #include <map>
-#include <stdio.h>
 
 #include "FServer.h"
 
@@ -14,11 +15,12 @@ FServer::FServer(EpollEventLoop* baseLoop,
       serAddr(ip, port),
       threadPool(workThreadNums)
 {
-    serverFd->bind(serAddr);
-    serverFd->listen(5);
     serverFd->setReuseAddr();
     serverFd->setNoDely();
     serverFd->setNonBlocking();
+    serverFd->bind(serAddr);
+    serverFd->listen(5);
+    signal(SIGPIPE, SIG_IGN);
 }   
 
 FServer::~FServer() 
