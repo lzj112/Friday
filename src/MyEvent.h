@@ -55,7 +55,7 @@ private:
     void appendRecvBuffer(PackageTCP& tmp);
     void sendMessTo(Message tmpMess);
     bool sendMessHead(PackageTCP* pac);
-    bool sendMessBody(PackageTCP* pac, int length);
+    bool sendMessBody(PackageTCP& pac);
 
     void changeToIN();
     void changeToOUT();

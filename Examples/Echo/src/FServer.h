@@ -33,10 +33,10 @@ private:
     const std::string serName;
 
     std::shared_ptr<SocketTCP> serverFd;
-    std::shared_ptr<InitSockAddr> serAddr;
-    std::unique_ptr<ThreadPool> threadPool;
+    InitSockAddr serAddr;
+    ThreadPool threadPool;
 
-    static const int workThreadNums = 4;
+    static const int workThreadNums = 3;
 
     IOcallBack connIOCallBack;
     errorCallBack connErrCallBack;

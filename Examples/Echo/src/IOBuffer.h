@@ -31,8 +31,8 @@ public:
 
 
 private:
-    // static const int MAXBUFFER = 1024;
-    static const int MAXBUFFER = 3;
+    static const int MAXBUFFER = 256;
+    // static const int MAXBUFFER = 3;
     int readIndex;
     int writeIndex;
     int messCount;

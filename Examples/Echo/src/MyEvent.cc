@@ -41,7 +41,6 @@ void MyEvent::goRead() //每次读取套接字上的数据时尽可能多的读�
 				isEndRead = readPackBody(tmpBuffer, tmpBuffer.head.length);
 			if (isEndRead) 
 			{
-				printf("将[%s]添加到recvbuffer\n", tmpBuffer.body);
 				appendRecvBuffer(tmpBuffer);
 			}
 		}	while (isEndRead == true);
@@ -155,11 +154,10 @@ void MyEvent::goWrite()
 		{
 			memset(&tmpMess, 0, sizeof(Message));
 			sendBuffer.readMess(tmpMess);
-			printf("从sendbuffer中拿到%s\n", tmpMess.mess());
 			sendMessTo(tmpMess);
 		}	while (!sendBuffer.isEmpty());
 	}
-	//改为监听可读事件
+	// 改为监听可读事件
 	changeToIN();
 }
 
@@ -180,13 +178,9 @@ void MyEvent::sendMessTo(Message tmpMess)
     package.head.length = sizeof(package.body);
 	
 	bool isSucSend = sendMessHead(&package);
-	if (isSucSend == true)
-		isSucSend = sendMessBody(&package + PACKHEADSIZE, package.head.length);
-	if (isSucSend == false) 
-	{
-		// sendMess(tmpMess);
-		std::cout << "发送一条消息失败" << std::endl;
-	}
+	if (isSucSend)
+		isSucSend = sendMessBody(package);
+
 }
 
 bool MyEvent::sendMessHead(PackageTCP* pac) 
@@ -218,14 +212,14 @@ bool MyEvent::sendMessHead(PackageTCP* pac)
 	return true;
 }
 
-bool MyEvent::sendMessBody(PackageTCP* pac, int length) 
+bool MyEvent::sendMessBody(PackageTCP& pac) 
 {
-	int count = length, ret = 0, sum = 0;
+	int count = pac.head.length, ret = 0, sum = 0;
 	while (count > 0) 
 	{
 		ret = send(fd_,
-				   (pac + sum),
-				   count,
+				   (pac.body + sum),
+				   MAXBODY,
 				   0);
 		if (ret <= 0) 
 		{

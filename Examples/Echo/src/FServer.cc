@@ -11,10 +11,10 @@ FServer::FServer(EpollEventLoop* baseLoop,
     : loop_(baseLoop),
       serName(name),
       serverFd(new SocketTCP()),
-      serAddr(new InitSockAddr(ip, port)),
-      threadPool( new ThreadPool(workThreadNums))
+      serAddr(ip, port),
+      threadPool(workThreadNums)
 {
-    serverFd->bind(*serAddr);
+    serverFd->bind(serAddr);
     serverFd->listen(5);
     serverFd->setReuseAddr();
     serverFd->setNoDely();
@@ -30,7 +30,7 @@ void FServer::starts()
     listenEvent.setReadCallBack(std::bind(&FServer::newConntion, this));
     //启动线程池,执行子线程们的loop
     //server里的loop在主线程中执行,由用户显示调用
-    threadPool->start();
+    threadPool.start();
     
     //监听套接字 注册epoll可读事件
     loop_->regReadable(listenEvent);
@@ -62,7 +62,7 @@ void FServer::newConntion()
 
     for(auto x : newConn) 
     {   
-        EpollEventLoop* ioLoop = threadPool->getNextLoop();
+        EpollEventLoop* ioLoop = threadPool.getNextLoop();
         {
             MyEvent tmpEvent(ioLoop, x.first);
             tmpEvent.setMessMana(messManage_);

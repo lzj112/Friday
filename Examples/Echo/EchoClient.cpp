@@ -29,14 +29,16 @@ int main()
     strcpy(pack.body, "hello!");
     pack.head.length = 7;
 
-    char ctr[20];
+    PackageTCP rePack;
+    printf("sizeof(packagetcp) = %d\n", sizeof(PackageTCP));
     int ret = 0;
     while (1) 
     {
         ret = send(sock.fd(), &pack, sizeof(pack), 0);
-        printf("ret == %d\n", ret);
-        ret = recv(sock.fd(), ctr, 20, 0);
-        printf("ret-->%d, recv=%s\n", ret, ctr);
+        printf("send ret == %d\n", ret);
+        ret = recv(sock.fd(), &rePack, PACKHEADSIZE, 0);
+        ret = recv(sock.fd(), rePack.body, MAXBODY, 0);
+        printf("recv = %s\n", rePack.body);
         sleep(1);
     }
 }

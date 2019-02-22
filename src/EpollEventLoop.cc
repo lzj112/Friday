@@ -10,7 +10,6 @@ const int EPOLLWAITFOR = 10000;
 EpollEventLoop::EpollEventLoop() 
     : isLooping(false),
       isEnd(false),
-      epoll_(new EpollBase()),
       events(initEventSize),
       threadID (std::this_thread::get_id())
 {
@@ -29,7 +28,7 @@ void EpollEventLoop::loop()
     isLooping = true;
     while (isLooping) 
     {
-        epoll_->wait(events, EPOLLWAITFOR);
+        epoll_.wait(events, EPOLLWAITFOR);
         handleEvents();
         {
             std::vector<epoll_event> evs(events.size());
@@ -105,7 +104,7 @@ void EpollEventLoop::delEvent(int fd)
 {
     epoll_event ev;
     ev.data.fd = fd;
-    epoll_->del(fd, &ev);
+    epoll_.del(fd, &ev);
     eventsMap.erase(fd);
 }
 
@@ -119,7 +118,7 @@ void EpollEventLoop::regReadable(MyEvent socket)
     if (it != eventsMap.end()) 
     {
         ev.data.ptr = &((*it).second);
-        epoll_->add(socket.fd(), &ev);  //将监听套接字加入epoll事件合集
+        epoll_.add(socket.fd(), &ev);  //将监听套接字加入epoll事件合集
     }
 }
 
@@ -133,7 +132,7 @@ void EpollEventLoop::regWriteable(MyEvent socket)
     if (it != eventsMap.end()) 
     {
         ev.data.ptr = &((*it).second);
-        epoll_->add(socket.fd(), &ev);  //将监听套接字加入epoll事件合集
+        epoll_.add(socket.fd(), &ev);  //将监听套接字加入epoll事件合集
     }
 }
 
@@ -144,9 +143,7 @@ void EpollEventLoop::modifyEvent(int type, MyEvent evT)
     ev.events = type;
     auto it = eventsMap.find(sockfd);
     if (it != eventsMap.end())
-    {
         eventsMap.erase(it);
-    }
 
     eventsMap.insert(std::make_pair(sockfd, evT));
     
@@ -154,7 +151,7 @@ void EpollEventLoop::modifyEvent(int type, MyEvent evT)
     if (iter != eventsMap.end()) 
     {
         ev.data.ptr = &((*iter).second);
-        epoll_->ctl(sockfd, &ev);
+        epoll_.ctl(sockfd, &ev);
     }
     else 
         printf("更改epoll注册事件失败\n");
