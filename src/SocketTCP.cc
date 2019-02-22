@@ -4,10 +4,9 @@
 
 #include "SocketTCP.h"
 
-SocketTCP::SocketTCP() : socketFd(new FileDes(creSocketTCP()))
+SocketTCP::SocketTCP()
 {
-    // //设置非阻塞
-    // socketFd->setNonBlocking();
+    sockfd = creSocketTCP();
 }
 
 SocketTCP::~SocketTCP()
@@ -24,7 +23,7 @@ int SocketTCP::creSocketTCP()
 
 int SocketTCP::bind(InitSockAddr localAddr) 
 {
-    int ret = ::bind(socketFd->fd(),
+    int ret = ::bind(sockfd,
                      static_cast<sockaddr *> (localAddr.sockAddr()),
                      localAddr.length());
     assert(ret != -1);
@@ -33,7 +32,7 @@ int SocketTCP::bind(InitSockAddr localAddr)
 
 int SocketTCP::listen(int backlog) 
 {
-    int ret = ::listen(socketFd->fd(), backlog);
+    int ret = ::listen(sockfd, backlog);
     assert(ret != -1);
 }
 
@@ -42,7 +41,7 @@ int SocketTCP::accept(sockaddr_in* peer)
     socklen_t peerAddrLen = sizeof(sockaddr_in);
 
     errno = 0;
-    int ret = ::accept(socketFd->fd(), 
+    int ret = ::accept(sockfd, 
                       (sockaddr *)peer, 
                       &peerAddrLen);
     if (ret > 0)
@@ -63,15 +62,28 @@ int SocketTCP::accept(sockaddr_in* peer)
 int SocketTCP::connect(InitSockAddr peerAddr) 
 {
     errno = 0;
-    return ::connect(socketFd->fd(), 
+    return ::connect(sockfd, 
                      peerAddr.sockAddr(),
                      peerAddr.length());
+}
+
+void SocketTCP::setNonBlocking() 
+{
+    int old_option = fcntl(sockfd, F_GETFL, 0);
+    int new_option = old_option | O_NONBLOCK;
+    fcntl(sockfd, F_SETFL, new_option);
+}
+
+void SocketTCP::reSet() 
+{
+    ::close(sockfd);
+    sockfd = creSocketTCP();
 }
 
 void SocketTCP::setNoDely() 
 {
     int optval = 1;
-    int ret = ::setsockopt(socketFd->fd(),
+    int ret = ::setsockopt(sockfd,
                            IPPROTO_TCP,
                            TCP_NODELAY,
                            &optval,
@@ -85,7 +97,7 @@ void SocketTCP::setNoDely()
 void SocketTCP::setReuseAddr() 
 {
     int optval = 1;
-    int ret = ::setsockopt(socketFd->fd(),
+    int ret = ::setsockopt(sockfd,
                            SOL_SOCKET,
                            SO_REUSEADDR,
                            &optval,
@@ -99,7 +111,7 @@ void SocketTCP::setReuseAddr()
 void SocketTCP::setKeepLive() 
 {
     int optval = 1;
-    int ret = ::setsockopt(socketFd->fd(),
+    int ret = ::setsockopt(sockfd,
                            SOL_SOCKET,
                            SO_KEEPALIVE,
                            &optval,
@@ -114,7 +126,7 @@ int SocketTCP::getSocketState()
 {
     int optval;
     socklen_t optlen = static_cast<socklen_t> (sizeof(optval));
-    int ret = ::getsockopt(socketFd->fd(),
+    int ret = ::getsockopt(sockfd,
                            SOL_SOCKET,
                            SO_ERROR,
                            &optval,
@@ -132,11 +144,11 @@ bool SocketTCP::isSelfConnection()
     memset(&local, 0, len);
     memset(&peer, 0, len);
 
-    getpeername(socketFd->fd(), 
+    getpeername(sockfd, 
                 (struct sockaddr *)&peer,
                 &len);
     
-    getsockname(socketFd->fd(),
+    getsockname(sockfd,
                 (struct sockaddr *)&local,
                 &len);
     return (peer.sin_port == local.sin_port) &&

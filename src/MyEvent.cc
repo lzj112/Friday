@@ -156,9 +156,9 @@ void MyEvent::goWrite()
 			sendBuffer.readMess(tmpMess);
 			sendMessTo(tmpMess);
 		}	while (!sendBuffer.isEmpty());
+		// 改为监听可读事件
+		changeToIN();
 	}
-	// 改为监听可读事件
-	changeToIN();
 }
 
 

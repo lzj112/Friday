@@ -23,15 +23,15 @@ public:
     ~SocketTCP();
 
     int creSocketTCP();
-    int fd() { return socketFd->fd(); }
+    int fd() { return sockfd; }
     int bind(InitSockAddr localAddr);
     int listen(int backlog = 10);
     int accept(sockaddr_in* peer);
     int connect(InitSockAddr peerAddr);
-    void close() { socketFd->close(); }
-    void reSet(int fd) { socketFd->reSet(fd); }
+    void close() { ::close(sockfd); }
+    void reSet();
 
-    void setNonBlocking() { socketFd->setNonBlocking(); }
+    void setNonBlocking();
     void setNoDely();
     void setReuseAddr();
     void setKeepLive();
@@ -39,7 +39,8 @@ public:
     bool isSelfConnection();
 
 private:
-    std::shared_ptr<FileDes> socketFd;
+    // std::shared_ptr<FileDes> socketFd;
+    int sockfd;
 };
 
 #endif

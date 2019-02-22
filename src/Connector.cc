@@ -12,22 +12,23 @@ Connector::Connector(EpollEventLoop* baseLoop,
     : loop_(baseLoop),
       cliSock(sock),
       reTryDelay(initReTryDelay),
-      serAddr(new InitSockAddr(ip, port)),
-      timerContainer(new TimerWheel(baseLoop))
+      serAddr(ip, port),
+      timerContainer(baseLoop)
 {}
 
 void Connector::connect() 
 {
-    int ret = cliSock->connect(*serAddr);
-    printf("connect return ret == %d\n", ret);
+    int ret = cliSock->connect(serAddr);
     int saveErrno = (ret == 0) ? ret : errno;
     switch (saveErrno) 
     {
         case 0:             //连接成功
-            connSuccessful();
-            break;
+            // printf("a\n");
+            // connSuccessful();
+            // break;
         case EINTR:         //被信号中止
         case EINPROGRESS:   //正在尝试连接
+        printf("b\n");
             inConnection();
             break;
         
@@ -36,6 +37,7 @@ void Connector::connect()
         case ENETUNREACH:   //网络不可达
         case ECONNREFUSED:  //拒绝连接
         case EADDRNOTAVAIL: //地址分配错误
+        printf("c\n");
             reConnect();
             break;
 
@@ -67,7 +69,6 @@ void Connector::connSuccessful()
 //正在连接
 void Connector::inConnection() 
 {
-    printf("here is isConnection--------\n");
     MyEvent ev(loop_, cliSock->fd());
     ev.setWriteCallBack(std::bind(&Connector::isConnOk, this));
     ev.setCloseCallBack(std::bind(&Connector::gotError, this));
@@ -86,10 +87,8 @@ void Connector::gotError()
 
 void Connector::isConnOk() 
 {
-    printf("here is isConnOK\n");
-    int ret = cliSock->connect(*serAddr);
+    int ret = cliSock->connect(serAddr);
     int error = (ret == 0) ? ret : errno;
-    printf("EISCONN = %d errno = %d\n", EISCONN, errno);
     if (error == 0)
     {
         connSuccessful();
@@ -118,16 +117,14 @@ void Connector::isConnOk()
 
 void Connector::reConnect() 
 {
-    printf("here is reConnect\n");
-    cliSock->close();
-    printf("re---1\n");
-    cliSock->reSet(cliSock->creSocketTCP());
-    printf("re---2\n");
-    timerContainer->addTimer(reTryDelay,
-                             0,
-                             std::bind(&Connector::connect,
-                                       this),
-                             1);
-    reTryDelay = 2 * reTryDelay;
-    printf("re---3\n");            
+    if (reTryDelay < maxCEILING) 
+    {
+        cliSock->reSet();
+        timerContainer.addTimer(reTryDelay,
+                                0,
+                                std::bind(&Connector::connect, this));
+        reTryDelay = 2 * reTryDelay;
+    }   
+    else
+        printf("无法连接\n");        
 }

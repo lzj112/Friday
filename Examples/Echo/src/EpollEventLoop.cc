@@ -50,7 +50,7 @@ void EpollEventLoop::handleEvents()
     {
         MyEvent* ev = static_cast<MyEvent *> (x.data.ptr);
         
-        if (x.events & (pollHangUp | pollErr)) 
+        if (x.events & pollRDHangUp) 
         {
              //这两个事件发生,设置可读
             //交给可读回调,触发其中错误处理
@@ -138,6 +138,7 @@ void EpollEventLoop::regWriteable(MyEvent socket)
 
 void EpollEventLoop::modifyEvent(int type, MyEvent evT) 
 {
+    printf("不错, 我被调用了\n");;
     int sockfd = evT.fd();
     epoll_event ev;
     ev.events = type;
@@ -151,6 +152,7 @@ void EpollEventLoop::modifyEvent(int type, MyEvent evT)
     if (iter != eventsMap.end()) 
     {
         ev.data.ptr = &((*iter).second);
+        printf("我被调用了\n");
         epoll_.ctl(sockfd, &ev);
     }
     else 

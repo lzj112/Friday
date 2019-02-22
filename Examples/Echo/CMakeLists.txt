@@ -12,3 +12,4 @@ target_link_libraries(echo FridayNET pthread)
 
 add_executable(client EchoClient.cpp)
 target_link_libraries(client FridayNET pthread)
+

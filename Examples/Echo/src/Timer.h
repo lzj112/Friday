@@ -16,8 +16,9 @@ typedef std::function<void(void)> timerCallBack;
 class Timer 
 {
 public:
-    Timer(int firstTime, int interval, timerCallBack cb, int fd);
-    // Timer(Timer&& tmp) noexcept;
+    Timer(int firstTime, int interval, timerCallBack cb, int fd = -1);
+    Timer(Timer&& tmp) noexcept;
+    Timer(const Timer& t);
     ~Timer() {}
     void tick() const;
     int expiration() const  { return expire; }
@@ -33,7 +34,7 @@ public:
     
     bool operator==(const Timer& tmp) const;
     Timer& operator=(const Timer& tmp);
-    // Timer& operator=(Timer&& tmp);
+    Timer& operator=(Timer&& tmp);
 
 private:
     

@@ -27,11 +27,7 @@ TimerWheel::~TimerWheel()
 void TimerWheel::start() 
 {
     MyEvent timeTmp(loop_, timerfd_.fd());
-    timeTmp.setMessMana(std::bind(&TimerWheel::readTimerfd,
-                                  this,
-                                  std::placeholders::_1,
-                                  std::placeholders::_2));
-    // timeTmp.setReadCallBack(std::bind(&TimerWheel::readTimerfd, this));
+    timeTmp.setReadCallBack(std::bind(&TimerWheel::readTimerfd, this));
 
     loop_->regReadable(timeTmp);
 
@@ -45,7 +41,7 @@ void TimerWheel::start()
     assert(ret != -1);
 }
 
-void TimerWheel::readTimerfd(const MyEvent*, const Message&) 
+void TimerWheel::readTimerfd(void) 
 {
     printf("定时器 timerfd 到期\n");
     ssize_t s;
@@ -58,8 +54,8 @@ void TimerWheel::readTimerfd(const MyEvent*, const Message&)
 
 uint32_t TimerWheel::addTimer(int firstTime, 
                               int interval, 
-                              timerCallBack cb = nullptr,
-                              int fd = -1) 
+                              timerCallBack cb,
+                              int fd) 
 {
     if (cb == nullptr) 
     {
@@ -101,6 +97,7 @@ void TimerWheel::cancleTimer(uint32_t timerID)
 
 void TimerWheel::tick() 
 {
+    printf("tick\n");
     if (!wheel[currentSlot].empty()) 
     {
         auto it = wheel[currentSlot].begin();

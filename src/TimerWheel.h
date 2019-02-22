@@ -22,13 +22,16 @@ public:
     ~TimerWheel();
 
     int tickTime() const { return SI; }
-    uint32_t addTimer(int firstTime, int interval, timerCallBack cb, int fd);
+    uint32_t addTimer(int firstTime, 
+                      int interval, 
+                      timerCallBack cb = nullptr, 
+                      int fd = -1);
     void cancleTimer(uint32_t timerID);
     void tick();
 
 private:
     void start();
-    void readTimerfd(const MyEvent*, const Message&);
+    void readTimerfd();
     void defaultTimerCallBack();
     timerCallBack defaultTimerCallBack_;
 
