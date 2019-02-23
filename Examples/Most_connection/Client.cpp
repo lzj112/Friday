@@ -9,8 +9,6 @@
 #include "src/EpollEventLoop.h"
 using namespace std;
 
-
-
 sockaddr_in netAdderss;
 socklen_t addrLength = sizeof(sockaddr_in);
 
@@ -31,19 +29,18 @@ int main()
     //     t[i] = fork();
     //     if (t[i] == 0) 
     //     {
-            array<int, 10000> sockfd;
-            for (int i = 0;; i++)
+            array<int, 1000> sockfd;
+            for (int i = 0; i < 1000; i++)
             {
-                printf("第%d次\n", i);
                 sockfd[i] = socket(AF_INET, SOCK_STREAM, 0);
                 // int socketfd = socket(AF_INET, SOCK_STREAM, 0);
                 // assert(socketfd != -1);
-                printf("建立套接字%d\n", sockfd[i]);
+                printf("create socket = %d\n", sockfd[i]);
                 // sockfd.push_back(socketfd);
                 int ret = connect(sockfd[i], (sockaddr *)&netAdderss, addrLength);
                 if (ret == 0)
                 {
-                    printf("%d建立连接成功\n", sockfd[i]);
+                    printf("%d connect succeed\n", sockfd[i]);
                     // char ctr[] = "hello";
                     // PackageTCP pac(1, ctr);
                     // ret = send(sockfd[i], &pac, sizeof(PackageTCP), 0);
@@ -59,4 +56,5 @@ int main()
             }
 
     // while (1) {}
+
 }
