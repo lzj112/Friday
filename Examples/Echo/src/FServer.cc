@@ -19,7 +19,7 @@ FServer::FServer(EpollEventLoop* baseLoop,
     serverFd->setNoDely();
     serverFd->setNonBlocking();
     serverFd->bind(serAddr);
-    serverFd->listen(5);
+    serverFd->listen(10);
     signal(SIGPIPE, SIG_IGN);
 }   
 

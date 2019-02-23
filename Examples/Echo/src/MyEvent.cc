@@ -63,15 +63,24 @@ bool MyEvent::readPackHead(PackageTCP* pack)
 					 PACKHEADSIZE, 
 					 0);
 		if (ret <= 0) 
-		{ isRecvHeadOK = false; break; }
+		{
+			if (errno == EINTR || 
+			 	errno == EAGAIN)
+				return false;
+			else 
+			{
+				printf("%d断开连接\n", fd_);
+				::close(fd_);
+				isRecvHeadOK = false;
+				return false;
+			}
+
+		}
 		else 
 			sum += ret;
 	}
 
-	if (isRecvHeadOK)
-		return true;
-	else 
-		return false;
+	return true;
 }
 
 bool MyEvent::readPackBody(PackageTCP& tmp, int len) 
@@ -84,21 +93,19 @@ bool MyEvent::readPackBody(PackageTCP& tmp, int len)
 					 (tmp.body + sum), 
 					 MAXBODY,
 					 0);
-		if (ret < 0) 
+		if (ret <= 0) 
 		{
 			if (errno == EINTR || 
 			 	errno == EAGAIN)
-				continue;
+				 return false;
 			else 
-				break;
+			{
+				printf("断开连接\n");
+				::close(fd_);
+				isRecvBodyOK = false;
+				return false;
+			}
 
-		}
-		else if (ret == 0) 
-		{
-			printf("断开连接\n");
-			::close(fd_);
-			isRecvBodyOK = false;
-			break;
 		}
 		else
 		{
@@ -106,10 +113,7 @@ bool MyEvent::readPackBody(PackageTCP& tmp, int len)
 			sum += ret;
 		}
 	}
-	if (isRecvBodyOK)	//需要同时验证count<=0么?
-		return true;
-	else 
-		return false;
+	return true;
 }
 
 void MyEvent::appendRecvBuffer(PackageTCP& tmp)
@@ -200,6 +204,8 @@ bool MyEvent::sendMessHead(PackageTCP* pac)
 				continue;
 			else 
 			{
+				printf("断开连接\n");
+				::close(fd_);
 				return false;
 			}
 		}
@@ -229,6 +235,8 @@ bool MyEvent::sendMessBody(PackageTCP& pac)
 				continue;
 			else 
 			{
+				printf("断开连接\n");
+				::close(fd_);
 				return false;
 			}
 		}
