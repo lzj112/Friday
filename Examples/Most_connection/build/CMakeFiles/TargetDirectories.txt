@@ -1,7 +1,0 @@
-/home/lzj/Friday/Examples/Most_connection/build/CMakeFiles/edit_cache.dir
-/home/lzj/Friday/Examples/Most_connection/build/CMakeFiles/rebuild_cache.dir
-/home/lzj/Friday/Examples/Most_connection/build/CMakeFiles/server.dir
-/home/lzj/Friday/Examples/Most_connection/build/CMakeFiles/client.dir
-/home/lzj/Friday/Examples/Most_connection/build/src/CMakeFiles/rebuild_cache.dir
-/home/lzj/Friday/Examples/Most_connection/build/src/CMakeFiles/FridayNET.dir
-/home/lzj/Friday/Examples/Most_connection/build/src/CMakeFiles/edit_cache.dir
