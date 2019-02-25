@@ -133,7 +133,6 @@ void Connector::isConnOk()
 ```
 ## 心跳 TODO
 - 思路
-
 每个事件存储成员`count`, 添加定时器, 每隔一段时间 count++, 有数据到来时 count 清零, 当 count 到达三次时, 断开连接
 使用时间轮增加效率
 
@@ -152,3 +151,23 @@ A > B 和 B > A 不能同时为真
 STL 容器判断等价:
 
  `!(A < B) && !(B < A) 成立时为等价`
+
+## 对端断开连接
+对端正常关闭 (程序里close(), shell 下 kill 或 CTR + C) 触发 EPOLLIN 和 EPOLLRDHUP
+交给可读回调中执行`read`函数时 触发其中的错误处理
+```
+		if (x.events & pollRDHangUp) 
+        {
+            //交给可读回调,触发其中错误处理
+            printf("pollRDHangUp\n");
+            x.events = pollReadAble;
+        }
+        if (x.events & pollReadAble)
+        {
+          //...
+        }
+        if (x.events & pollWriteAble) 
+        {
+           //...
+        }
+```

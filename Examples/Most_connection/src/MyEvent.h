@@ -8,7 +8,8 @@
 
 #include "IOBuffer.h"
 #include "PackageTCP.h"
-#include "TimerWheel.h"
+// #include "TimerWheel.h"
+// #include "TimerWheel.h"
 #include "EpollEventLoop.h"
 
 
@@ -28,7 +29,6 @@ public:
     ~MyEvent() {}
     MyEvent(const MyEvent& t);
     
-
     int fd() { return fd_; }
 
     void setReadCallBack(const IOcallBack& cb) 
@@ -39,9 +39,6 @@ public:
     { errorCallBack_ = cb; }
     void setMessMana(const messManage& cb) 
     { messManage_ = cb; }
-    // void setEventType(int type)
-    // { eventType = type; }
-
     void goRead();
     void goWrite();
     void goClose();
@@ -62,11 +59,14 @@ private:
     
 
     void performMessManaCB();
+    void checkForExpiration();
     
     
     const int fd_;
-    // int eventType;
     EpollEventLoop* loop_;
+    // int heartBeatCount;
+    // TimerWheel wheel;
+    // static const int INITEXPIRATION = 8;
     void* ptr;
     
     IOBuffer sendBuffer;

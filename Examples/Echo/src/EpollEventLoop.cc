@@ -52,27 +52,19 @@ void EpollEventLoop::handleEvents()
         
         if (x.events & pollRDHangUp) 
         {
-             //这两个事件发生,设置可读
+            //这两个事件发生,设置可读
             //交给可读回调,触发其中错误处理
-            printf("pollHangUp || pollErr\n");
+            printf("pollRDHangUp\n");
             x.events = pollReadAble;
         }
-        else if (x.events & pollReadAble)
+        if (x.events & pollReadAble)
         {
-            if (x.events & pollRDHangUp) 
-            {
-                printf("pollRDHangUp\n");
-                //对端正常关闭,同时触发epollin
-                ::close(ev->fd());
-            }
-            else 
-            {
-                printf("pollread\n");
-                //有数据读到读buffer里
-                ev->goRead();
-            }
+            printf("pollread\n");
+            //有数据读到读buffer里
+            ev->goRead();
+            
         }
-        else if (x.events & pollWriteAble) 
+        if (x.events & pollWriteAble) 
         {
             printf("pollwrite\n");
             //有数据写到写buffer里
@@ -148,3 +140,5 @@ void EpollEventLoop::modifyEvent(int type, MyEvent evT)
     else 
         printf("更改epoll注册事件失败\n");
 }
+
+

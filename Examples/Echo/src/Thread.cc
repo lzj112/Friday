@@ -11,7 +11,7 @@ Thread::Thread(const threadFunc& cb)
 {
     if (cb == nullptr) 
     {
-        std::thread tmp(std::bind(&Thread::defaultThreadFunc, this));
+        std::thread tmp(std::bind(&Thread::defaultWorkerThread, this));
         thread_ = std::move(tmp);
         std::thread::id id = thread_.get_id();
     }
@@ -31,7 +31,7 @@ Thread::~Thread()
     delete loop_;
 }
 
-void Thread::defaultThreadFunc() 
+void Thread::defaultWorkerThread() 
 {
     loop_->loop();
 }
