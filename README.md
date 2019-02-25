@@ -133,6 +133,7 @@ void Connector::isConnOk()
 ```
 ## 心跳 TODO
 - 思路
+
 每个事件存储成员`count`, 添加定时器, 每隔一段时间 count++, 有数据到来时 count 清零, 当 count 到达三次时, 断开连接
 使用时间轮增加效率
 
