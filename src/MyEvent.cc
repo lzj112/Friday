@@ -6,6 +6,8 @@
 MyEvent::MyEvent(EpollEventLoop* loop, int fd) 
     : fd_(fd),
 	  loop_(loop),
+	//   heartBeatCount(0),
+	//   wheel(loop),
       ptr(nullptr),
 	  readCallBack_(nullptr),
 	  writeCallBack_(nullptr),
@@ -17,6 +19,8 @@ MyEvent::MyEvent(EpollEventLoop* loop, int fd)
 MyEvent::MyEvent(const MyEvent& t) 
 	: fd_(t.fd_),
 	  loop_(t.loop_),
+	//   heartBeatCount(0),
+	//   wheel(t.loop_),
 	  ptr(t.ptr),
 	  readCallBack_(t.readCallBack_),
 	  writeCallBack_(t.writeCallBack_),
@@ -41,6 +45,7 @@ void MyEvent::goRead() //每次读取套接字上的数据时尽可能多的读�
 				isEndRead = readPackBody(tmpBuffer, tmpBuffer.head.length);
 			if (isEndRead) 
 			{
+				// heartBeatCount = 0;	//心跳计数清零
 				appendRecvBuffer(tmpBuffer);
 			}
 		}	while (isEndRead == true);
@@ -259,3 +264,12 @@ void MyEvent::changeToOUT()
 
 	loop_->modifyEvent(pollEdgeTrigger | pollWriteAble, *this);
 }
+
+// void MyEvent::checkForExpiration() 
+// {
+// 	if (heartBeatCount != 0) 
+// 	{
+		
+// 	}
+// 	heartBeatCount++;
+// }

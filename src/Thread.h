@@ -8,6 +8,7 @@
 
 #include "Mutex.h"
 #include "FileDes.h"
+#include "TimerWheel.h"
 #include "EpollEventLoop.h"
 
 
@@ -21,7 +22,7 @@ public:
     ~Thread();
     Thread& operator=(const Thread&);
 
-    void defaultThreadFunc();
+    void defaultWorkerThread();
     void Detach() { thread_.detach(); }
     void Join() { thread_.join(); }
     std::thread::id id() { return threadID; }
@@ -37,6 +38,7 @@ private:
 
     EpollEventLoop* loop_;
     std::unique_ptr<Mutex> myMutex;
-    std::vector<epoll_event> readyEvents;
+    TimerWheel wheel;
+    // std::vector<epoll_event> readyEvents;
 };
 #endif
