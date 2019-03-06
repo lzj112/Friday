@@ -5,10 +5,7 @@
 
 #include <iostream>
 
-<<<<<<< HEAD
 #include "ErrLog.h"
-=======
->>>>>>> 2dbba237396801c4e1d576a40693b98ce9c368c1
 #include "MyEvent.h"
 #include "EpollBase.h"
 
@@ -72,12 +69,9 @@ void EpollBase::wait(std::vector<epoll_event>& readyEvents, int timeout)
         {
             //错误处理 TODO
             perror("被信号中断:");
-<<<<<<< HEAD
             DEBUG("epfd = %d size=%d, timeout=%d\n", epollFd, 
                                                      static_cast<int> (readyEvents.size()), 
                                                      timeout);
-=======
->>>>>>> 2dbba237396801c4e1d576a40693b98ce9c368c1
             exit(1);    //退出 FIXME
         }
     }

@@ -19,6 +19,7 @@ src/CMakeFiles/FridayNET.dir/Connector.cc.o: ../src/UniqueID.h
 src/CMakeFiles/FridayNET.dir/EpollBase.cc.o: ../src/EpollBase.cc
 src/CMakeFiles/FridayNET.dir/EpollBase.cc.o: ../src/EpollBase.h
 src/CMakeFiles/FridayNET.dir/EpollBase.cc.o: ../src/EpollEventLoop.h
+src/CMakeFiles/FridayNET.dir/EpollBase.cc.o: ../src/ErrLog.h
 src/CMakeFiles/FridayNET.dir/EpollBase.cc.o: ../src/FileDes.h
 src/CMakeFiles/FridayNET.dir/EpollBase.cc.o: ../src/IOBuffer.h
 src/CMakeFiles/FridayNET.dir/EpollBase.cc.o: ../src/InitSockAddr.h
@@ -26,9 +27,6 @@ src/CMakeFiles/FridayNET.dir/EpollBase.cc.o: ../src/Message.h
 src/CMakeFiles/FridayNET.dir/EpollBase.cc.o: ../src/MyEvent.h
 src/CMakeFiles/FridayNET.dir/EpollBase.cc.o: ../src/PackageTCP.h
 src/CMakeFiles/FridayNET.dir/EpollBase.cc.o: ../src/SocketTCP.h
-src/CMakeFiles/FridayNET.dir/EpollBase.cc.o: ../src/Timer.h
-src/CMakeFiles/FridayNET.dir/EpollBase.cc.o: ../src/TimerWheel.h
-src/CMakeFiles/FridayNET.dir/EpollBase.cc.o: ../src/UniqueID.h
 
 src/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.o: ../src/EpollBase.h
 src/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.o: ../src/EpollEventLoop.cc
@@ -40,12 +38,10 @@ src/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.o: ../src/Message.h
 src/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.o: ../src/MyEvent.h
 src/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.o: ../src/PackageTCP.h
 src/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.o: ../src/SocketTCP.h
-src/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.o: ../src/Timer.h
-src/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.o: ../src/TimerWheel.h
-src/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.o: ../src/UniqueID.h
 
 src/CMakeFiles/FridayNET.dir/FServer.cc.o: ../src/EpollBase.h
 src/CMakeFiles/FridayNET.dir/FServer.cc.o: ../src/EpollEventLoop.h
+src/CMakeFiles/FridayNET.dir/FServer.cc.o: ../src/ErrLog.h
 src/CMakeFiles/FridayNET.dir/FServer.cc.o: ../src/FServer.cc
 src/CMakeFiles/FridayNET.dir/FServer.cc.o: ../src/FServer.h
 src/CMakeFiles/FridayNET.dir/FServer.cc.o: ../src/FileDes.h
@@ -64,10 +60,12 @@ src/CMakeFiles/FridayNET.dir/FServer.cc.o: ../src/UniqueID.h
 
 src/CMakeFiles/FridayNET.dir/HeartBeat.cc.o: ../src/HeartBeat.cc
 
+src/CMakeFiles/FridayNET.dir/IOBuffer.cc.o: ../src/ErrLog.h
 src/CMakeFiles/FridayNET.dir/IOBuffer.cc.o: ../src/IOBuffer.cc
 src/CMakeFiles/FridayNET.dir/IOBuffer.cc.o: ../src/IOBuffer.h
 src/CMakeFiles/FridayNET.dir/IOBuffer.cc.o: ../src/Message.h
 
+src/CMakeFiles/FridayNET.dir/Message.cc.o: ../src/ErrLog.h
 src/CMakeFiles/FridayNET.dir/Message.cc.o: ../src/Message.cc
 src/CMakeFiles/FridayNET.dir/Message.cc.o: ../src/Message.h
 
@@ -76,6 +74,7 @@ src/CMakeFiles/FridayNET.dir/Mutex.cc.o: ../src/Mutex.h
 
 src/CMakeFiles/FridayNET.dir/MyEvent.cc.o: ../src/EpollBase.h
 src/CMakeFiles/FridayNET.dir/MyEvent.cc.o: ../src/EpollEventLoop.h
+src/CMakeFiles/FridayNET.dir/MyEvent.cc.o: ../src/ErrLog.h
 src/CMakeFiles/FridayNET.dir/MyEvent.cc.o: ../src/FileDes.h
 src/CMakeFiles/FridayNET.dir/MyEvent.cc.o: ../src/IOBuffer.h
 src/CMakeFiles/FridayNET.dir/MyEvent.cc.o: ../src/InitSockAddr.h
@@ -84,9 +83,6 @@ src/CMakeFiles/FridayNET.dir/MyEvent.cc.o: ../src/MyEvent.cc
 src/CMakeFiles/FridayNET.dir/MyEvent.cc.o: ../src/MyEvent.h
 src/CMakeFiles/FridayNET.dir/MyEvent.cc.o: ../src/PackageTCP.h
 src/CMakeFiles/FridayNET.dir/MyEvent.cc.o: ../src/SocketTCP.h
-src/CMakeFiles/FridayNET.dir/MyEvent.cc.o: ../src/Timer.h
-src/CMakeFiles/FridayNET.dir/MyEvent.cc.o: ../src/TimerWheel.h
-src/CMakeFiles/FridayNET.dir/MyEvent.cc.o: ../src/UniqueID.h
 
 src/CMakeFiles/FridayNET.dir/SocketTCP.cc.o: ../src/InitSockAddr.h
 src/CMakeFiles/FridayNET.dir/SocketTCP.cc.o: ../src/SocketTCP.cc

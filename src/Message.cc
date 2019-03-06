@@ -1,19 +1,12 @@
 #include <cstring>
 
-<<<<<<< HEAD
 #include "ErrLog.h"
-=======
->>>>>>> 2dbba237396801c4e1d576a40693b98ce9c368c1
 #include "Message.h"
 
 Message::Message() 
     : lengthNow(0),
       type_(-1)
-<<<<<<< HEAD
 { message_.push_back('\0'); }
-=======
-{}
->>>>>>> 2dbba237396801c4e1d576a40693b98ce9c368c1
 
 Message::Message(const char* str) : lengthNow(0), type_(-1)
 {  
@@ -31,14 +24,7 @@ Message::Message(std::string& str) : lengthNow(0), type_(-1)
 Message::Message(const Message& t) 
 {
     type_ = t.type_;
-    // std::vector<char> tmp(t.message_);
-    // std::swap(message_, tmp);
-<<<<<<< HEAD
-    // message_.assign(t.message_.begin(), t.message_.end());
     message_ = t.message_;
-=======
-    message_.assign(t.message_.begin(), t.message_.end());
->>>>>>> 2dbba237396801c4e1d576a40693b98ce9c368c1
     lengthNow = message_.size();
 }
 
@@ -49,7 +35,6 @@ Message::Message(Message&& mess) noexcept
     type_ = mess.type();
 }
 
-<<<<<<< HEAD
 Message::~Message() 
 {
     lengthNow = -1;
@@ -61,30 +46,11 @@ Message::~Message()
 
 Message& Message::operator=(const Message& t) 
 {
-    DEBUG("for sure t: ");
-    t.show();
-=======
-Message& Message::operator=(const Message& t) 
-{
->>>>>>> 2dbba237396801c4e1d576a40693b98ce9c368c1
     if (this != &t) 
     {
         type_ = t.type_;
-        // {
-        //     std::vector<char> ().swap(message_);
-        // }
-        // std::vector<char> tmp(t.message_);
-        // std::swap(message_, tmp);
-<<<<<<< HEAD
-        // message_.assign(t.message_.begin(), t.message_.end());
         message_ = t.message_;
         lengthNow = message_.size();
-
-        // DEBUG("message=%s\n", message_.data());
-=======
-        message_.assign(t.message_.begin(), t.message_.end());
-        lengthNow = message_.size();
->>>>>>> 2dbba237396801c4e1d576a40693b98ce9c368c1
     }
     return *this;
 }
@@ -92,17 +58,8 @@ Message& Message::operator=(const Message& t)
 Message& Message::operator=(Message&& t) noexcept
 {
     type_ = t.type_;
-    // {
-    //     std::vector<char> ().swap(message_);
-    // }
     std::vector<char> tmp(t.message_);
     std::swap(message_, tmp);
-<<<<<<< HEAD
-
-DEBUG("message=%s\n", message_.data());
-
-=======
->>>>>>> 2dbba237396801c4e1d576a40693b98ce9c368c1
     lengthNow = message_.size();
 
     return *this;

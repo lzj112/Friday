@@ -1,5 +1,5 @@
 
-
+/*
 #include <string>
 #include <iostream>
 
@@ -22,3 +22,4 @@ int main()
 
     cout << "echo server 程序结束" << endl;    
 }
+*/

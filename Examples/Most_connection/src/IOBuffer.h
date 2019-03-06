@@ -16,7 +16,6 @@ public:
     IOBuffer(const IOBuffer& t);
     IOBuffer& operator=(const IOBuffer& t);
 
-<<<<<<< HEAD
     void appendMes(const char* buffer);
     void appendMes(Message& tmp);
     void appendMes(Message&& tmp);
@@ -24,15 +23,6 @@ public:
     int readableMes()  //还有多少可读数据
     { return messCount; }
     int writableMes()  //还有多少可写空间
-=======
-    void appendMess(const char* buffer);
-    void appendMess(Message& tmp);
-    void appendMess(Message&& tmp);
-    void readMess(Message& buffer);
-    int readableMess()  //还有多少可读数据
-    { return messCount; }
-    int writableMess()  //还有多少可写空间
->>>>>>> 2dbba237396801c4e1d576a40693b98ce9c368c1
     { return MAXBUFFER - messCount - 1; }
     int headPoint() 
     { return readIndex; }

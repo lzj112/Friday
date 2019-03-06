@@ -46,13 +46,11 @@ void MyEvent::goRead() //每次读取套接字上的数据时尽可能多的读�
 				isEndRead = readPackBody(tmpBuffer, tmpBuffer.head.length);
 			if (isEndRead) 
 			{
-				DEBUG("recv data = %s\n", tmpBuffer.body);
 				// heartBeatCount = 0;	//心跳计数清零
 				appendRecvBuffer(tmpBuffer);
 			}
 		}	while (isEndRead == true);
 
-		DEBUG("结束一次循环recv\n");
 		//处理拿到的数据
 		performMessManaCB();
 	}
@@ -170,7 +168,7 @@ void MyEvent::goWrite()
 		{
 			memset(&tmpMess, 0, sizeof(Message));
 			sendBuffer.readMes(tmpMess);
-			sendMessTo(tmpMess);
+			sendMesTo(tmpMess);
 		}	while (!sendBuffer.isEmpty());
 		// 改为监听可读事件
 		changeToIN();
@@ -180,7 +178,6 @@ void MyEvent::goWrite()
 
 int MyEvent::sendMes(Message mes)
 {
-	DEBUG("here is function sendMes\n");
 	// sendBuffer.appendMess(std::move(mes));	//加入写buffer
 	sendBuffer.appendMes(mes);	//加入写buffer
 
@@ -188,7 +185,7 @@ int MyEvent::sendMes(Message mes)
 }
 
 //重新添加 注册可写
-void MyEvent::sendMessTo(Message tmpMess) 
+void MyEvent::sendMesTo(Message tmpMess) 
 {
 	PackageTCP package;
 	if (tmpMess.mes() != nullptr)
@@ -196,13 +193,13 @@ void MyEvent::sendMessTo(Message tmpMess)
     package.head.type = tmpMess.type();
     package.head.length = sizeof(package.body);
 	
-	bool isSucSend = sendMessHead(&package);
+	bool isSucSend = sendMesHead(&package);
 	if (isSucSend)
-		isSucSend = sendMessBody(package);
+		isSucSend = sendMesBody(package);
 
 }
 
-bool MyEvent::sendMessHead(PackageTCP* pac) 
+bool MyEvent::sendMesHead(PackageTCP* pac) 
 {
 	int count = PACKHEADSIZE, ret = 0, sum = 0;
 	while (count > 0) 
@@ -233,7 +230,7 @@ bool MyEvent::sendMessHead(PackageTCP* pac)
 	return true;
 }
 
-bool MyEvent::sendMessBody(PackageTCP& pac) 
+bool MyEvent::sendMesBody(PackageTCP& pac) 
 {
 	int count = pac.head.length, ret = 0, sum = 0;
 	while (count > 0) 

@@ -1,4 +1,4 @@
-
+/*
 #include <stdio.h>
 #include <assert.h>
 
@@ -13,7 +13,7 @@ static const int INITSOCKMAX = 1;   //1 / 10 / 100 / 1000
 
 void pingpongFunc(MyEvent* ev, Message& m) 
 {
-    ev->sendMess(m);
+    ev->sendMes(m);
 }
 
 void setNonBlocking(int sockfd) 
@@ -49,11 +49,12 @@ int main()
 
         {
             MyEvent event(&loop, cliSock[i]);
-            event.setMessMana(pingpongFunc);
+            event.setMesMgr(pingpongFunc);
             loop.regReadable(event);
-            event.sendMess(mess);
+            event.sendMes(mess);
         }
     }
 
     loop.loop();
 }
+*/

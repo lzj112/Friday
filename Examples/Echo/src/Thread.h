@@ -38,11 +38,7 @@ private:
 
     EpollEventLoop* loop_;
     std::unique_ptr<Mutex> myMutex;
-<<<<<<< HEAD
     // TimerWheel wheel;
-=======
-    TimerWheel wheel;
->>>>>>> 2dbba237396801c4e1d576a40693b98ce9c368c1
     // std::vector<epoll_event> readyEvents;
 };
 #endif

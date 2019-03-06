@@ -24,9 +24,6 @@ Message::Message(std::string& str) : lengthNow(0), type_(-1)
 Message::Message(const Message& t) 
 {
     type_ = t.type_;
-    // std::vector<char> tmp(t.message_);
-    // std::swap(message_, tmp);
-    // message_.assign(t.message_.begin(), t.message_.end());
     message_ = t.message_;
     lengthNow = message_.size();
 }
@@ -49,21 +46,11 @@ Message::~Message()
 
 Message& Message::operator=(const Message& t) 
 {
-    DEBUG("for sure t: ");
-    t.show();
     if (this != &t) 
     {
         type_ = t.type_;
-        // {
-        //     std::vector<char> ().swap(message_);
-        // }
-        // std::vector<char> tmp(t.message_);
-        // std::swap(message_, tmp);
-        // message_.assign(t.message_.begin(), t.message_.end());
         message_ = t.message_;
         lengthNow = message_.size();
-
-        // DEBUG("message=%s\n", message_.data());
     }
     return *this;
 }
@@ -71,14 +58,8 @@ Message& Message::operator=(const Message& t)
 Message& Message::operator=(Message&& t) noexcept
 {
     type_ = t.type_;
-    // {
-    //     std::vector<char> ().swap(message_);
-    // }
     std::vector<char> tmp(t.message_);
     std::swap(message_, tmp);
-
-DEBUG("message=%s\n", message_.data());
-
     lengthNow = message_.size();
 
     return *this;

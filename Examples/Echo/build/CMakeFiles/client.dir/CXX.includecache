@@ -95,8 +95,6 @@ IOBuffer.h
 /home/lzj/Friday/Examples/Echo/src/IOBuffer.h
 PackageTCP.h
 /home/lzj/Friday/Examples/Echo/src/PackageTCP.h
-TimerWheel.h
-/home/lzj/Friday/Examples/Echo/src/TimerWheel.h
 EpollEventLoop.h
 /home/lzj/Friday/Examples/Echo/src/EpollEventLoop.h
 

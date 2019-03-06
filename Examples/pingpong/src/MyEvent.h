@@ -50,9 +50,9 @@ private:
     bool readPackBody(PackageTCP& tmpPackage, int len);
     void appendSendBuffer(PackageTCP& tmp);
     void appendRecvBuffer(PackageTCP& tmp);
-    void sendMessTo(Message tmpMess);
-    bool sendMessHead(PackageTCP* pac);
-    bool sendMessBody(PackageTCP& pac);
+    void sendMesTo(Message tmpMess);
+    bool sendMesHead(PackageTCP* pac);
+    bool sendMesBody(PackageTCP& pac);
 
     void changeToIN();
     void changeToOUT();
