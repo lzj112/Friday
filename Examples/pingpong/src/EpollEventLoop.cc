@@ -53,10 +53,10 @@ void EpollEventLoop::handleEvents()
         
         if (x.events & pollRDHangUp) 
         {
-            //这两个事件发生,设置可读
-            //交给可读回调,触发其中错误处理
+            //设置可读,交给可读回调,触发其中错误处理
             printf("pollRDHangUp\n");
-            x.events = pollReadAble;
+            delEvent(ev->fd());
+            // x.events = pollReadAble;
         }
         if (x.events & pollReadAble)
         {
@@ -92,6 +92,12 @@ void EpollEventLoop::removeAllEvents()
     }
 }
 
+void EpollEventLoop::delEvent(int fd) 
+{
+    auto it = eventsMap.find(fd);
+    if (it != eventsMap.end()) 
+        eventsMap.erase(it);
+}
 
 void EpollEventLoop::regReadable(MyEvent socket) 
 {

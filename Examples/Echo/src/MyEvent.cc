@@ -9,6 +9,7 @@ MyEvent::MyEvent(EpollEventLoop* loop, int fd)
 	  loop_(loop),
 	//   heartBeatCount(0),
 	//   wheel(loop),
+	  isClosed(false),
       ptr(nullptr),
 	  readCallBack_(nullptr),
 	  writeCallBack_(nullptr),
@@ -22,6 +23,7 @@ MyEvent::MyEvent(const MyEvent& t)
 	  loop_(t.loop_),
 	//   heartBeatCount(0),
 	//   wheel(t.loop_),
+	  isClosed(false),
 	  ptr(t.ptr),
 	  readCallBack_(t.readCallBack_),
 	  writeCallBack_(t.writeCallBack_),
@@ -75,8 +77,8 @@ bool MyEvent::readPackHead(PackageTCP* pack)
 				return false;
 			else 
 			{
-				printf("%d断开连接\n", fd_);
 				::close(fd_);
+				isClosed = true;
 				isRecvHeadOK = false;
 				return false;
 			}
@@ -106,8 +108,8 @@ bool MyEvent::readPackBody(PackageTCP& tmp, int len)
 				 return false;
 			else 
 			{
-				printf("断开连接\n");
 				::close(fd_);
+				isClosed = true;
 				isRecvBodyOK = false;
 				return false;
 			}
@@ -216,8 +218,8 @@ bool MyEvent::sendMesHead(PackageTCP* pac)
 				continue;
 			else 
 			{
-				printf("断开连接\n");
 				::close(fd_);
+				isClosed = true;
 				return false;
 			}
 		}
@@ -247,8 +249,8 @@ bool MyEvent::sendMesBody(PackageTCP& pac)
 				continue;
 			else 
 			{
-				printf("断开连接\n");
 				::close(fd_);
+				isClosed = true;
 				return false;
 			}
 		}

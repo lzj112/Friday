@@ -26,7 +26,10 @@ class MyEvent
 {
 public:
     MyEvent(EpollEventLoop* loop, int fd);
-    ~MyEvent() {}
+    ~MyEvent() 
+    { 
+        // if (!isClosed) ::close(fd_); 
+    }
     MyEvent(const MyEvent& t);
     
     int fd() { return fd_; }
@@ -64,6 +67,7 @@ private:
     
     const int fd_;
     EpollEventLoop* loop_;
+    bool isClosed;
     // int heartBeatCount;
     // TimerWheel wheel;
     // static const int INITEXPIRATION = 8;

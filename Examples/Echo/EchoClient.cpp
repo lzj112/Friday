@@ -34,7 +34,6 @@ int main()
 
     PackageTCP rePack;
     int ret = 0;
-    int count = 0;
     while (1) 
     {
         ret = send(sock.fd(), &pack, sizeof(pack), 0);

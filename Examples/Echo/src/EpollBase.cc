@@ -12,29 +12,17 @@
 void EpollBase::add(int fd, epoll_event* ev) 
 {
     MyEvent* ptr = static_cast<MyEvent *> (ev->data.ptr);
-    if (epoll_ctl(epollFd, EPOLL_CTL_ADD, fd, ev) < 0) 
-    {
-        perror("epoll_ctl_add ");
-        //错误处理 TODO
-    }
+    epoll_ctl(epollFd, EPOLL_CTL_ADD, fd, ev);
 }
 
 void EpollBase::del(int fd, epoll_event* ev) 
 {
-    if (epoll_ctl(epollFd, EPOLL_CTL_DEL, fd, ev) < 0) 
-    {
-        perror("epoll_ctl_del ");
-        //错误处理 TODO
-    }
+    epoll_ctl(epollFd, EPOLL_CTL_DEL, fd, ev);
 }
 
 void EpollBase::ctl(int fd, epoll_event* ev) 
 {
-    if (epoll_ctl(epollFd, EPOLL_CTL_MOD, fd, ev) < 0) 
-    {
-        perror("epoll_ctl_mod ");
-        //错误处理 TODO
-    }
+    epoll_ctl(epollFd, EPOLL_CTL_MOD, fd, ev);
 }
 
 void EpollBase::wait(std::vector<epoll_event>& readyEvents, int timeout) 
