@@ -1,7 +1,0 @@
-/home/lzj/Friday/Examples/Echo/build/CMakeFiles/rebuild_cache.dir
-/home/lzj/Friday/Examples/Echo/build/CMakeFiles/edit_cache.dir
-/home/lzj/Friday/Examples/Echo/build/CMakeFiles/echo.dir
-/home/lzj/Friday/Examples/Echo/build/CMakeFiles/client.dir
-/home/lzj/Friday/Examples/Echo/build/src/CMakeFiles/rebuild_cache.dir
-/home/lzj/Friday/Examples/Echo/build/src/CMakeFiles/FridayNET.dir
-/home/lzj/Friday/Examples/Echo/build/src/CMakeFiles/edit_cache.dir

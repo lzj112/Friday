@@ -12,13 +12,15 @@ static int i = 0;
 
 void echoFunc(MyEvent* ev, Message& m) 
 {
-    assert(ev != nullptr);
-    const int length = m.length();
-    char ctr[length + 10];
-    strcpy(ctr, "ECHO : ");
-    strcat(ctr, m.mes());
-    Message tmp(ctr);
-    ev->sendMes(tmp);
+    if (ev != nullptr)
+    {
+        const int length = m.length();
+        char ctr[length + 10];
+        strcpy(ctr, "ECHO : ");
+        strcat(ctr, m.mes());
+        Message tmp(ctr);
+        ev->sendMes(tmp);
+    }
 }
 
 int main() 
