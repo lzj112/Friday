@@ -24,8 +24,13 @@ int main()
     inet_pton(AF_INET, ip, &netAdderss.sin_addr);
     
     pid_t t[3];
+<<<<<<< HEAD
     for (int i = 0; i < 3; i++) 
     {
+=======
+    // for (int i = 0; i < 3; i++) 
+    // {
+>>>>>>> 2dbba237396801c4e1d576a40693b98ce9c368c1
         t[0] = fork();
         if (t[0] == 0) 
         {
@@ -59,7 +64,11 @@ int main()
                     break;
                 }
             }
+<<<<<<< HEAD
         }
+=======
+        // }
+>>>>>>> 2dbba237396801c4e1d576a40693b98ce9c368c1
     }
 
     while (1) {}

@@ -31,7 +31,10 @@ void EpollEventLoop::loop()
         epoll_.wait(events, EPOLLWAITFOR);
         handleEvents();
         {
+<<<<<<< HEAD
             // events.clear();
+=======
+>>>>>>> 2dbba237396801c4e1d576a40693b98ce9c368c1
             std::vector<epoll_event> evs(events.size());
             std::swap(events, evs);
         }
@@ -141,3 +144,8 @@ void EpollEventLoop::modifyEvent(int type, MyEvent evT)
     else 
         printf("更改epoll注册事件失败\n");
 }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 2dbba237396801c4e1d576a40693b98ce9c368c1

@@ -3,7 +3,10 @@
 
 #include <map>
 
+<<<<<<< HEAD
 #include "ErrLog.h"
+=======
+>>>>>>> 2dbba237396801c4e1d576a40693b98ce9c368c1
 #include "FServer.h"
 
 FServer::FServer(EpollEventLoop* baseLoop,
@@ -68,7 +71,11 @@ void FServer::newConntion()
         EpollEventLoop* ioLoop = threadPool.getNextLoop();
         {
             MyEvent tmpEvent(ioLoop, x.first);
+<<<<<<< HEAD
             tmpEvent.setMesMgr(messMgr_);
+=======
+            tmpEvent.setMessMana(messManage_);
+>>>>>>> 2dbba237396801c4e1d576a40693b98ce9c368c1
             //将新连接fd分配给子线程
             ioLoop->regReadable(tmpEvent);
         }

@@ -20,8 +20,13 @@ public:
            int port);
     ~FServer();
 
+<<<<<<< HEAD
     void setMesMgr(const mesMgr& cb) 
     { messMgr_ = cb; }
+=======
+    void setMesMang(const messManage& cb) 
+    { messManage_ = cb; }
+>>>>>>> 2dbba237396801c4e1d576a40693b98ce9c368c1
     void starts();
     int defaultConnIOCB();
     void defaultConnErrCB(); 
@@ -40,7 +45,11 @@ private:
 
     IOcallBack connIOCallBack;
     errorCallBack connErrCallBack;
+<<<<<<< HEAD
     mesMgr messMgr_;
+=======
+    messManage messManage_;
+>>>>>>> 2dbba237396801c4e1d576a40693b98ce9c368c1
 };
 
 #endif
