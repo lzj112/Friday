@@ -49,13 +49,13 @@ public:
     int sendMes(Message mess);
     
 private:
-    bool readPackHead(PackageTCP* tmpPackage);
-    bool readPackBody(PackageTCP& tmpPackage, int len);
+    int readPackHead(PackageTCP* tmpPackage);
+    int readPackBody(PackageTCP& tmpPackage, int len);
     void appendSendBuffer(PackageTCP& tmp);
     void appendRecvBuffer(PackageTCP& tmp);
-    void sendMesTo(Message tmpMess);
-    bool sendMesHead(PackageTCP* pac);
-    bool sendMesBody(PackageTCP& pac);
+    int sendMesTo(Message tmpMess);
+    int sendMesHead(PackageTCP* pac);
+    int sendMesBody(PackageTCP& pac);
 
     void changeToIN();
     void changeToOUT();

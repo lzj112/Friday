@@ -9,24 +9,11 @@
 
 using namespace std;
 
-void echoFunc(MyEvent* ev, Message& m) 
-{
-    if (ev != nullptr)
-    {
-        const int length = m.length();
-        char ctr[length + 10];
-        strcpy(ctr, "ECHO : ");
-        strcat(ctr, m.mes());
-        Message tmp(ctr);
-        ev->sendMes(tmp);
-    }
-}
 
 int main() 
 {
     EpollEventLoop loop;
     FServer ser(&loop, "test", "127.0.0.1", 4000);
-    ser.setMesMgr(echoFunc);
     ser.starts();
     loop.loop();
 

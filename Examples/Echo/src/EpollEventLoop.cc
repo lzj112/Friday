@@ -2,6 +2,7 @@
 #include <utility>
 #include <assert.h>
 
+#include "ErrLog.h"
 #include "EpollEventLoop.h"
 
 
@@ -51,7 +52,7 @@ void EpollEventLoop::handleEvents()
     {
         MyEvent* ev = static_cast<MyEvent *> (x.data.ptr);
         
-        if (x.events & pollRDHangUp) 
+        if (x.events & (pollRDHangUp | pollHangUp)) 
         {
             //设置可读,交给可读回调,触发其中错误处理
             printf("pollRDHangUp\n");
@@ -94,6 +95,7 @@ void EpollEventLoop::removeAllEvents()
 
 void EpollEventLoop::delEvent(int fd) 
 {
+    DEBUG("删除改时间\n");
     auto it = eventsMap.find(fd);
     if (it != eventsMap.end()) 
         eventsMap.erase(it);

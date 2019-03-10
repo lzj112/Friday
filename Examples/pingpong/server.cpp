@@ -1,5 +1,5 @@
 
-/*
+
 #include <string>
 #include <iostream>
 
@@ -9,17 +9,16 @@ using namespace std;
 
 void pingpongFunc(MyEvent* ev, Message& m) 
 {
-    ev->sendMess(m);
+    ev->sendMes(m);
 }
 
 int main() 
 {
     EpollEventLoop loop;
     FServer ser(&loop, "test", "127.0.0.1", 6000);
-    ser.setMesMang(pingpongFunc);
+    ser.setMesMgr(pingpongFunc);
     ser.starts();
     loop.loop();
 
     cout << "echo server 程序结束" << endl;    
 }
-*/

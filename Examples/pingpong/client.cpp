@@ -29,8 +29,7 @@ int main()
    
     EpollEventLoop loop;
 
-    Message mess("Hello World!");
-    mess.setType(123);
+    PackageTCP pack(123, "FUCK!");
 
     vector<int> cliSock; 
     int sock;
@@ -44,14 +43,14 @@ int main()
                             serAddr.sockAddr(), 
                             serAddr.length());
         assert(ret != -1);
-        // send(cliSock[i], &pack, sizeof(PackageTCP), 0);
+        send(cliSock[i], &pack, sizeof(PackageTCP), 0);
         setNonBlocking(sock);
 
         {
             MyEvent event(&loop, cliSock[i]);
             event.setMesMgr(pingpongFunc);
             loop.regReadable(event);
-            event.sendMes(mess);
+            // event.sendMes(mess);
         }
     }
 
