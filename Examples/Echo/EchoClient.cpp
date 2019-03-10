@@ -1,15 +1,25 @@
 
 #include <stdio.h>
+#include <signal.h>
+#include <unistd.h>
 
 #include <iostream>
 
+#include "src/Timer.h"
 #include "src/Connector.h"
 #include "src/EpollEventLoop.h"
 using namespace std;
 
+static bool echo = true;
+
 void newConn(int connfd) 
 {
     printf("新的连接已经建立,new connfd = %d\n", connfd);    
+}
+
+void timerFunc(int) 
+{
+    echo = false;
 }
 
 int main() 
@@ -25,25 +35,28 @@ int main()
                         serAddr.length());
     assert(ret != -1);
 
-    PackageTCP pack(123, "FUCK!");
+    PackageTCP pack(123, "hello world!");
 
     PackageTCP retPack;
     ret = 0;
-    int count = 0;
-    while (1) 
+    int sendCount = 0;
+    int recvCount = 0;
+    signal(SIGALRM, timerFunc);
+    // alarm(180);
+    
+    alarm(3);
+
+    while (echo) 
     {
         memset(&retPack, 0, sizeof(retPack));
         ret = send(sock, &pack, sizeof(PackageTCP), 0);
-        assert(ret != -1);
-        printf("send ret == %d\n", ret);
+        sendCount += ret;
+        printf("Send = %s\n",pack.body);
         ret = recv(sock, &retPack, PACKHEADSIZE, 0);
-        // assert(ret != -1);
+        recvCount += ret;
         ret = recv(sock, retPack.body, MAXBODY, 0);
-        // assert(ret != -1);
-        printf("recv =%d  %s\n", ret, retPack.body);
-        count += ret;
-        // usleep(1);
-    //     sleep(1);
+        recvCount += ret;
+        printf("recv = %s\n", retPack.body);
     }
-    while (1) {}
+    printf("send = %d bytes recv = %dbytes in 3 mins\n", sendCount, recvCount);
 }
