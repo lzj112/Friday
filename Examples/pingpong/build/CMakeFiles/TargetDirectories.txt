@@ -1,7 +1,0 @@
-/home/lzj/Friday/Examples/pingpong/build/CMakeFiles/edit_cache.dir
-/home/lzj/Friday/Examples/pingpong/build/CMakeFiles/rebuild_cache.dir
-/home/lzj/Friday/Examples/pingpong/build/CMakeFiles/server.dir
-/home/lzj/Friday/Examples/pingpong/build/CMakeFiles/client.dir
-/home/lzj/Friday/Examples/pingpong/build/src/CMakeFiles/rebuild_cache.dir
-/home/lzj/Friday/Examples/pingpong/build/src/CMakeFiles/FridayNET.dir
-/home/lzj/Friday/Examples/pingpong/build/src/CMakeFiles/edit_cache.dir

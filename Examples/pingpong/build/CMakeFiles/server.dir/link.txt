@@ -1,1 +1,0 @@
-/usr/bin/c++    -rdynamic CMakeFiles/server.dir/server.cpp.o  -o server src/libFridayNET.a -lpthread 
