@@ -1,13 +1,12 @@
 
 #include "Timer.h"
 
-Timer::Timer(int firstTime, int interval, timerCallBack cb, int fd) 
+Timer::Timer(int firstTime, int interval, timerCallBack cb) 
     : timerID(UniqueID().ID()),
       expire(-1),
       interval_((interval > 0) ? interval : 0),
       isRepeat_(interval > 0),
-      timeCB(cb),
-      myFd(fd)
+      timeCB(cb)
 {
     timespec now;
     clock_gettime(CLOCK_REALTIME, &now);
@@ -15,8 +14,7 @@ Timer::Timer(int firstTime, int interval, timerCallBack cb, int fd)
 }
 
 Timer::Timer(const Timer& t)
-    : myFd(t.myFd),
-      expire(t.expire),
+    : expire(t.expire),
       interval_(t.interval_),
       timerID(t.timerID),
       timeCB(t.timeCB)
@@ -31,7 +29,6 @@ Timer& Timer::operator=(const Timer& tmp)
 {
     if (this == &tmp) 
         return *this;
-    myFd = tmp.myFd;
     timerID = tmp.timerID;
     expire = tmp.expire;
     interval_ = tmp.interval_;
@@ -40,7 +37,7 @@ Timer& Timer::operator=(const Timer& tmp)
 }
 
 Timer::Timer(Timer&& tmp) noexcept
-    : myFd(tmp.myFd),
+    : /*myFd(tmp.myFd),*/
       timerID(tmp.timerID),
       expire(tmp.expire),
       interval_(tmp.interval_),
@@ -60,7 +57,7 @@ bool Timer::operator<(const Timer& tmp) const
     }
     else if (expire == tmp.expiration()) 
     {
-        if (timerID != tmp.id() || myFd != tmp.fd()) 
+        if (timerID != tmp.id())
         {
             return true;
         }
@@ -73,8 +70,7 @@ bool Timer::operator<(const Timer& tmp) const
 
 bool Timer::operator==(const Timer& tmp) const 
 {
-    if (myFd == tmp.fd() &&
-        timerID == tmp.id() &&
+    if (timerID == tmp.id() &&
         expire == tmp.expiration() && 
         interval_ == tmp.interval())
     {
@@ -92,7 +88,6 @@ Timer& Timer::operator=(Timer&& tmp)
 {
     if (this != &tmp) 
     {
-        myFd = tmp.fd();
         timerID = tmp.id();
         timeCB = tmp.timerFunc();
         expire = tmp.expiration();

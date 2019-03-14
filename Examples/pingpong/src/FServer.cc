@@ -68,7 +68,7 @@ void FServer::newConntion()
         EpollEventLoop* ioLoop = threadPool.getNextLoop();
         {
             MyEvent tmpEvent(ioLoop, x.first);
-            tmpEvent.setMesMgr(messMgr_);
+            tmpEvent.setMsgMgr(msgMgr_);
             //将新连接fd分配给子线程
             ioLoop->regReadable(tmpEvent);
         }

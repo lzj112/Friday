@@ -16,7 +16,7 @@ typedef std::function<void(void)> timerCallBack;
 class Timer 
 {
 public:
-    Timer(int firstTime, int interval, timerCallBack cb, int fd = -1);
+    Timer(int firstTime, int interval, timerCallBack cb);
     Timer(Timer&& tmp) noexcept;
     Timer(const Timer& t);
     ~Timer() {}
@@ -25,8 +25,6 @@ public:
     int interval() const { return interval_; }
     bool isRepeat() const { return isRepeat_; }
     void shutdown() { expire = -1; interval_ = 0; }
-    void setFd(int fd) { myFd = fd; }
-    int fd() const { return myFd; }
     timerCallBack timerFunc() const { return timeCB; }
     uint32_t id() const { return timerID; }
 
@@ -38,7 +36,7 @@ public:
 
 private:
     
-    int myFd;
+    // int myFd;
     int expire;      //到期时间
     int interval_;    //时间间隔
     uint32_t timerID;   //定时器ID 全局唯一

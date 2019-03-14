@@ -54,8 +54,7 @@ void TimerWheel::readTimerfd(void)
 
 uint32_t TimerWheel::addTimer(int firstTime, 
                               int interval, 
-                              timerCallBack cb,
-                              int fd) 
+                              timerCallBack cb) 
 {
     if (cb == nullptr) 
     {
@@ -69,7 +68,7 @@ uint32_t TimerWheel::addTimer(int firstTime,
     //应该插入哪个槽
     int ts = (currentSlot + (timeout % N)) % N;
 
-    Timer timerTmp(firstTime, interval, cb, fd);
+    Timer timerTmp(firstTime, interval, cb);
     uint32_t timerID = timerTmp.id();
     //记录timerid和定时器指针的对应关系
     location.emplace(std::make_pair(timerID, std::move(timerTmp)));
@@ -116,15 +115,13 @@ void TimerWheel::tick()
                 {
                     int expire = it->interval();
                     int interval = it->interval();
-                    int fd = it->fd();
                     timerCallBack cb = it->timerFunc();
 
                     it = wheel[currentSlot].erase(it);
 
                     addTimer(expire,
                              interval,
-                             cb,
-                             fd);
+                             cb);
                 }
                 else 
                 {

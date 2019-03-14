@@ -2,6 +2,7 @@
 #include <assert.h>
 
 #include <string>
+#include <vector>
 #include <iostream>
 
 #include "src/ErrLog.h"
@@ -9,16 +10,21 @@
 
 using namespace std;
 
-void echoFunc(MyEvent* ev, Message& m) 
+void echoFunc(MyEvent* ev, vector<unsigned char> str) 
 {
-    if (ev != nullptr)
+    vector<unsigned char> tmpBuf;
+    auto it = str.begin();
+    auto end = str.end();
+    for (; it != end; it++) 
     {
-        const int length = m.length();
-        char ctr[length + 10];
-        strcpy(ctr, "ECHO : ");
-        strcat(ctr, m.mes());
-        Message tmp(ctr);
-        ev->sendMes(tmp);
+        if (*it != '\0') 
+            tmpBuf.push_back(*it);
+        else 
+        {
+            tmpBuf.push_back(*it);
+            ev->sendMsgToBuffer(tmpBuf);
+            tmpBuf.clear();
+        }
     }
 }
 
@@ -26,7 +32,7 @@ int main()
 {
     EpollEventLoop loop;
     FServer ser(&loop, "test", "127.0.0.1", 4000);
-    ser.setMesMgr(echoFunc);
+    ser.setMsgMgr(echoFunc);
     ser.starts();
     loop.loop();
 

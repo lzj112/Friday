@@ -1,99 +1,96 @@
 
-
+#include <cstring>
 #include <utility>
+
+#include <algorithm>
 
 #include "ErrLog.h"
 #include "IOBuffer.h"
 
 
 IOBuffer::IOBuffer() 
-    : readIndex(0),
-      writeIndex(0),
-      messCount(0)
 {}
 
 IOBuffer::~IOBuffer() 
 {
-    {
-        std::array<Message, MAXBUFFER> ().swap(ioBuffer);
-    }
+    std::list<std::vector<unsigned char> > ().swap(ioBuffer);
 }
 
 IOBuffer::IOBuffer(const IOBuffer& t)
-    : readIndex(t.readIndex),
-      writeIndex(t.writeIndex),
-      messCount(t.messCount),
-      ioBuffer(t.ioBuffer)
+    : ioBuffer(t.ioBuffer)
 {}
 
 IOBuffer& IOBuffer::operator=(const IOBuffer& t) 
 {
     if (this != &t) 
-    {
-        readIndex = t.readIndex;
-        writeIndex = t.writeIndex;
-        messCount = t.messCount;
         ioBuffer = t.ioBuffer;
-    }
 }
 
+void IOBuffer::TryFreeMemory() 
+{
+    if (!ioBuffer.empty()) 
+        ioBuffer.clear();
+}
 
+std::vector<unsigned char> IOBuffer::messageOnTop() 
+{
+    auto it = ioBuffer.front();
+    ioBuffer.pop_front();
+    return it;
+}
 
-void IOBuffer::appendMes(const char* buffer) 
+unsigned char* IOBuffer::messageData() 
+{
+    return ioBuffer.front().data();
+}
+
+int IOBuffer::remainingMsg() 
+{
+    return ioBuffer.front().size();
+}
+
+void IOBuffer::appendMsgBack(const char* buffer) 
 {
     if (buffer != nullptr) 
     {
-        if (!isFull()) 
-        {
-            Message tmp(buffer);
-            ioBuffer[writeIndex] = std::move(tmp);
-            writeIndex = ++writeIndex % MAXBUFFER;
-        }
+        std::vector<unsigned char> tmpBuf;
+        for (int i = 0; i < strlen(buffer) + 1; i++)
+            tmpBuf.push_back(*(buffer + i));
+        ioBuffer.emplace_back(tmpBuf);
+    }   
+}
+
+void IOBuffer::appendMsgBack(std::string& s) 
+{
+    if (!s.empty())
+    {
+        std::vector<unsigned char> tmpBuf;
+        for_each(s.begin(), 
+                 s.end(), 
+                 [&tmpBuf](char c){
+            tmpBuf.push_back(c);
+        });
+        ioBuffer.emplace_back(tmpBuf);
     }
 }
 
-void IOBuffer::appendMes(Message& tmp) 
+void IOBuffer::appendMsgBack(unsigned char* str, int len) 
 {
-    if (!isFull()) 
+    if (str != nullptr && len > 0) 
     {
-        ioBuffer[writeIndex] = tmp;
-        writeIndex = ++writeIndex % MAXBUFFER;
+        std::vector<unsigned char> tmpBuf;
+        for (int i = 0; i < len; i++)
+            tmpBuf.push_back(*(str + i));
+        ioBuffer.emplace_back(tmpBuf);
     }
 }
 
-void IOBuffer::appendMes(Message&& tmp) 
+void IOBuffer::appendMsgBack(std::vector<unsigned char>& message) 
 {
-    if (!isFull()) 
-    {
-        ioBuffer[writeIndex] = std::forward<Message&&> (tmp);
-        writeIndex = ++writeIndex % MAXBUFFER;
-
-    }
-}
-
-void IOBuffer::readMes(Message& buffer) 
-{
-    if (!isEmpty()) 
-    {
-        buffer = ioBuffer[readIndex];
-        readIndex = ++readIndex % MAXBUFFER;
-    }
+    ioBuffer.emplace_back(message);
 }
 
 bool IOBuffer::isEmpty() 
 {
-    if (readIndex == writeIndex &&
-        messCount == 0)
-        return true;
-    else 
-        return false;
-}
-
-bool IOBuffer::isFull() 
-{
-    if (messCount == (MAXBUFFER - 1) && 
-        readIndex == (writeIndex + 1) % MAXBUFFER)
-        return true;
-    else 
-        return false;
+    return ioBuffer.empty();
 }

@@ -52,10 +52,9 @@ void EpollEventLoop::handleEvents()
     {
         MyEvent* ev = static_cast<MyEvent *> (x.data.ptr);
         
-        if (x.events & (pollRDHangUp | pollHangUp)) 
+        if (x.events & (pollRDHangUp | pollHangUp | pollErr)) 
         {
             //设置可读,交给可读回调,触发其中错误处理
-            printf("pollRDHangUp\n");
             delEvent(ev->fd());
             // x.events = pollReadAble;
         }
@@ -95,7 +94,7 @@ void EpollEventLoop::removeAllEvents()
 
 void EpollEventLoop::delEvent(int fd) 
 {
-    DEBUG("删除改时间\n");
+    DEBUG("删除%d对应事件\n", fd);
     auto it = eventsMap.find(fd);
     if (it != eventsMap.end()) 
         eventsMap.erase(it);

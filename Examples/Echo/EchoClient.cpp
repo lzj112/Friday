@@ -34,29 +34,26 @@ int main()
                         serAddr.sockAddr(), 
                         serAddr.length());
     assert(ret != -1);
+    unsigned char tmpBuf[20] = "Hello Wold";
+    int len = 11;
 
-    PackageTCP pack(123, "hello world!");
-
-    PackageTCP retPack;
-    ret = 0;
-    int sendCount = 0;
-    int recvCount = 0;
-    signal(SIGALRM, timerFunc);
-    // alarm(180);
-    
-    alarm(3);
-
-    while (echo) 
+    unsigned char recvBuf[20];
+    while (1) 
     {
-        memset(&retPack, 0, sizeof(retPack));
-        ret = send(sock, &pack, sizeof(PackageTCP), 0);
-        sendCount += ret;
-        printf("Send = %s\n",pack.body);
-        ret = recv(sock, &retPack, PACKHEADSIZE, 0);
-        recvCount += ret;
-        ret = recv(sock, retPack.body, MAXBODY, 0);
-        recvCount += ret;
-        printf("recv = %s\n", retPack.body);
+        ::send(sock, tmpBuf, len, 0);
+        ::recv(sock, recvBuf, sizeof(recvBuf), 0);
+        cout << "recv = " << recvBuf << endl;
     }
-    printf("send = %d bytes recv = %dbytes in 3 mins\n", sendCount, recvCount);
+
+
+    // ret = 0;
+    // int sendCount = 0;
+    // int recvCount = 0;
+    // signal(SIGALRM, timerFunc);
+    // alarm(600);
+
+    
+
+
+    // printf("send = %d bytes recv = %dbytes in 3 mins\n", sendCount, recvCount);
 }

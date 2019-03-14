@@ -5,7 +5,7 @@
 #include <thread>
 
 #include "SocketTCP.h"
-#include "ThreadPool.h"
+#include "IOThreadPool.h"
 #include "InitSockAddr.h"
 #include "EpollEventLoop.h"
 /*
@@ -20,8 +20,8 @@ public:
            int port);
     ~FServer();
 
-    void setMesMgr(const mesMgr& cb) 
-    { messMgr_ = cb; }
+    void setMsgMgr(const msgMgr& cb) 
+    { msgMgr_ = cb; }
     void starts();
     int defaultConnIOCB();
     void defaultConnErrCB(); 
@@ -40,7 +40,7 @@ private:
 
     IOcallBack connIOCallBack;
     errorCallBack connErrCallBack;
-    mesMgr messMgr_;
+    msgMgr msgMgr_;
 };
 
 #endif

@@ -7,7 +7,7 @@
 #include <sys/epoll.h>
 
 #include "IOBuffer.h"
-#include "PackageTCP.h"
+// #include "PackageTCP.h"
 // #include "TimerWheel.h"
 // #include "TimerWheel.h"
 #include "EpollEventLoop.h"
@@ -20,7 +20,7 @@ class EpollEventLoop;
 
 typedef std::function<void(void)> IOcallBack;
 typedef std::function<void(void)> errorCallBack; //关闭连接直接执行,不放进任务队列
-typedef std::function<void(MyEvent*, Message&)> mesMgr;
+typedef std::function<void(MyEvent*, std::vector<unsigned char>)> msgMgr;
 
 class MyEvent 
 {
@@ -40,29 +40,28 @@ public:
     { writeCallBack_ = cb; }
     void setCloseCallBack(const errorCallBack& cb) 
     { errorCallBack_ = cb; }
-    void setMesMgr(const mesMgr& cb) 
-    { mesMgr_ = cb; }
+    void setMsgMgr(const msgMgr& cb) 
+    { msgMgr_ = cb; }
     void goRead();
     void goWrite();
     void goClose();
 
-    int sendMes(Message mess);
+    void sendMsgToBuffer(unsigned char* msgsage, int len);
+    void sendMsgToBuffer(std::vector<unsigned char>& tmpBuf);
+    void startSendPeer();
     
 private:
-    int readPackHead(PackageTCP* tmpPackage);
-    int readPackBody(PackageTCP& tmpPackage, int len);
-    void appendSendBuffer(PackageTCP& tmp);
-    void appendRecvBuffer(PackageTCP& tmp);
-    int sendMesTo(Message tmpMess);
-    int sendMesHead(PackageTCP* pac);
-    int sendMesBody(PackageTCP& pac);
-
+    int readMsgFromTCP();
+    int sendMsgsage();
     void changeToIN();
     void changeToOUT();
     
 
-    void performMessManaCB();
-    void checkForExpiration();
+    void performMsgsManaCB();
+    void jointMessage(std::vector<unsigned char>& tmpBuf,
+                      unsigned char* ctr,
+                      int len);
+    // void checkForExpiration();
     
     
     const int fd_;
@@ -79,7 +78,7 @@ private:
 
     IOcallBack readCallBack_;
     IOcallBack writeCallBack_;
-    mesMgr mesMgr_;
+    msgMgr msgMgr_;
     errorCallBack errorCallBack_;
 };
 

@@ -13,7 +13,7 @@ MyEvent::MyEvent(EpollEventLoop* loop, int fd)
       ptr(nullptr),
 	  readCallBack_(nullptr),
 	  writeCallBack_(nullptr),
-	  mesMgr_(nullptr),
+	  msgMgr_(nullptr),
 	  errorCallBack_(nullptr)
 {}
 
@@ -27,7 +27,7 @@ MyEvent::MyEvent(const MyEvent& t)
 	  ptr(t.ptr),
 	  readCallBack_(t.readCallBack_),
 	  writeCallBack_(t.writeCallBack_),
-	  mesMgr_(t.mesMgr_),
+	  msgMgr_(t.msgMgr_),
 	  errorCallBack_(t.errorCallBack_)
 {
 	sendBuffer = t.sendBuffer;
@@ -38,25 +38,15 @@ void MyEvent::goRead() //每次读取套接字上的数据时尽可能多的读�
 {
 	if (readCallBack_ == nullptr)
 	{
-		PackageTCP tmpBuffer;
-		int isEndRead;
-		do 
-		{
-			bzero(&tmpBuffer, sizeof(PackageTCP));
-			isEndRead = readPackHead(&tmpBuffer);
-			if (isEndRead == 1)
-				isEndRead = readPackBody(tmpBuffer, tmpBuffer.head.length);
-			if (isEndRead == 1) 
-			{
-				// heartBeatCount = 0;	//心跳计数清零
-				appendRecvBuffer(tmpBuffer);
-			}
-		}	while (isEndRead == 1 && !recvBuffer.isFull());
-
-
+		recvBuffer.TryFreeMemory();
+		int readBytes;
+		readBytes = readMsgFromTCP();
 		//处理拿到的数据
-		if (isEndRead != -1)
-			performMessManaCB();
+		if (readBytes > 0)
+		{	
+			performMsgsManaCB();
+			changeToOUT();
+		}
 		else 
 			loop_->delEvent(fd_);
 	}
@@ -64,102 +54,66 @@ void MyEvent::goRead() //每次读取套接字上的数据时尽可能多的读�
 		readCallBack_();
 }
 
-int MyEvent::readPackHead(PackageTCP* pack) 
+int MyEvent::readMsgFromTCP() 
 {
 	int ret = 0, sum = 0;
-	bool isRecvHeadOK = true;
-	while (sum < PACKHEADSIZE) //读取数据头
+	std::vector<unsigned char> tmpBuf;
+	unsigned char buf[READONCELEN];
+	while (1) //读取数据头
 	{
 		ret = ::recv(fd_, 
-					 (pack + sum), 
-					 PACKHEADSIZE, 
+					 buf, 
+					 READONCELEN, 
 					 0);
 		if (ret <= 0) 
 		{
 			if (errno == EINTR || 
 			 	errno == EAGAIN)
-				return 0;
+				break;
 			else 
 			{
 				::close(fd_);
 				isClosed = true;
-				isRecvHeadOK = false;
 				return -1;
 			}
 
 		}
 		else 
-			sum += ret;
-	}
-
-	return 1;
-}
-
-int MyEvent::readPackBody(PackageTCP& tmp, int len) 
-{
-	int count = len, ret = 0, sum = 0;
-	bool isRecvBodyOK = true;
-	while (count > 0) 
-	{
-		ret = ::recv(fd_, 
-					 (tmp.body + sum), 
-					 MAXBODY,
-					 0);
-		if (ret <= 0) 
 		{
-			if (errno == EINTR || 
-			 	errno == EAGAIN)
-				 return 0;
-			else 
-			{
-				::close(fd_);
-				isClosed = true;
-				isRecvBodyOK = false;
-				return -1;
-			}
-
-		}
-		else
-		{
-			count -= ret;
 			sum += ret;
+			jointMessage(tmpBuf, buf, ret);
+			memset(buf, READONCELEN, '\0');
 		}
 	}
-	return 1;
+	recvBuffer.appendMsgBack(tmpBuf);
+	return sum;
 }
 
-void MyEvent::appendRecvBuffer(PackageTCP& tmp)
+void MyEvent::jointMessage(std::vector<unsigned char>& tmpBuf,
+						   unsigned char* ctr,
+						   int len) 
 {
-	Message tmpMess(tmp.body);
-	tmpMess.setType(tmp.head.type);
-	recvBuffer.appendMes(std::move(tmpMess));
-	// recvBuffer.appendMes(tmpMess);
+	if (ctr == nullptr || len <= 0) 
+		return ;
+	for (int i = 0; i < len; i++) 
+		tmpBuf.push_back(*(ctr + i));
 }
 
 
 //读取完数据后挨个处理
 //messManage_为用户指定
-void MyEvent::performMessManaCB() 
+void MyEvent::performMsgsManaCB() 
 {
 	if (!recvBuffer.isEmpty()) 
 	{
-		Message tmpMess;
-		do 
+		if (msgMgr_ != nullptr)
 		{
-			memset(&tmpMess, 0, sizeof(Message));
-			recvBuffer.readMes(tmpMess);
-			if (mesMgr_ != nullptr)
-			{
-				mesMgr_(this, tmpMess);
-			}
-			else 
-			{
-				std::cout << "take the message:" << std::endl;
-				tmpMess.show();
-			}
-		}	while (!recvBuffer.isEmpty());
-
-		changeToOUT();
+			msgMgr_(this, recvBuffer.messageOnTop());
+		}
+		else 
+		{
+			DEBUG("未指定处理回调\n");
+		}	
 	}
 }
 
@@ -167,104 +121,73 @@ void MyEvent::goWrite()
 {
 	if (writeCallBack_ != nullptr) 
 		writeCallBack_();
-	else if (!sendBuffer.isEmpty()) 
+	else if (!sendBuffer.isEmpty())
 	{
-		Message tmpMess;
-		int isSucSend;
-		do 
-		{
-			memset(&tmpMess, 0, sizeof(Message));
-			sendBuffer.readMes(tmpMess);
-			isSucSend = sendMesTo(tmpMess);
-		}	while (!sendBuffer.isEmpty() && isSucSend == 1);
-		// 改为监听可读事件
-		if (isSucSend != -1)
-			changeToIN();
-		else 
+		int sendBytes;;
+		sendBytes = sendMsgsage();
+		
+		if (sendBytes == -1)
 			loop_->delEvent(fd_);
 	}
+	changeToIN();
 }
 
 
-int MyEvent::sendMes(Message mes)
+void MyEvent::sendMsgToBuffer(unsigned char* message, int len)
 {
-	sendBuffer.appendMes(std::move(mes));	//加入写buffer
-	// sendBuffer.appendMes(mes);	//加入写buffer
-
-	// changeToOUT();
+	if (message != nullptr) 
+		sendBuffer.appendMsgBack(message, len);
 }
 
-//重新添加 注册可写
-int MyEvent::sendMesTo(Message tmpMes) 
+void MyEvent::sendMsgToBuffer(std::vector<unsigned char>& tmpBuf) 
 {
-	PackageTCP package(tmpMes.type(), tmpMes.mes());
-	
-	int isSucSend = sendMesHead(&package);
-	if (isSucSend == 1)
-		isSucSend = sendMesBody(package);
-	return isSucSend;
+	if (!tmpBuf.empty())
+		sendBuffer.appendMsgBack(tmpBuf);
 }
 
-int MyEvent::sendMesHead(PackageTCP* pac) 
+void MyEvent::startSendPeer() 
 {
-	int count = PACKHEADSIZE, ret = 0, sum = 0;
-	while (count > 0) 
+	changeToOUT();
+}
+
+int MyEvent::sendMsgsage() 
+{
+	if (sendBuffer.isEmpty())
+		return 0;
+	int ret = 0, sendSum = 0; 
+	std::vector<unsigned char> tmpBuf;
+	while (!sendBuffer.isEmpty())
 	{
-		ret = send(fd_,
-				   (pac + sum),
-				   count,
-				   0);
-		if (ret <= 0) 
+		int sendOnce = 0;
+		int	count = sendBuffer.remainingMsg();
+		tmpBuf = sendBuffer.messageOnTop();
+		while (count > sendOnce) 
 		{
-			if (errno == EAGAIN || 
-				errno == EWOULDBLOCK || 
-				errno == EINTR)
-				return 0;
+			ret = send(fd_,
+					   tmpBuf.data() + sendOnce,
+					   count,
+					   0);
+			if (ret <= 0) 
+			{
+				if (errno == EAGAIN || 
+					errno == EWOULDBLOCK || 
+					errno == EINTR)
+					break;
+				else 
+				{
+					::close(fd_);
+					isClosed = true;
+					return -1;
+				}
+			}
 			else 
 			{
-				::close(fd_);
-				isClosed = true;
-				return -1;
+				sendOnce += ret;
+				sendSum += ret;
 			}
 		}
-		else 
-		{
-			count -= ret;
-			sum += ret;
-		}
 	}
-	return 1;
-}
-
-int MyEvent::sendMesBody(PackageTCP& pac) 
-{
-	int count = pac.head.length, ret = 0, sum = 0;
-	while (count > 0) 
-	{
-		ret = send(fd_,
-				   (pac.body + sum),
-				   MAXBODY,
-				   0);
-		if (ret <= 0) 
-		{
-			if (errno == EAGAIN || 
-				errno == EWOULDBLOCK || 
-				errno == EINTR)
-				return 0;
-			else 
-			{
-				::close(fd_);
-				isClosed = true;
-				return -1;
-			}
-		}
-		else 
-		{
-			count -= ret;
-			sum += ret;
-		}
-	}
-	return 1;
+	return sendSum;
 }
 
 void MyEvent::changeToIN() 

@@ -3,12 +3,14 @@
 #include <string>
 #include <iostream>
 
+#include "src/ErrLog.h"
 #include "src/FServer.h"
 
 using namespace std;
 
 void pingpongFunc(MyEvent* ev, Message& m) 
 {
+    DEBUG("pingpong===%s///\n", m.mes());
     ev->sendMes(m);
 }
 

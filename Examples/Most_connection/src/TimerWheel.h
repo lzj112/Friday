@@ -24,8 +24,7 @@ public:
     int tickTime() const { return SI; }
     uint32_t addTimer(int firstTime, 
                       int interval, 
-                      timerCallBack cb = nullptr, 
-                      int fd = -1);
+                      timerCallBack cb = nullptr);
     void cancleTimer(uint32_t timerID);
     void tick();
 
