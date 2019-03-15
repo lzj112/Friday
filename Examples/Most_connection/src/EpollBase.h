@@ -33,9 +33,9 @@ public:
     ~EpollBase() { close(epollFd); }
 
     int fd() { return epollFd; }
-    void add(int fd, epoll_event* ev);
-    void del(int fd, epoll_event* ev);
-    void ctl(int fd, epoll_event* ev);
+    int add(int fd, epoll_event* ev);
+    int del(int fd, epoll_event* ev);
+    int ctl(int fd, epoll_event* ev);
     void wait(std::vector<epoll_event>& readyEvents, int timeout = 0);
 private:
     int epollFd;

@@ -29,14 +29,15 @@ FServer::~FServer()
 
 void FServer::starts() 
 {
-    MyEvent listenEvent(loop_, serverFd->fd());
-    listenEvent.setReadCallBack(std::bind(&FServer::newConntion, this));
+    std::shared_ptr<MyEvent> listenEv = 
+        std::make_shared<MyEvent> (loop_, serverFd->fd());
+    listenEv->setReadCallBack(std::bind(&FServer::newConntion, this));
     //启动线程池,执行子线程们的loop
     //server里的loop在主线程中执行,由用户显示调用
     threadPool.start();
     
     //监听套接字 注册epoll可读事件
-    loop_->regReadable(listenEvent);
+    loop_->regReadable(listenEv);
 }
 
 //防止淤积,循环accept
@@ -67,10 +68,11 @@ void FServer::newConntion()
     {   
         EpollEventLoop* ioLoop = threadPool.getNextLoop();
         {
-            MyEvent tmpEvent(ioLoop, x.first);
-            tmpEvent.setMsgMgr(msgMgr_);
+            std::shared_ptr<MyEvent> myEv = 
+                std::make_shared<MyEvent> (ioLoop, x.first);
+            myEv->setMsgMgr(msgMgr_);
             //将新连接fd分配给子线程
-            ioLoop->regReadable(tmpEvent);
+            ioLoop->regReadable(myEv);
         }
     }
 }

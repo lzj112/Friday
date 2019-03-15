@@ -9,20 +9,20 @@
 #include "MyEvent.h"
 #include "EpollBase.h"
 
-void EpollBase::add(int fd, epoll_event* ev) 
+int EpollBase::add(int fd, epoll_event* ev) 
 {
     MyEvent* ptr = static_cast<MyEvent *> (ev->data.ptr);
-    epoll_ctl(epollFd, EPOLL_CTL_ADD, fd, ev);
+    return epoll_ctl(epollFd, EPOLL_CTL_ADD, fd, ev);
 }
 
-void EpollBase::del(int fd, epoll_event* ev) 
+int EpollBase::del(int fd, epoll_event* ev) 
 {
-    epoll_ctl(epollFd, EPOLL_CTL_DEL, fd, ev);
+    return epoll_ctl(epollFd, EPOLL_CTL_DEL, fd, ev);
 }
 
-void EpollBase::ctl(int fd, epoll_event* ev) 
+int EpollBase::ctl(int fd, epoll_event* ev) 
 {
-    epoll_ctl(epollFd, EPOLL_CTL_MOD, fd, ev);
+    return epoll_ctl(epollFd, EPOLL_CTL_MOD, fd, ev);
 }
 
 void EpollBase::wait(std::vector<epoll_event>& readyEvents, int timeout) 

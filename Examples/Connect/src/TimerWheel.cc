@@ -26,10 +26,9 @@ TimerWheel::~TimerWheel()
 
 void TimerWheel::start() 
 {
-    MyEvent timeTmp(loop_, timerfd_.fd());
-    timeTmp.setReadCallBack(std::bind(&TimerWheel::readTimerfd, this));
-
-    loop_->regReadable(timeTmp);
+    std::shared_ptr<MyEvent> timeStamp = 
+        std::make_shared<MyEvent> (loop_, timerfd_.fd());
+    timeStamp->setReadCallBack(std::bind(&TimerWheel::readTimerfd, this));
 
     itimerspec new_value;
     new_value.it_value.tv_sec = SI; //设置第一次到期时间

@@ -2,6 +2,8 @@
 #include <utility>
 #include <assert.h>
 
+#include <memory>
+
 #include "ErrLog.h"
 #include "EpollEventLoop.h"
 
@@ -100,51 +102,41 @@ void EpollEventLoop::delEvent(int fd)
         eventsMap.erase(it);
 }
 
-void EpollEventLoop::regReadable(MyEvent socket) 
+void EpollEventLoop::regReadable(std::shared_ptr<MyEvent> myEv) 
 {
     epoll_event ev = {0, {0}};
     ev.events = pollReadAble | pollEdgeTrigger;
-    eventsMap.insert(std::make_pair(socket.fd(), socket));
-  
-    auto it = eventsMap.find(socket.fd());
-    if (it != eventsMap.end()) 
+
+    ev.data.ptr = myEv.get();
+    if (epoll_.add(myEv->fd(), &ev) != -1) 
     {
-        ev.data.ptr = &((*it).second);
-        epoll_.add(socket.fd(), &ev);  //将监听套接字加入epoll事件合集
+        eventsMap.insert(std::make_pair(myEv->fd(), myEv));
     }
 }
 
-void EpollEventLoop::regWriteable(MyEvent socket) 
+void EpollEventLoop::regWriteable(std::shared_ptr<MyEvent> myEv) 
 {
     epoll_event ev = {0, {0}};
     ev.events = pollWriteAble | pollEdgeTrigger;
-    eventsMap.insert(std::make_pair(socket.fd(), socket));
-  
-    auto it = eventsMap.find(socket.fd());
-    if (it != eventsMap.end()) 
+
+    ev.data.ptr = myEv.get();
+    if (epoll_.add(myEv->fd(), &ev) != -1) 
     {
-        ev.data.ptr = &((*it).second);
-        epoll_.add(socket.fd(), &ev);  //将监听套接字加入epoll事件合集
+        eventsMap.insert(std::make_pair(myEv->fd(), myEv));
     }
 }
 
-void EpollEventLoop::modifyEvent(int type, MyEvent evT) 
+void EpollEventLoop::modifyEvent(int type, std::shared_ptr<MyEvent> myEv) 
 {
-    int sockfd = evT.fd();
+    int sockfd = myEv->fd();
     epoll_event ev;
     ev.events = type;
-    auto it = eventsMap.find(sockfd);
-    if (it != eventsMap.end())
-        eventsMap.erase(it);
-
-    eventsMap.insert(std::make_pair(sockfd, evT));
-    
-    auto iter = eventsMap.find(sockfd);
-    if (iter != eventsMap.end()) 
+    ev.data.ptr = myEv.get();
+    if (epoll_.ctl(myEv->fd(), &ev) == -1) 
     {
-        ev.data.ptr = &((*iter).second);
-        epoll_.ctl(sockfd, &ev);
+        DEBUG("更改 epoll 事件类型失败\n");
+        auto it = eventsMap.find(myEv->fd());
+        if (it != eventsMap.end()) 
+            eventsMap.erase(it);
     }
-    else 
-        printf("更改epoll注册事件失败\n");
 }

@@ -192,13 +192,15 @@ int MyEvent::sendMsgsage()
 
 void MyEvent::changeToIN() 
 {
-	loop_->modifyEvent(pollEdgeTrigger | pollReadAble, *this);
+	loop_->modifyEvent(pollEdgeTrigger | pollReadAble, 
+					   shared_from_this());
 }
 
 void MyEvent::changeToOUT() 
 {
 
-	loop_->modifyEvent(pollEdgeTrigger | pollWriteAble, *this);
+	loop_->modifyEvent(pollEdgeTrigger | pollWriteAble, 
+					   shared_from_this());
 }
 
 // void MyEvent::checkForExpiration() 

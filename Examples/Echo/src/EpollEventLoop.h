@@ -25,11 +25,9 @@ public:
     void removeAllEvents();
 
     void delEvent(int fd);
-    // void regReadable(int fd);
-    void regReadable(MyEvent socket);
-    // void regWriteable(int fd);
-    void regWriteable(MyEvent socket);
-    void modifyEvent(int type, MyEvent evT);
+    void regReadable(std::shared_ptr<MyEvent> myEv);
+    void regWriteable(std::shared_ptr<MyEvent> myEv);
+    void modifyEvent(int type, std::shared_ptr<MyEvent> myEv);
    
     
 private:
@@ -39,7 +37,8 @@ private:
 
     EpollBase epoll_;
     std::vector<epoll_event> events;    //存放epoll_wait返回结果
-    std::map<int, MyEvent> eventsMap;   //存放fd和ptr指向结构体的对应关系
+    // std::map<int, MyEvent> eventsMap;   //存放fd和ptr指向结构体的对应关系
+    std::map<int, std::shared_ptr<MyEvent> > eventsMap;
 
     static const int initEventSize = 16;
 };

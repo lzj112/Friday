@@ -65,9 +65,9 @@ void Connector::connSuccessful()
 //正在连接
 void Connector::inConnection() 
 {
-    MyEvent ev(loop_, cliSock->fd());
-    ev.setWriteCallBack(std::bind(&Connector::isConnOk, this));
-    // ev.setCloseCallBack(std::bind(&Connector::gotError, this));
+    std::shared_ptr<MyEvent> ev = 
+        std::make_shared<MyEvent> (loop_, cliSock->fd());
+    ev->setWriteCallBack(std::bind(&Connector::isConnOk, this));
     //注册可写事件
     loop_->regWriteable(ev);
 }

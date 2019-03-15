@@ -2,12 +2,12 @@
 #define MYEVENT_H_
 
 #include <unistd.h>
-
-#include <functional>
 #include <sys/epoll.h>
 
+#include <memory>
+#include <functional>
+
 #include "IOBuffer.h"
-// #include "PackageTCP.h"
 // #include "TimerWheel.h"
 // #include "TimerWheel.h"
 #include "EpollEventLoop.h"
@@ -22,7 +22,7 @@ typedef std::function<void(void)> IOcallBack;
 typedef std::function<void(void)> errorCallBack; //关闭连接直接执行,不放进任务队列
 typedef std::function<void(MyEvent*, std::vector<unsigned char>)> msgMgr;
 
-class MyEvent 
+class MyEvent : public std::enable_shared_from_this<MyEvent>
 {
 public:
     MyEvent(EpollEventLoop* loop, int fd);
