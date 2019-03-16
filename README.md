@@ -136,8 +136,9 @@ void Connector::isConnOk()
 ## 心跳 TODO
 
 - 思路
-每个事件存储成员`count`, 添加定时器, 每隔一段时间 count++, 有数据到来时 count 清零, 当 count 到达三次时, 断开连接
-使用时间轮增加效率
+每个事件存储成员`heartBeatCount_`, 服务端 `heartBeatCount_`定期自增, 客户端每隔一段时间发送一个空包(心跳), 服务端收到后, `heartBeatCount_`清零, 当计数达到三次断开连接
+>定时在每次到期发现没有收到数据时翻倍
+>不在服务端发送心跳是为了减少其 IO 负担, 客户端来维持心跳的话, 服务端只需要定时进行逻辑判断就行了
 
 ## IOBuffer
 
