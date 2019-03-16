@@ -46,7 +46,9 @@ void EpollEventLoop::loop()
 }
 ```
 `EpollEventLoop::loop()`中循环, 调用`EpollBase::wait()`返回就绪事件集合, 调用`EpollEventLoop::handleEvents() `分类事件, 执行`MyEvent`中的对应回调函数
+
 ## 服务端 accept 
+
 - `FServer`中仍然采用的是循环`accept`的方法, 即: 
 ```
 	while (1) 
@@ -132,15 +134,14 @@ void Connector::isConnOk()
 }
 ```
 ## 心跳 TODO
+
 - 思路
 每个事件存储成员`count`, 添加定时器, 每隔一段时间 count++, 有数据到来时 count 清零, 当 count 到达三次时, 断开连接
 使用时间轮增加效率
 
 ## IOBuffer
-应用层 buffer 必不可少, `IOBuffer`是一个循环队列, 内里存储的是固定`Message`类型的数据
-`MyEvent`的回调函数读取到数据时, 存入`recvBuffer`, 然后处理.
 
-我采取每次循环读取数据, 直到这次没有数据可读或者是`recvBuffer`已满, 然后处理完数据, 发送数据同理, 先将要发送的数据存入`sendBuffer`, 然后一次发完, 因为我认为不应该有数据堆积, 有了就要尽快处理
+应用层 buffer 必不可少, `IOBuffer`是一个 `std::list<std::vector<unsigned char> >`的链表, 每次读取数据一直读到返回`EINTR EWOULDBLOCK`添加进读 buffer, 然后交给用户设定的回调函数解析处理, 发送数据时将数据添加进写 buffer, 注册 epoll 可写事件, 触发时发送
 
 ## 时间轮
 时间轮我采用 set 的自排序功能 `std::vector<std::set<Timer> > wheel` 实现其中定时器的排序
