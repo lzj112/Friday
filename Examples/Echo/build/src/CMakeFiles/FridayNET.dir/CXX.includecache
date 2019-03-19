@@ -57,6 +57,8 @@ utility
 -
 assert.h
 -
+memory
+-
 ErrLog.h
 /home/lzj/Friday/Examples/Echo/src/ErrLog.h
 EpollEventLoop.h
@@ -189,9 +191,11 @@ MyEvent.h
 /home/lzj/Friday/Examples/Echo/src/MyEvent.h
 unistd.h
 -
-functional
--
 sys/epoll.h
+-
+memory
+-
+functional
 -
 IOBuffer.h
 /home/lzj/Friday/Examples/Echo/src/IOBuffer.h

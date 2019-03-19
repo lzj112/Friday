@@ -54,11 +54,11 @@ void EpollEventLoop::handleEvents()
     {
         MyEvent* ev = static_cast<MyEvent *> (x.data.ptr);
         
-        if (x.events & (pollRDHangUp | pollErr)) 
+        if (x.events & pollRDHangUp ) 
         {
             //设置可读,交给可读回调,触发其中错误处理
-            delEvent(ev->fd());
-            // x.events = pollReadAble;
+            // delEvent(ev->fd());
+            x.events = pollReadAble;
         }
         if (x.events & pollReadAble)
         {
