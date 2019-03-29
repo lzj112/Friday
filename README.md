@@ -25,6 +25,11 @@
 ## Reactor函数调用流程图
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20190222203150515.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zNjg4ODU3Nw==,size_16,color_FFFFFF,t_70)
 
+# 项目测试
+
+目前只做了简单的单线程pingpong测试
+吞吐率大概为 3479KB/s
+
 # 部分技术点实现
 
 ## Reactor 的实现

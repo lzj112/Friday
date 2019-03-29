@@ -34,9 +34,9 @@ void EpollEventLoop::loop()
         epoll_.wait(events, EPOLLWAITFOR);
         handleEvents();
         {
-            // events.clear();
-            std::vector<epoll_event> evs(events.size());
-            std::swap(events, evs);
+            //// events.clear();
+            // std::vector<epoll_event> evs(events.size());
+            // std::swap(events, evs);
         }
     }
 
@@ -54,11 +54,11 @@ void EpollEventLoop::handleEvents()
     {
         MyEvent* ev = static_cast<MyEvent *> (x.data.ptr);
         
-        if (x.events & pollRDHangUp) 
+        if (x.events & pollRDHangUp ) 
         {
             //设置可读,交给可读回调,触发其中错误处理
-            delEvent(ev->fd());
-            // x.events = pollReadAble;
+            // delEvent(ev->fd());
+            x.events = pollReadAble;
         }
         if (x.events & pollReadAble)
         {

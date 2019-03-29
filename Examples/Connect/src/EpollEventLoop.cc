@@ -34,9 +34,9 @@ void EpollEventLoop::loop()
         epoll_.wait(events, EPOLLWAITFOR);
         handleEvents();
         {
-            // events.clear();
-            std::vector<epoll_event> evs(events.size());
-            std::swap(events, evs);
+            //// events.clear();
+            // std::vector<epoll_event> evs(events.size());
+            // std::swap(events, evs);
         }
     }
 

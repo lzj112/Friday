@@ -58,9 +58,6 @@ private:
     
 
     void performMsgsManaCB();
-    void jointMessage(std::vector<unsigned char>& tmpBuf,
-                      unsigned char* ctr,
-                      int len);
     // void checkForExpiration();
     
     

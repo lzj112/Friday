@@ -7,9 +7,6 @@
 #include <string>
 #include <vector>
 
-
-static const int READONCELEN = 256;
-
 class IOBuffer 
 {
 public:

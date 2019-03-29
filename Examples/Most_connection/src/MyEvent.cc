@@ -57,13 +57,13 @@ void MyEvent::goRead() //每次读取套接字上的数据时尽可能多的读�
 int MyEvent::readMsgFromTCP() 
 {
 	int ret = 0, sum = 0;
-	std::vector<unsigned char> tmpBuf;
-	unsigned char buf[READONCELEN];
+	std::vector<unsigned char> buf_tmp(1500, 0);
+	std::vector<unsigned char> buf_merage(0);
 	while (1) //读取数据头
 	{
 		ret = ::recv(fd_, 
-					 buf, 
-					 READONCELEN, 
+					 buf_tmp.data(), 
+					 buf_tmp.size(), 
 					 0);
 		if (ret <= 0) 
 		{
@@ -81,24 +81,14 @@ int MyEvent::readMsgFromTCP()
 		else 
 		{
 			sum += ret;
-			jointMessage(tmpBuf, buf, ret);
-			memset(buf, READONCELEN, '\0');
+			buf_merage.insert(buf_merage.end(),
+							  buf_tmp.begin(),
+							  buf_tmp.end());
 		}
 	}
-	recvBuffer.appendMsgBack(tmpBuf);
+	recvBuffer.appendMsgBack(buf_merage);
 	return sum;
 }
-
-void MyEvent::jointMessage(std::vector<unsigned char>& tmpBuf,
-						   unsigned char* ctr,
-						   int len) 
-{
-	if (ctr == nullptr || len <= 0) 
-		return ;
-	for (int i = 0; i < len; i++) 
-		tmpBuf.push_back(*(ctr + i));
-}
-
 
 //读取完数据后挨个处理
 //messManage_为用户指定
@@ -119,6 +109,7 @@ void MyEvent::performMsgsManaCB()
 
 void MyEvent::goWrite() 
 {
+	DEBUG("gowrite\n");
 	if (writeCallBack_ != nullptr) 
 		writeCallBack_();
 	else if (!sendBuffer.isEmpty())
@@ -129,6 +120,7 @@ void MyEvent::goWrite()
 		if (sendBytes == -1)
 			loop_->delEvent(fd_);
 	}
+	DEBUG("write over\n");
 	changeToIN();
 }
 
