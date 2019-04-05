@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/lzj/Friday/Examples/Echo
+CMAKE_SOURCE_DIR = /home/lzj/Friday/Examples/pingpong
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/lzj/Friday/Examples/Echo/build
+CMAKE_BINARY_DIR = /home/lzj/Friday/Examples/pingpong/build
 
 # Include any dependencies generated for this target.
 include src/CMakeFiles/FridayNET.dir/depend.make
@@ -59,16 +59,16 @@ include src/CMakeFiles/FridayNET.dir/flags.make
 
 src/CMakeFiles/FridayNET.dir/Connector.cc.o: src/CMakeFiles/FridayNET.dir/flags.make
 src/CMakeFiles/FridayNET.dir/Connector.cc.o: ../src/Connector.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lzj/Friday/Examples/Echo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object src/CMakeFiles/FridayNET.dir/Connector.cc.o"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FridayNET.dir/Connector.cc.o -c /home/lzj/Friday/Examples/Echo/src/Connector.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lzj/Friday/Examples/pingpong/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object src/CMakeFiles/FridayNET.dir/Connector.cc.o"
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FridayNET.dir/Connector.cc.o -c /home/lzj/Friday/Examples/pingpong/src/Connector.cc
 
 src/CMakeFiles/FridayNET.dir/Connector.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/FridayNET.dir/Connector.cc.i"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lzj/Friday/Examples/Echo/src/Connector.cc > CMakeFiles/FridayNET.dir/Connector.cc.i
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lzj/Friday/Examples/pingpong/src/Connector.cc > CMakeFiles/FridayNET.dir/Connector.cc.i
 
 src/CMakeFiles/FridayNET.dir/Connector.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/FridayNET.dir/Connector.cc.s"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lzj/Friday/Examples/Echo/src/Connector.cc -o CMakeFiles/FridayNET.dir/Connector.cc.s
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lzj/Friday/Examples/pingpong/src/Connector.cc -o CMakeFiles/FridayNET.dir/Connector.cc.s
 
 src/CMakeFiles/FridayNET.dir/Connector.cc.o.requires:
 
@@ -83,16 +83,16 @@ src/CMakeFiles/FridayNET.dir/Connector.cc.o.provides.build: src/CMakeFiles/Frida
 
 src/CMakeFiles/FridayNET.dir/EpollBase.cc.o: src/CMakeFiles/FridayNET.dir/flags.make
 src/CMakeFiles/FridayNET.dir/EpollBase.cc.o: ../src/EpollBase.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lzj/Friday/Examples/Echo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object src/CMakeFiles/FridayNET.dir/EpollBase.cc.o"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FridayNET.dir/EpollBase.cc.o -c /home/lzj/Friday/Examples/Echo/src/EpollBase.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lzj/Friday/Examples/pingpong/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object src/CMakeFiles/FridayNET.dir/EpollBase.cc.o"
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FridayNET.dir/EpollBase.cc.o -c /home/lzj/Friday/Examples/pingpong/src/EpollBase.cc
 
 src/CMakeFiles/FridayNET.dir/EpollBase.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/FridayNET.dir/EpollBase.cc.i"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lzj/Friday/Examples/Echo/src/EpollBase.cc > CMakeFiles/FridayNET.dir/EpollBase.cc.i
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lzj/Friday/Examples/pingpong/src/EpollBase.cc > CMakeFiles/FridayNET.dir/EpollBase.cc.i
 
 src/CMakeFiles/FridayNET.dir/EpollBase.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/FridayNET.dir/EpollBase.cc.s"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lzj/Friday/Examples/Echo/src/EpollBase.cc -o CMakeFiles/FridayNET.dir/EpollBase.cc.s
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lzj/Friday/Examples/pingpong/src/EpollBase.cc -o CMakeFiles/FridayNET.dir/EpollBase.cc.s
 
 src/CMakeFiles/FridayNET.dir/EpollBase.cc.o.requires:
 
@@ -107,16 +107,16 @@ src/CMakeFiles/FridayNET.dir/EpollBase.cc.o.provides.build: src/CMakeFiles/Frida
 
 src/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.o: src/CMakeFiles/FridayNET.dir/flags.make
 src/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.o: ../src/EpollEventLoop.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lzj/Friday/Examples/Echo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object src/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.o"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FridayNET.dir/EpollEventLoop.cc.o -c /home/lzj/Friday/Examples/Echo/src/EpollEventLoop.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lzj/Friday/Examples/pingpong/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object src/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.o"
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FridayNET.dir/EpollEventLoop.cc.o -c /home/lzj/Friday/Examples/pingpong/src/EpollEventLoop.cc
 
 src/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/FridayNET.dir/EpollEventLoop.cc.i"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lzj/Friday/Examples/Echo/src/EpollEventLoop.cc > CMakeFiles/FridayNET.dir/EpollEventLoop.cc.i
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lzj/Friday/Examples/pingpong/src/EpollEventLoop.cc > CMakeFiles/FridayNET.dir/EpollEventLoop.cc.i
 
 src/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/FridayNET.dir/EpollEventLoop.cc.s"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lzj/Friday/Examples/Echo/src/EpollEventLoop.cc -o CMakeFiles/FridayNET.dir/EpollEventLoop.cc.s
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lzj/Friday/Examples/pingpong/src/EpollEventLoop.cc -o CMakeFiles/FridayNET.dir/EpollEventLoop.cc.s
 
 src/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.o.requires:
 
@@ -131,16 +131,16 @@ src/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.o.provides.build: src/CMakeFiles/
 
 src/CMakeFiles/FridayNET.dir/FServer.cc.o: src/CMakeFiles/FridayNET.dir/flags.make
 src/CMakeFiles/FridayNET.dir/FServer.cc.o: ../src/FServer.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lzj/Friday/Examples/Echo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object src/CMakeFiles/FridayNET.dir/FServer.cc.o"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FridayNET.dir/FServer.cc.o -c /home/lzj/Friday/Examples/Echo/src/FServer.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lzj/Friday/Examples/pingpong/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object src/CMakeFiles/FridayNET.dir/FServer.cc.o"
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FridayNET.dir/FServer.cc.o -c /home/lzj/Friday/Examples/pingpong/src/FServer.cc
 
 src/CMakeFiles/FridayNET.dir/FServer.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/FridayNET.dir/FServer.cc.i"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lzj/Friday/Examples/Echo/src/FServer.cc > CMakeFiles/FridayNET.dir/FServer.cc.i
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lzj/Friday/Examples/pingpong/src/FServer.cc > CMakeFiles/FridayNET.dir/FServer.cc.i
 
 src/CMakeFiles/FridayNET.dir/FServer.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/FridayNET.dir/FServer.cc.s"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lzj/Friday/Examples/Echo/src/FServer.cc -o CMakeFiles/FridayNET.dir/FServer.cc.s
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lzj/Friday/Examples/pingpong/src/FServer.cc -o CMakeFiles/FridayNET.dir/FServer.cc.s
 
 src/CMakeFiles/FridayNET.dir/FServer.cc.o.requires:
 
@@ -155,16 +155,16 @@ src/CMakeFiles/FridayNET.dir/FServer.cc.o.provides.build: src/CMakeFiles/FridayN
 
 src/CMakeFiles/FridayNET.dir/HeartBeat.cc.o: src/CMakeFiles/FridayNET.dir/flags.make
 src/CMakeFiles/FridayNET.dir/HeartBeat.cc.o: ../src/HeartBeat.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lzj/Friday/Examples/Echo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object src/CMakeFiles/FridayNET.dir/HeartBeat.cc.o"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FridayNET.dir/HeartBeat.cc.o -c /home/lzj/Friday/Examples/Echo/src/HeartBeat.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lzj/Friday/Examples/pingpong/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object src/CMakeFiles/FridayNET.dir/HeartBeat.cc.o"
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FridayNET.dir/HeartBeat.cc.o -c /home/lzj/Friday/Examples/pingpong/src/HeartBeat.cc
 
 src/CMakeFiles/FridayNET.dir/HeartBeat.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/FridayNET.dir/HeartBeat.cc.i"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lzj/Friday/Examples/Echo/src/HeartBeat.cc > CMakeFiles/FridayNET.dir/HeartBeat.cc.i
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lzj/Friday/Examples/pingpong/src/HeartBeat.cc > CMakeFiles/FridayNET.dir/HeartBeat.cc.i
 
 src/CMakeFiles/FridayNET.dir/HeartBeat.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/FridayNET.dir/HeartBeat.cc.s"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lzj/Friday/Examples/Echo/src/HeartBeat.cc -o CMakeFiles/FridayNET.dir/HeartBeat.cc.s
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lzj/Friday/Examples/pingpong/src/HeartBeat.cc -o CMakeFiles/FridayNET.dir/HeartBeat.cc.s
 
 src/CMakeFiles/FridayNET.dir/HeartBeat.cc.o.requires:
 
@@ -179,16 +179,16 @@ src/CMakeFiles/FridayNET.dir/HeartBeat.cc.o.provides.build: src/CMakeFiles/Frida
 
 src/CMakeFiles/FridayNET.dir/IOBuffer.cc.o: src/CMakeFiles/FridayNET.dir/flags.make
 src/CMakeFiles/FridayNET.dir/IOBuffer.cc.o: ../src/IOBuffer.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lzj/Friday/Examples/Echo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object src/CMakeFiles/FridayNET.dir/IOBuffer.cc.o"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FridayNET.dir/IOBuffer.cc.o -c /home/lzj/Friday/Examples/Echo/src/IOBuffer.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lzj/Friday/Examples/pingpong/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object src/CMakeFiles/FridayNET.dir/IOBuffer.cc.o"
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FridayNET.dir/IOBuffer.cc.o -c /home/lzj/Friday/Examples/pingpong/src/IOBuffer.cc
 
 src/CMakeFiles/FridayNET.dir/IOBuffer.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/FridayNET.dir/IOBuffer.cc.i"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lzj/Friday/Examples/Echo/src/IOBuffer.cc > CMakeFiles/FridayNET.dir/IOBuffer.cc.i
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lzj/Friday/Examples/pingpong/src/IOBuffer.cc > CMakeFiles/FridayNET.dir/IOBuffer.cc.i
 
 src/CMakeFiles/FridayNET.dir/IOBuffer.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/FridayNET.dir/IOBuffer.cc.s"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lzj/Friday/Examples/Echo/src/IOBuffer.cc -o CMakeFiles/FridayNET.dir/IOBuffer.cc.s
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lzj/Friday/Examples/pingpong/src/IOBuffer.cc -o CMakeFiles/FridayNET.dir/IOBuffer.cc.s
 
 src/CMakeFiles/FridayNET.dir/IOBuffer.cc.o.requires:
 
@@ -203,16 +203,16 @@ src/CMakeFiles/FridayNET.dir/IOBuffer.cc.o.provides.build: src/CMakeFiles/Friday
 
 src/CMakeFiles/FridayNET.dir/IOThread.cc.o: src/CMakeFiles/FridayNET.dir/flags.make
 src/CMakeFiles/FridayNET.dir/IOThread.cc.o: ../src/IOThread.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lzj/Friday/Examples/Echo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object src/CMakeFiles/FridayNET.dir/IOThread.cc.o"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FridayNET.dir/IOThread.cc.o -c /home/lzj/Friday/Examples/Echo/src/IOThread.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lzj/Friday/Examples/pingpong/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object src/CMakeFiles/FridayNET.dir/IOThread.cc.o"
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FridayNET.dir/IOThread.cc.o -c /home/lzj/Friday/Examples/pingpong/src/IOThread.cc
 
 src/CMakeFiles/FridayNET.dir/IOThread.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/FridayNET.dir/IOThread.cc.i"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lzj/Friday/Examples/Echo/src/IOThread.cc > CMakeFiles/FridayNET.dir/IOThread.cc.i
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lzj/Friday/Examples/pingpong/src/IOThread.cc > CMakeFiles/FridayNET.dir/IOThread.cc.i
 
 src/CMakeFiles/FridayNET.dir/IOThread.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/FridayNET.dir/IOThread.cc.s"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lzj/Friday/Examples/Echo/src/IOThread.cc -o CMakeFiles/FridayNET.dir/IOThread.cc.s
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lzj/Friday/Examples/pingpong/src/IOThread.cc -o CMakeFiles/FridayNET.dir/IOThread.cc.s
 
 src/CMakeFiles/FridayNET.dir/IOThread.cc.o.requires:
 
@@ -227,16 +227,16 @@ src/CMakeFiles/FridayNET.dir/IOThread.cc.o.provides.build: src/CMakeFiles/Friday
 
 src/CMakeFiles/FridayNET.dir/IOThreadPool.cc.o: src/CMakeFiles/FridayNET.dir/flags.make
 src/CMakeFiles/FridayNET.dir/IOThreadPool.cc.o: ../src/IOThreadPool.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lzj/Friday/Examples/Echo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object src/CMakeFiles/FridayNET.dir/IOThreadPool.cc.o"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FridayNET.dir/IOThreadPool.cc.o -c /home/lzj/Friday/Examples/Echo/src/IOThreadPool.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lzj/Friday/Examples/pingpong/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object src/CMakeFiles/FridayNET.dir/IOThreadPool.cc.o"
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FridayNET.dir/IOThreadPool.cc.o -c /home/lzj/Friday/Examples/pingpong/src/IOThreadPool.cc
 
 src/CMakeFiles/FridayNET.dir/IOThreadPool.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/FridayNET.dir/IOThreadPool.cc.i"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lzj/Friday/Examples/Echo/src/IOThreadPool.cc > CMakeFiles/FridayNET.dir/IOThreadPool.cc.i
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lzj/Friday/Examples/pingpong/src/IOThreadPool.cc > CMakeFiles/FridayNET.dir/IOThreadPool.cc.i
 
 src/CMakeFiles/FridayNET.dir/IOThreadPool.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/FridayNET.dir/IOThreadPool.cc.s"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lzj/Friday/Examples/Echo/src/IOThreadPool.cc -o CMakeFiles/FridayNET.dir/IOThreadPool.cc.s
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lzj/Friday/Examples/pingpong/src/IOThreadPool.cc -o CMakeFiles/FridayNET.dir/IOThreadPool.cc.s
 
 src/CMakeFiles/FridayNET.dir/IOThreadPool.cc.o.requires:
 
@@ -251,16 +251,16 @@ src/CMakeFiles/FridayNET.dir/IOThreadPool.cc.o.provides.build: src/CMakeFiles/Fr
 
 src/CMakeFiles/FridayNET.dir/MyEvent.cc.o: src/CMakeFiles/FridayNET.dir/flags.make
 src/CMakeFiles/FridayNET.dir/MyEvent.cc.o: ../src/MyEvent.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lzj/Friday/Examples/Echo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object src/CMakeFiles/FridayNET.dir/MyEvent.cc.o"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FridayNET.dir/MyEvent.cc.o -c /home/lzj/Friday/Examples/Echo/src/MyEvent.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lzj/Friday/Examples/pingpong/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object src/CMakeFiles/FridayNET.dir/MyEvent.cc.o"
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FridayNET.dir/MyEvent.cc.o -c /home/lzj/Friday/Examples/pingpong/src/MyEvent.cc
 
 src/CMakeFiles/FridayNET.dir/MyEvent.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/FridayNET.dir/MyEvent.cc.i"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lzj/Friday/Examples/Echo/src/MyEvent.cc > CMakeFiles/FridayNET.dir/MyEvent.cc.i
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lzj/Friday/Examples/pingpong/src/MyEvent.cc > CMakeFiles/FridayNET.dir/MyEvent.cc.i
 
 src/CMakeFiles/FridayNET.dir/MyEvent.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/FridayNET.dir/MyEvent.cc.s"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lzj/Friday/Examples/Echo/src/MyEvent.cc -o CMakeFiles/FridayNET.dir/MyEvent.cc.s
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lzj/Friday/Examples/pingpong/src/MyEvent.cc -o CMakeFiles/FridayNET.dir/MyEvent.cc.s
 
 src/CMakeFiles/FridayNET.dir/MyEvent.cc.o.requires:
 
@@ -275,16 +275,16 @@ src/CMakeFiles/FridayNET.dir/MyEvent.cc.o.provides.build: src/CMakeFiles/FridayN
 
 src/CMakeFiles/FridayNET.dir/SocketTCP.cc.o: src/CMakeFiles/FridayNET.dir/flags.make
 src/CMakeFiles/FridayNET.dir/SocketTCP.cc.o: ../src/SocketTCP.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lzj/Friday/Examples/Echo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object src/CMakeFiles/FridayNET.dir/SocketTCP.cc.o"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FridayNET.dir/SocketTCP.cc.o -c /home/lzj/Friday/Examples/Echo/src/SocketTCP.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lzj/Friday/Examples/pingpong/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object src/CMakeFiles/FridayNET.dir/SocketTCP.cc.o"
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FridayNET.dir/SocketTCP.cc.o -c /home/lzj/Friday/Examples/pingpong/src/SocketTCP.cc
 
 src/CMakeFiles/FridayNET.dir/SocketTCP.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/FridayNET.dir/SocketTCP.cc.i"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lzj/Friday/Examples/Echo/src/SocketTCP.cc > CMakeFiles/FridayNET.dir/SocketTCP.cc.i
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lzj/Friday/Examples/pingpong/src/SocketTCP.cc > CMakeFiles/FridayNET.dir/SocketTCP.cc.i
 
 src/CMakeFiles/FridayNET.dir/SocketTCP.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/FridayNET.dir/SocketTCP.cc.s"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lzj/Friday/Examples/Echo/src/SocketTCP.cc -o CMakeFiles/FridayNET.dir/SocketTCP.cc.s
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lzj/Friday/Examples/pingpong/src/SocketTCP.cc -o CMakeFiles/FridayNET.dir/SocketTCP.cc.s
 
 src/CMakeFiles/FridayNET.dir/SocketTCP.cc.o.requires:
 
@@ -299,16 +299,16 @@ src/CMakeFiles/FridayNET.dir/SocketTCP.cc.o.provides.build: src/CMakeFiles/Frida
 
 src/CMakeFiles/FridayNET.dir/Timer.cc.o: src/CMakeFiles/FridayNET.dir/flags.make
 src/CMakeFiles/FridayNET.dir/Timer.cc.o: ../src/Timer.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lzj/Friday/Examples/Echo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object src/CMakeFiles/FridayNET.dir/Timer.cc.o"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FridayNET.dir/Timer.cc.o -c /home/lzj/Friday/Examples/Echo/src/Timer.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lzj/Friday/Examples/pingpong/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object src/CMakeFiles/FridayNET.dir/Timer.cc.o"
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FridayNET.dir/Timer.cc.o -c /home/lzj/Friday/Examples/pingpong/src/Timer.cc
 
 src/CMakeFiles/FridayNET.dir/Timer.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/FridayNET.dir/Timer.cc.i"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lzj/Friday/Examples/Echo/src/Timer.cc > CMakeFiles/FridayNET.dir/Timer.cc.i
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lzj/Friday/Examples/pingpong/src/Timer.cc > CMakeFiles/FridayNET.dir/Timer.cc.i
 
 src/CMakeFiles/FridayNET.dir/Timer.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/FridayNET.dir/Timer.cc.s"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lzj/Friday/Examples/Echo/src/Timer.cc -o CMakeFiles/FridayNET.dir/Timer.cc.s
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lzj/Friday/Examples/pingpong/src/Timer.cc -o CMakeFiles/FridayNET.dir/Timer.cc.s
 
 src/CMakeFiles/FridayNET.dir/Timer.cc.o.requires:
 
@@ -323,16 +323,16 @@ src/CMakeFiles/FridayNET.dir/Timer.cc.o.provides.build: src/CMakeFiles/FridayNET
 
 src/CMakeFiles/FridayNET.dir/TimerWheel.cc.o: src/CMakeFiles/FridayNET.dir/flags.make
 src/CMakeFiles/FridayNET.dir/TimerWheel.cc.o: ../src/TimerWheel.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lzj/Friday/Examples/Echo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object src/CMakeFiles/FridayNET.dir/TimerWheel.cc.o"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FridayNET.dir/TimerWheel.cc.o -c /home/lzj/Friday/Examples/Echo/src/TimerWheel.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lzj/Friday/Examples/pingpong/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object src/CMakeFiles/FridayNET.dir/TimerWheel.cc.o"
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FridayNET.dir/TimerWheel.cc.o -c /home/lzj/Friday/Examples/pingpong/src/TimerWheel.cc
 
 src/CMakeFiles/FridayNET.dir/TimerWheel.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/FridayNET.dir/TimerWheel.cc.i"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lzj/Friday/Examples/Echo/src/TimerWheel.cc > CMakeFiles/FridayNET.dir/TimerWheel.cc.i
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lzj/Friday/Examples/pingpong/src/TimerWheel.cc > CMakeFiles/FridayNET.dir/TimerWheel.cc.i
 
 src/CMakeFiles/FridayNET.dir/TimerWheel.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/FridayNET.dir/TimerWheel.cc.s"
-	cd /home/lzj/Friday/Examples/Echo/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lzj/Friday/Examples/Echo/src/TimerWheel.cc -o CMakeFiles/FridayNET.dir/TimerWheel.cc.s
+	cd /home/lzj/Friday/Examples/pingpong/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lzj/Friday/Examples/pingpong/src/TimerWheel.cc -o CMakeFiles/FridayNET.dir/TimerWheel.cc.s
 
 src/CMakeFiles/FridayNET.dir/TimerWheel.cc.o.requires:
 
@@ -377,9 +377,9 @@ src/libFridayNET.a: src/CMakeFiles/FridayNET.dir/Timer.cc.o
 src/libFridayNET.a: src/CMakeFiles/FridayNET.dir/TimerWheel.cc.o
 src/libFridayNET.a: src/CMakeFiles/FridayNET.dir/build.make
 src/libFridayNET.a: src/CMakeFiles/FridayNET.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/lzj/Friday/Examples/Echo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX static library libFridayNET.a"
-	cd /home/lzj/Friday/Examples/Echo/build/src && $(CMAKE_COMMAND) -P CMakeFiles/FridayNET.dir/cmake_clean_target.cmake
-	cd /home/lzj/Friday/Examples/Echo/build/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/FridayNET.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/lzj/Friday/Examples/pingpong/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX static library libFridayNET.a"
+	cd /home/lzj/Friday/Examples/pingpong/build/src && $(CMAKE_COMMAND) -P CMakeFiles/FridayNET.dir/cmake_clean_target.cmake
+	cd /home/lzj/Friday/Examples/pingpong/build/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/FridayNET.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 src/CMakeFiles/FridayNET.dir/build: src/libFridayNET.a
@@ -402,10 +402,10 @@ src/CMakeFiles/FridayNET.dir/requires: src/CMakeFiles/FridayNET.dir/TimerWheel.c
 .PHONY : src/CMakeFiles/FridayNET.dir/requires
 
 src/CMakeFiles/FridayNET.dir/clean:
-	cd /home/lzj/Friday/Examples/Echo/build/src && $(CMAKE_COMMAND) -P CMakeFiles/FridayNET.dir/cmake_clean.cmake
+	cd /home/lzj/Friday/Examples/pingpong/build/src && $(CMAKE_COMMAND) -P CMakeFiles/FridayNET.dir/cmake_clean.cmake
 .PHONY : src/CMakeFiles/FridayNET.dir/clean
 
 src/CMakeFiles/FridayNET.dir/depend:
-	cd /home/lzj/Friday/Examples/Echo/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lzj/Friday/Examples/Echo /home/lzj/Friday/Examples/Echo/src /home/lzj/Friday/Examples/Echo/build /home/lzj/Friday/Examples/Echo/build/src /home/lzj/Friday/Examples/Echo/build/src/CMakeFiles/FridayNET.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/lzj/Friday/Examples/pingpong/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lzj/Friday/Examples/pingpong /home/lzj/Friday/Examples/pingpong/src /home/lzj/Friday/Examples/pingpong/build /home/lzj/Friday/Examples/pingpong/build/src /home/lzj/Friday/Examples/pingpong/build/src/CMakeFiles/FridayNET.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : src/CMakeFiles/FridayNET.dir/depend
 

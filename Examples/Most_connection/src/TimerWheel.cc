@@ -99,11 +99,11 @@ void TimerWheel::tick()
     {
         auto it = wheel[currentSlot].begin();
         auto end = wheel[currentSlot].end();
-        timespec now;
+        timeval now;
 
         for (; it != end;) 
         {
-            clock_gettime(CLOCK_REALTIME, &now);
+            gettimeofday(&now, nullptr);
             int timeNow = static_cast<int> (now.tv_sec);
             int timeStamp = it->expiration();
 
@@ -123,14 +123,10 @@ void TimerWheel::tick()
                              cb);
                 }
                 else 
-                {
                     it = wheel[currentSlot].erase(it);
-                }
             }
             else 
-            {
                 it++;
-            }
         }
     }
 

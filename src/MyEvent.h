@@ -8,6 +8,7 @@
 #include <functional>
 
 #include "IOBuffer.h"
+#include "UniqueID.h"
 // #include "TimerWheel.h"
 // #include "TimerWheel.h"
 #include "EpollEventLoop.h"
@@ -26,13 +27,14 @@ class MyEvent : public std::enable_shared_from_this<MyEvent>
 {
 public:
     MyEvent(EpollEventLoop* loop, int fd);
-    ~MyEvent() 
-    { 
-        // if (!isClosed) ::close(fd_); 
-    }
     MyEvent(const MyEvent& t);
+    ~MyEvent() 
+    { if (!isClosed) ::close(fd_); }
     
-    int fd() { return fd_; }
+    int fd() 
+    { return fd_; }
+    int id()   
+    { return eventID; }
 
     void setReadCallBack(const IOcallBack& cb) 
     { readCallBack_ = cb; }
@@ -60,7 +62,7 @@ private:
     void performMsgsManaCB();
     // void checkForExpiration();
     
-    
+    int eventID;
     const int fd_;
     EpollEventLoop* loop_;
     bool isClosed;

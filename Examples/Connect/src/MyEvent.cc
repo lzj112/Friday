@@ -6,6 +6,7 @@
 
 MyEvent::MyEvent(EpollEventLoop* loop, int fd) 
     : fd_(fd),
+	  eventID(UniqueID::ID()),
 	  loop_(loop),
 	//   heartBeatCount(0),
 	//   wheel(loop),
@@ -74,6 +75,7 @@ int MyEvent::readMsgFromTCP()
 			{
 				::close(fd_);
 				isClosed = true;
+				loop_->dumpster(eventID);
 				return -1;
 			}
 
@@ -109,7 +111,6 @@ void MyEvent::performMsgsManaCB()
 
 void MyEvent::goWrite() 
 {
-	DEBUG("gowrite\n");
 	if (writeCallBack_ != nullptr) 
 		writeCallBack_();
 	else if (!sendBuffer.isEmpty())
@@ -120,7 +121,6 @@ void MyEvent::goWrite()
 		if (sendBytes == -1)
 			loop_->delEvent(fd_);
 	}
-	DEBUG("write over\n");
 	changeToIN();
 }
 
@@ -169,6 +169,7 @@ int MyEvent::sendMsgsage()
 				{
 					::close(fd_);
 					isClosed = true;
+					loop_->dumpster(eventID);
 					return -1;
 				}
 			}

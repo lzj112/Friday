@@ -3,6 +3,7 @@
 
 #include <unistd.h>
 #include <assert.h>
+#include <sys/time.h>
 #include <sys/timerfd.h>
 
 #include <functional>

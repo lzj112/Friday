@@ -23,6 +23,7 @@ src/CMakeFiles/FridayNET.dir/EpollBase.cc.o: ../src/IOBuffer.h
 src/CMakeFiles/FridayNET.dir/EpollBase.cc.o: ../src/InitSockAddr.h
 src/CMakeFiles/FridayNET.dir/EpollBase.cc.o: ../src/MyEvent.h
 src/CMakeFiles/FridayNET.dir/EpollBase.cc.o: ../src/SocketTCP.h
+src/CMakeFiles/FridayNET.dir/EpollBase.cc.o: ../src/UniqueID.h
 
 src/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.o: ../src/EpollBase.h
 src/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.o: ../src/EpollEventLoop.cc
@@ -33,6 +34,7 @@ src/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.o: ../src/IOBuffer.h
 src/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.o: ../src/InitSockAddr.h
 src/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.o: ../src/MyEvent.h
 src/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.o: ../src/SocketTCP.h
+src/CMakeFiles/FridayNET.dir/EpollEventLoop.cc.o: ../src/UniqueID.h
 
 src/CMakeFiles/FridayNET.dir/FServer.cc.o: ../src/EpollBase.h
 src/CMakeFiles/FridayNET.dir/FServer.cc.o: ../src/EpollEventLoop.h
@@ -92,6 +94,7 @@ src/CMakeFiles/FridayNET.dir/MyEvent.cc.o: ../src/InitSockAddr.h
 src/CMakeFiles/FridayNET.dir/MyEvent.cc.o: ../src/MyEvent.cc
 src/CMakeFiles/FridayNET.dir/MyEvent.cc.o: ../src/MyEvent.h
 src/CMakeFiles/FridayNET.dir/MyEvent.cc.o: ../src/SocketTCP.h
+src/CMakeFiles/FridayNET.dir/MyEvent.cc.o: ../src/UniqueID.h
 
 src/CMakeFiles/FridayNET.dir/SocketTCP.cc.o: ../src/InitSockAddr.h
 src/CMakeFiles/FridayNET.dir/SocketTCP.cc.o: ../src/SocketTCP.cc

@@ -45,11 +45,6 @@ void EpollEventLoop::loop()
 
 void EpollEventLoop::handleEvents() 
 {
-    if (events.size() == 0) 
-    {
-        return ;
-    }
-
     for (auto& x : events) 
     {
         MyEvent* ev = static_cast<MyEvent *> (x.data.ptr);
@@ -57,7 +52,6 @@ void EpollEventLoop::handleEvents()
         if (x.events & pollRDHangUp ) 
         {
             //设置可读,交给可读回调,触发其中错误处理
-            // delEvent(ev->fd());
             x.events = pollReadAble;
         }
         if (x.events & pollReadAble)
@@ -73,6 +67,8 @@ void EpollEventLoop::handleEvents()
             //有数据写到写buffer里
             ev->goWrite();
         }
+        if (!overdueEvent.empty())
+            disposalWaste();
     }
 }
 
@@ -94,6 +90,20 @@ void EpollEventLoop::removeAllEvents()
     }
 }
 
+void EpollEventLoop::dumpster(int eventId) 
+{
+    overdueEvent.emplace_back(eventId);
+}
+
+void EpollEventLoop::disposalWaste() 
+{
+    if (!overdueEvent.empty()) 
+        for (auto x : overdueEvent)
+        {
+            eventsMap.erase(x);
+        }
+}
+
 void EpollEventLoop::delEvent(int fd) 
 {
     DEBUG("删除%d对应事件\n", fd);
@@ -101,6 +111,7 @@ void EpollEventLoop::delEvent(int fd)
     if (it != eventsMap.end()) 
         eventsMap.erase(it);
 }
+
 
 void EpollEventLoop::regReadable(std::shared_ptr<MyEvent> myEv) 
 {

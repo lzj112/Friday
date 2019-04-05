@@ -8,8 +8,8 @@ Timer::Timer(int firstTime, int interval, timerCallBack cb)
       isRepeat_(interval > 0),
       timeCB(cb)
 {
-    timespec now;
-    clock_gettime(CLOCK_REALTIME, &now);
+    timeval now;
+    gettimeofday(&now, nullptr);
     expire = static_cast<int> (now.tv_sec) + firstTime;
 }
 
