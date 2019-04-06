@@ -10,6 +10,7 @@ ThreadPool::ThreadPool(int threadnum)
       isCreated(false)
 {}
 
+
 ThreadPool::~ThreadPool() 
 {}
  
@@ -21,9 +22,9 @@ void ThreadPool::start()
         //创建线程对象
         Thread* thread_ = new Thread();
         //保存线程对象
-        pool_.push_back(std::unique_ptr<Thread> (thread_));
+        pool_.emplace_back(std::unique_ptr<Thread> (thread_));
         //保存创建的线程中的EpollEventLoop
-        loops_.push_back(thread_->getLoop());
+        loops_.emplace_back(thread_->getLoop());
     }
     isCreated = true;
 }

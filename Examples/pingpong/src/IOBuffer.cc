@@ -55,7 +55,7 @@ void IOBuffer::appendMsgBack(const char* buffer)
     {
         std::vector<unsigned char> tmpBuf;
         for (int i = 0; i < strlen(buffer) + 1; i++)
-            tmpBuf.push_back(*(buffer + i));
+            tmpBuf.emplace_back(*(buffer + i));
         ioBuffer.emplace_back(tmpBuf);
     }   
 }
@@ -68,7 +68,7 @@ void IOBuffer::appendMsgBack(std::string& s)
         for_each(s.begin(), 
                  s.end(), 
                  [&tmpBuf](char c){
-            tmpBuf.push_back(c);
+            tmpBuf.emplace_back(c);
         });
         ioBuffer.emplace_back(tmpBuf);
     }
@@ -80,7 +80,7 @@ void IOBuffer::appendMsgBack(unsigned char* str, int len)
     {
         std::vector<unsigned char> tmpBuf;
         for (int i = 0; i < len; i++)
-            tmpBuf.push_back(*(str + i));
+            tmpBuf.emplace_back(*(str + i));
         ioBuffer.emplace_back(tmpBuf);
     }
 }

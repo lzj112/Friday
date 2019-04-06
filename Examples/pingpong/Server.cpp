@@ -18,10 +18,10 @@ void echoFunc(MyEvent* ev, vector<unsigned char> str)
     for (; it != end; it++) 
     {
         if (*it != '\0') 
-            tmpBuf.push_back(*it);
+            tmpBuf.emplace_back(*it);
         else 
         {
-            tmpBuf.push_back(*it);
+            tmpBuf.emplace_back(*it);
             ev->sendMsgToBuffer(tmpBuf);
             tmpBuf.clear();
         }
