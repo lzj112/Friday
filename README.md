@@ -56,7 +56,7 @@ void EpollEventLoop::loop()
 
 - `FServer`中仍然采用的是循环`accept`的方法, 即: 
 ```
-	while (1) 
+    while (1) 
     {
         memset(&peer, 0, peerLen);	//peer为sockaddr_in类型
         connfd = serverFd->accept(&peer);
@@ -164,7 +164,7 @@ STL 容器判断等价:
 对端正常关闭 (程序里close(), shell 下 kill 或 CTR + C) 触发 EPOLLIN 和 EPOLLRDHUP
 交给可读回调中执行`read`函数时 触发其中的错误处理
 ```
-		if (x.events & pollRDHangUp) 
+	if (x.events & pollRDHangUp) 
         {
             //交给可读回调,触发其中错误处理
             printf("pollRDHangUp\n");
