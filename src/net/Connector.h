@@ -1,7 +1,4 @@
-#ifndef CONNECTOR_H_
-#define CONNECTOR_H_
-
-// #include <memory>
+#pragma once
 
 #include "FileDes.h"
 #include "SocketTCP.h"
@@ -54,5 +51,3 @@ private:
     errorCallBack closeCb;
     connSucced connSucced_;
 };
-
-#endif  

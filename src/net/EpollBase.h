@@ -1,5 +1,4 @@
-#ifndef EPOLLBASE_H_
-#define EPOLLBASE_H_
+#pragma once
 
 #include <unistd.h>
 #include <sys/epoll.h>
@@ -40,5 +39,3 @@ public:
 private:
     int epollFd;
 };
-
-#endif

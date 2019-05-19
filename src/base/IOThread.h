@@ -1,5 +1,4 @@
-#ifndef IOTHREAD_H_
-#define IOTHREAD_H_
+#pragma once
 
 #include <thread>
 #include <vector>
@@ -9,7 +8,6 @@
 #include "FileDes.h"
 #include "TimerWheel.h"
 #include "EpollEventLoop.h"
-
 
 class Thread 
 {
@@ -39,4 +37,3 @@ private:
     // TimerWheel wheel;
     // std::vector<epoll_event> readyEvents;
 };
-#endif

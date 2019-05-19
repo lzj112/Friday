@@ -1,5 +1,5 @@
-#ifndef TIMERLWHEEL_H_
-#define TIMERLWHEEL_H_
+
+#pragma once
 
 #include <sys/timerfd.h>
 
@@ -11,6 +11,8 @@
 #include "Timer.h"
 #include "FileDes.h"
 #include "EpollEventLoop.h"
+
+
 
 class MyEvent;
 class EpollEventLoop;
@@ -32,10 +34,11 @@ private:
     void start();
     void readTimerfd();
     void defaultTimerCallBack();
-    timerCallBack defaultTimerCallBack_;
 
+private:
     static const int N = 10;
     static const int SI = 2;
+    timerCallBack defaultTimerCallBack_;
 
     EpollEventLoop* loop_;
     std::vector<std::set<Timer> > wheel;
@@ -45,5 +48,3 @@ private:
     FileDes timerfd_;
 
 };
-
-#endif

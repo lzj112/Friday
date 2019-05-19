@@ -7,7 +7,6 @@
 #include "ErrLog.h"
 #include "IOBuffer.h"
 
-
 IOBuffer::IOBuffer() 
 {}
 

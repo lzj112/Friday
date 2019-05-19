@@ -1,5 +1,4 @@
-#ifndef FILEDES_H_
-#define FILEDES_H_
+#pragma once
 
 #include <fcntl.h>
 #include <unistd.h>
@@ -46,4 +45,3 @@ private:
     bool isClose;
 };
 
-#endif

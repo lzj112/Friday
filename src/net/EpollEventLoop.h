@@ -1,5 +1,4 @@
-#ifndef EPOLLEVENTLOOP_H_
-#define EPOLLEVENTLOOP_H_
+#pragma once
 
 #include <memory>
 #include <thread>
@@ -37,7 +36,8 @@ public:
     
 private:
     void disposalWaste();
-
+    
+private:
     static const int initEventSize = 16;
     bool isLooping;
     bool isEnd;
@@ -51,4 +51,3 @@ private:
 
 };
 
-#endif

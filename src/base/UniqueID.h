@@ -1,11 +1,12 @@
-#ifndef UNIQUEID_H_
-#define UNIQUEID_H_
+#pragma once
 
 #include <stdint.h>
 #include <assert.h>
 #include <sys/timerfd.h>
 
 #define IDSPOCE 100000
+
+
 
 class UniqueID 
 {
@@ -20,5 +21,3 @@ public:
         return static_cast<int> (nowTime.tv_nsec);
     }
 };
-
-#endif

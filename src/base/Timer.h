@@ -1,5 +1,4 @@
-#ifndef TIMER_H_
-#define TIMER_H_
+#pragma once
 
 #include <unistd.h>
 #include <assert.h>
@@ -46,5 +45,3 @@ private:
     timerCallBack timeCB;
 
 };
-
-#endif

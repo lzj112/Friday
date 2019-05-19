@@ -1,5 +1,5 @@
-#ifndef IOTHREADPOOL_H_
-#define IOTHREADPOOL_H_
+
+#pragma once
 
 #include <vector>
 
@@ -26,5 +26,3 @@ private:
     bool isCreated;
 
 };
-
-#endif

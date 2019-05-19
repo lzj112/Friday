@@ -1,7 +1,4 @@
-
-#ifndef IOBUFFER_H_
-#define IOBUFFER_H_
-
+#pragma once
 
 #include <list>
 #include <string>
@@ -31,6 +28,3 @@ private:
     std::list<std::vector<unsigned char> > ioBuffer;
     // std::vector<unsigned char> ioBuffer;
 };
-
-
-#endif

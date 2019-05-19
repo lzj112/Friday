@@ -1,5 +1,4 @@
-#ifndef INITSOCKADDR_H_
-#define INITSOCKADDR_H_
+#pragma once
 
 #include <netinet/in.h>
 
@@ -68,5 +67,3 @@ private:
     socklen_t addrLength;
 };
 
-
-#endif

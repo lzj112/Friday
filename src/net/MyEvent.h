@@ -1,5 +1,4 @@
-#ifndef MYEVENT_H_
-#define MYEVENT_H_
+#pragma once
 
 #include <unistd.h>
 #include <sys/epoll.h>
@@ -62,6 +61,7 @@ private:
     void performMsgsManaCB();
     // void checkForExpiration();
     
+private:
     int eventID;
     const int fd_;
     EpollEventLoop* loop_;
@@ -82,4 +82,3 @@ private:
 };
 
 
-#endif

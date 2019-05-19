@@ -1,5 +1,5 @@
-#ifndef SOCKETTCP_H_
-#define SOCKETTCP_H_
+
+#pragma once
 
 #include <fcntl.h>
 #include <errno.h>
@@ -15,6 +15,7 @@
 
 // #include "FileDes.h"
 #include "InitSockAddr.h"
+
 
 class SocketTCP 
 {
@@ -43,4 +44,3 @@ private:
     int sockfd;
 };
 
-#endif

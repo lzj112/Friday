@@ -1,5 +1,4 @@
-#ifndef FSERVER_H_
-#define FSERVER_H_
+#pragma once
 
 #include <string>
 #include <thread>
@@ -29,6 +28,7 @@ public:
 private:
     void newConntion();
 
+private:
     EpollEventLoop* loop_;
     const std::string serName;
 
@@ -43,4 +43,3 @@ private:
     msgMgr msgMgr_;
 };
 
-#endif
