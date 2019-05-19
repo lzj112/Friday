@@ -27,8 +27,8 @@ private:
     void stopThreadPool();
 
 private:
-    std::list<std::shared_ptr<std::thread> > Fpool_;
-    FTaskQueue<Ftask> Fqueue_;
+    std::list<std::shared_ptr<std::thread> > Fpool;
+    FTaskQueue<Ftask> Fqueue;
     std::atomic_bool isRunning;
     std::once_flag pollFlag;
 };

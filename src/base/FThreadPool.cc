@@ -6,10 +6,15 @@ FThreadPool::FThreadPool(int numThreads)
 
 FThreadPool::~FThreadPool()
 {
-    std::call_once(pollFlag, 
+    try 
+    {
+        std::call_once(pollFlag, 
                    [this]{
                        stopThreadPool();
                    });
+    }
+    catch (...) 
+    {}
 }
 
 void FThreaPool::stop() 
@@ -22,7 +27,7 @@ void FThreaPool::stop()
 
 void FThreaPool::addTask(const Ftask& task) 
 {
-    Fqueue_.putTask(task);
+    Fqueue.putTask(task);
 }
 
 void FThreaPool::addTask(Ftask&& task) 
@@ -35,7 +40,7 @@ void FThreaPool::startPool(int numThreads)
     isRunning = true;
     for (int i = 0; i < numThreads; i++) 
     {
-        Fpool_.emplace_back(std::make_shared<std::thread> 
+        Fpool.emplace_back(std::make_shared<std::thread> 
             (&FThreadPool::threadFunc, this));
     }
 }
@@ -45,7 +50,7 @@ void FThreaPool::threadFunc()
     while (isRunning) 
     {
         std::list<Ftask> taskList;
-        Fqueue_.takeTask(taskList);
+        Fqueue.takeTask(taskList);
 
         for (auto& task : taskList) 
         {
@@ -59,11 +64,14 @@ void FThreaPool::threadFunc()
 
 void FThreaPool::stopThreadPool() 
 {
-    Fqueue_.stop();
+    Fqueue.stop();
     isRunning = false;
 
-    for (auto thread : Fpool_) 
+    for (auto thread : Fpool) 
     {
-        if ()
+        if (thread) 
+            thread->join();
     }
+
+    Fpool.clear();
 }

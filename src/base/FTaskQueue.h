@@ -10,31 +10,27 @@ template <class T>
 class FTaskQueue 
 {
 public:
-    FTaskQueue();
+    FTaskQueue(int maxSize = 256);
     ~FTaskQueue();
 
-    bool isEmpty();
-    bool isFUll();
+    bool isEmpty() const;
+    bool isFull() const;
     int size();
-    void putTask(const T& x);
-    void putTask(T&& x);
-    void takeTask(T& x);
+    void putTask(const T& task);
+    void takeTask(T& task);
     void takeTask(std::list<T>& list);
     void stop();
 
 private:
-    bool notFull() const;
-    bool notEmpty() const;
-
-    void add(T&& x);
-    void add(const T& x);
+    void stopQueue();
 
 private:
-    std::list<T> fFaskQueue;
-    std::mutex fMutex;
+    std::list<T> Fqueue;
+    std::mutex Fmutex;
     std::condition_variable notEmpty_;
     std::condition_variable notFull_;
     int maxQueueSize;
-    bool needStop;
+    bool isStop;
+    std::once_flag queueFlag;
 };
 
