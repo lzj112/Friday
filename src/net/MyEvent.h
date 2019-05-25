@@ -8,15 +8,13 @@
 
 #include "IOBuffer.h"
 #include "UniqueID.h"
-// #include "TimerWheel.h"
-// #include "TimerWheel.h"
-#include "EpollEventLoop.h"
+#include "EventLoop.h"
 
 
 //针对每个连接封装其属性和操作
 
 class MyEvent;
-class EpollEventLoop;
+class EventLoop;
 
 typedef std::function<void(void)> IOcallBack;
 typedef std::function<void(void)> errorCallBack; //关闭连接直接执行,不放进任务队列
@@ -25,7 +23,7 @@ typedef std::function<void(MyEvent*, std::vector<unsigned char>)> msgMgr;
 class MyEvent : public std::enable_shared_from_this<MyEvent>
 {
 public:
-    MyEvent(EpollEventLoop* loop, int fd);
+    MyEvent(EventLoop* loop, int fd);
     MyEvent(const MyEvent& t);
     ~MyEvent() 
     { if (!isClosed) ::close(fd_); }
@@ -64,11 +62,8 @@ private:
 private:
     int eventID;
     const int fd_;
-    EpollEventLoop* loop_;
+    EventLoop* loop_;
     bool isClosed;
-    // int heartBeatCount;
-    // TimerWheel wheel;
-    // static const int INITEXPIRATION = 8;
     void* ptr;
     
     //读写buffer

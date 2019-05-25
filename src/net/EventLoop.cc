@@ -5,20 +5,20 @@
 #include <memory>
 
 #include "ErrLog.h"
-#include "EpollEventLoop.h"
+#include "EventLoop.h"
 
 
 const int EPOLLWAITFOR = 10000;
 
-EpollEventLoop::EpollEventLoop() 
+EventLoop::EventLoop() 
     : isLooping(false),
       isEnd(false),
       events(initEventSize),
-      threadID (std::this_thread::get_id())
-{
-}
+      threadID (std::this_thread::get_id()),
+      pool(initThreads)
+{}
 
-EpollEventLoop::~EpollEventLoop() 
+EventLoop::~EventLoop() 
 {
     assert(isEnd);
 
@@ -26,7 +26,7 @@ EpollEventLoop::~EpollEventLoop()
     removeAllEvents();
 }
 
-void EpollEventLoop::loop() 
+void EventLoop::loop() 
 {
     isLooping = true;
     while (isLooping) 
@@ -38,7 +38,7 @@ void EpollEventLoop::loop()
     isEnd = true;
 }
 
-void EpollEventLoop::handleEvents() 
+void EventLoop::handleEvents() 
 {
     for (auto& x : events) 
     {
@@ -51,28 +51,27 @@ void EpollEventLoop::handleEvents()
         }
         if (x.events & pollReadAble)
         {
-            printf("pollread\n");
+            DEBUG("pollread\n");
             //有数据读到读buffer里
-            ev->goRead();
-            
+            pool.addTask(std::bind(MyEvent::goRead, ev));
         }
         if (x.events & pollWriteAble) 
         {
-            printf("pollwrite\n");
+            DEBUG("pollwrite\n");
             //有数据写到写buffer里
-            ev->goWrite();
+            pool.addTask(std::bind(MyEvent::goWrite, ev));
         }
         if (!overdueEvent.empty())
             disposalWaste();
     }
 }
 
-void EpollEventLoop::stopLoop() 
+void EventLoop::stopLoop() 
 {
     isLooping = false;
 }
 
-void EpollEventLoop::removeAllEvents() 
+void EventLoop::removeAllEvents() 
 {
     if (isEnd || !isLooping) 
     {
@@ -85,12 +84,12 @@ void EpollEventLoop::removeAllEvents()
     }
 }
 
-void EpollEventLoop::dumpster(int eventId) 
+void EventLoop::dumpster(int eventId) 
 {
     overdueEvent.emplace_back(eventId);
 }
 
-void EpollEventLoop::disposalWaste() 
+void EventLoop::disposalWaste() 
 {
     if (!overdueEvent.empty()) 
         for (auto x : overdueEvent)
@@ -99,7 +98,7 @@ void EpollEventLoop::disposalWaste()
         }
 }
 
-void EpollEventLoop::delEvent(int fd) 
+void EventLoop::delEvent(int fd) 
 {
     DEBUG("删除%d对应事件\n", fd);
     auto it = eventsMap.find(fd);
@@ -108,7 +107,7 @@ void EpollEventLoop::delEvent(int fd)
 }
 
 
-void EpollEventLoop::regReadable(std::shared_ptr<MyEvent> myEv) 
+void EventLoop::regReadable(std::shared_ptr<MyEvent> myEv) 
 {
     epoll_event ev = {0, {0}};
     ev.events = pollReadAble | pollEdgeTrigger;
@@ -120,7 +119,7 @@ void EpollEventLoop::regReadable(std::shared_ptr<MyEvent> myEv)
     }
 }
 
-void EpollEventLoop::regWriteable(std::shared_ptr<MyEvent> myEv) 
+void EventLoop::regWriteable(std::shared_ptr<MyEvent> myEv) 
 {
     epoll_event ev = {0, {0}};
     ev.events = pollWriteAble | pollEdgeTrigger;
@@ -132,7 +131,7 @@ void EpollEventLoop::regWriteable(std::shared_ptr<MyEvent> myEv)
     }
 }
 
-void EpollEventLoop::modifyEvent(int type, std::shared_ptr<MyEvent> myEv) 
+void EventLoop::modifyEvent(int type, std::shared_ptr<MyEvent> myEv) 
 {
     int sockfd = myEv->fd();
     epoll_event ev;

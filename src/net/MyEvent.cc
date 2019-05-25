@@ -3,7 +3,7 @@
 #include "ErrLog.h"
 #include "MyEvent.h"
 
-MyEvent::MyEvent(EpollEventLoop *loop, int fd)
+MyEvent::MyEvent(EventLoop *loop, int fd)
 		: fd_(fd),
 			eventID(UniqueID::ID()),
 			loop_(loop),

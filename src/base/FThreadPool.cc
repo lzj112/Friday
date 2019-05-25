@@ -1,8 +1,8 @@
 
-#include "FThreaPool.h"
+#include "FThreadPool.h"
 
 FThreadPool::FThreadPool(int numThreads) 
-{   startPool(numThreads);  }
+{ startPool(numThreads); }
 
 FThreadPool::~FThreadPool()
 {
@@ -17,7 +17,7 @@ FThreadPool::~FThreadPool()
     {}
 }
 
-void FThreaPool::stop() 
+void FThreadPool::stop() 
 {   
     std::call_once(pollFlag, 
                    [this]{
@@ -25,17 +25,17 @@ void FThreaPool::stop()
                    });
 }
 
-void FThreaPool::addTask(const Ftask& task) 
+void FThreadPool::addTask(const Ftask& task) 
 {
     Fqueue.putTask(task);
 }
 
-void FThreaPool::addTask(Ftask&& task) 
+void FThreadPool::addTask(Ftask&& task) 
 {
     Fqueue.putTask(std::forward<Ftask> (task));
 }
 
-void FThreaPool::startPool(int numThreads) 
+void FThreadPool::startPool(int numThreads) 
 {
     isRunning = true;
     for (int i = 0; i < numThreads; i++) 
@@ -45,7 +45,7 @@ void FThreaPool::startPool(int numThreads)
     }
 }
 
-void FThreaPool::threadFunc() 
+void FThreadPool::threadFunc() 
 {
     while (isRunning) 
     {
@@ -62,7 +62,7 @@ void FThreaPool::threadFunc()
     }
 }
 
-void FThreaPool::stopThreadPool() 
+void FThreadPool::stopThreadPool() 
 {
     Fqueue.stop();
     isRunning = false;

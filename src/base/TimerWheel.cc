@@ -6,6 +6,7 @@
 #include <iostream>
 #include <exception>
 
+#include "ErrLog.h"
 #include "TimerWheel.h"
 
 
@@ -43,7 +44,7 @@ void TimerWheel::start()
 
 void TimerWheel::readTimerfd(void) 
 {
-    printf("定时器 timerfd 到期\n");
+    DEBUG("定时器 timerfd 到期\n");
     ssize_t s;
     uint64_t exp;
     s = ::read(timerfd_.fd(), &exp, sizeof(uint64_t));
@@ -95,7 +96,7 @@ void TimerWheel::cancleTimer(uint32_t timerID)
 
 void TimerWheel::tick() 
 {
-    printf("tick\n");
+    DEBUG("tick\n");
     if (!wheel[currentSlot].empty()) 
     {
         auto it = wheel[currentSlot].begin();

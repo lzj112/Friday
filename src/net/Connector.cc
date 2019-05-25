@@ -3,6 +3,7 @@
 
 #include <functional>
 
+#include "ErrLog.h"
 #include "Connector.h"
 
 Connector::Connector(EpollEventLoop* baseLoop,
@@ -94,18 +95,18 @@ void Connector::isConnOk()
         //是自连接
         if (cliSock->isSelfConnection())
         {
-            printf("是自连接\n");
+            DEBUG("是自连接\n");
             reConnect();
         }
         else
         {
-            printf("成功连接\n");
+            DEBUG("成功连接\n");
             connSuccessful();
         }
     }
     else 
     {
-        printf("连接失败,重连\n");
+        DEBUG("连接失败,重连\n");
         //不是EISCONN就是连接失败
         reConnect();
     }
@@ -122,5 +123,5 @@ void Connector::reConnect()
         reTryDelay = 2 * reTryDelay;
     }   
     else
-        printf("无法连接\n");        
+        DEBUG("无法连接\n");        
 }
